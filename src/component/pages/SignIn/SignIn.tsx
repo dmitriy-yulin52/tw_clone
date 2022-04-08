@@ -12,17 +12,30 @@ export const useStylesSignIn = makeStyles((theme) => ({
         height: '100%'
     },
     leftSide: {
-        backgroundColor: '#1DA1F2',
+        backgroundImage:'url(https://abs.twimg.com/sticky/illustrations/lohp_1302x955.png)',
+        // backgroundColor: '#71C9f8',
         flex: '0 0 50%',
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
+        position:'relative',
+        overflow:'hidden'
+    },
+    leftSideBigIcon:{
+        position:'absolute',
+        left:'50%',
+        top:'50%',
+        height:'60%',
+        width:'60%',
+        transform:'translate(-50%,-50%)',
+        filter:'invert(101%) sepia(143%) saturate(0%) hue-rotate(103deg) brightness(187%) contrast(101%)'
     },
     leftSideListInfo:{
+        position:'relative',
         listStyle:'none',
         padding:'0px',
         margin:'0px',
-         width:380,
+        width:380,
         '& h6':{
             display:'flex',
             alignItems:'center',
@@ -30,6 +43,9 @@ export const useStylesSignIn = makeStyles((theme) => ({
             fontWeight:700,
             fontSize:'20px',
         },
+    },
+    leftSideListInfoItem:{
+      marginBottom:theme.spacing(4)
     },
     leftSideListInfoIcon:{
       fontSize:'32px',
@@ -71,22 +87,7 @@ export const SignIn = () => {
     return (
         <div className={classNames(classes.wrapper)}>
             <div className={classNames(classes.leftSide)}>
-                <ul className={classes.leftSideListInfo}>
-                    <li>
-                        <Typography variant={'h6'}>
-                            <SearchIcon className={classes.leftSideListInfoIcon}/>
-                            Читайте о том, что вам интересно.
-                        </Typography>
-                    </li>
-                    <li><Typography variant={'h6'}>
-                        <PeopleOutlineIcon className={classes.leftSideListInfoIcon}/>
-                        Узнайте, о чем говорят в мире.
-                    </Typography></li>
-                    <li><Typography variant={'h6'}>
-                        <ChatBubbleOutlineOutlinedIcon className={classes.leftSideListInfoIcon}/>
-                        Присоединяйтесь к общению.
-                    </Typography></li>
-                </ul>
+                <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
             </div>
             <section className={classNames(classes.loginSide)}>
                 <div className={classNames(classes.loginSideWrapper)}>
