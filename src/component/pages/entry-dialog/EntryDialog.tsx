@@ -34,44 +34,33 @@ export const EntryDialog = memo(function EntryDialog(props:EntryDialogProps):Rea
                                 aria-label={'close'}
                                 className={''}
                             >
-                                {/*<CloseIcon/>*/}
                                 <CloseIcon onClick={closeDialog} color={'primary'}/>
                             </IconButton>
                             Настройка поиска
                         </DialogTitle>
                         <DialogContent>
-                            <DialogContentText>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores atque aut,
-                                deserunt esse expedita maxime molestias officia, quaerat quidem quo sed similique soluta
-                                vero, voluptate. Dolor eveniet nesciunt nostrum.
-                            </DialogContentText>
+                            <Typography gutterBottom variant={'h6'}>
+                                Войти в Твиттер
+                            </Typography>
                             <FormControl component={'fieldset'} fullWidth>
                                 <FormGroup aria-label={'position'} row>
                                     <TextField
                                         autoFocus
                                         margin={'dense'}
-                                        id={'name'}
-                                        label={'Email Address'}
+                                        id={'email'}
+                                        label={'E-mail'}
+                                        type={'email'}
+                                        fullWidth
+                                    />
+                                    <TextField
+                                        autoFocus
+                                        margin={'dense'}
+                                        id={'email'}
+                                        label={'E-mail'}
                                         type={'email'}
                                         fullWidth
                                     />
                                 </FormGroup>
-                                <div>
-                                    <div>
-                                        <FormLabel>
-                                            <p>Скрыть содержимое</p>
-                                            <Checkbox color={'primary'}/>
-                                        </FormLabel>
-                                        <Typography variant={'body2'}>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet animi esse
-                                            explicabo, itaque nihil nisi ratione repellendus repudiandae? Ab illum
-                                            laboriosam maxime natus neque non nostrum quae quo tempora?
-                                        </Typography>
-                                    </div>
-                                    <div>
-                                        <Radio value={'a'} name={'radio-button'}/>
-                                    </div>
-                                </div>
                             </FormControl>
                         </DialogContent>
                         <DialogActions>

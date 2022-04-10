@@ -1,19 +1,9 @@
 import * as React from 'react'
-import {
-    Button, Checkbox,
-    Dialog, DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle, FormControl, FormGroup, FormLabel,
-    IconButton,
-    makeStyles, Radio, TextField,
-    Typography
-} from "@material-ui/core";
+import {ReactElement} from 'react'
+import {Button, makeStyles, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
-import CloseIcon from '@material-ui/icons/Close';
-import {ReactElement} from "react";
 import {EntryDialog} from "../entry-dialog/EntryDialog";
 
 export const useStylesSignIn = makeStyles((theme) => ({
@@ -91,7 +81,6 @@ export const useStylesSignIn = makeStyles((theme) => ({
 
 
 export const SignIn = (): ReactElement => {
-
 
     const [open, setClose, setOpen] = useBooleanState(false)
 
