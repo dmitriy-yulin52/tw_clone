@@ -3,7 +3,7 @@ import {SignIn} from "./component/pages/SignIn/SignIn";
 
 function App() {
   return (
-    <div className="App">
+    <div className={'App'}>
       <SignIn/>
     </div>
   );
