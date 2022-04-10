@@ -12,8 +12,9 @@ import {
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
-import {useCallback} from "react";
-
+import CloseIcon from '@material-ui/icons/Close';
+import {ReactElement} from "react";
+import {EntryDialog} from "../entry-dialog/EntryDialog";
 
 export const useStylesSignIn = makeStyles((theme) => ({
     wrapper: {
@@ -89,15 +90,12 @@ export const useStylesSignIn = makeStyles((theme) => ({
 }))
 
 
-export const SignIn = () => {
+export const SignIn = (): ReactElement => {
 
 
     const [open, setClose, setOpen] = useBooleanState(false)
 
     const classes = useStylesSignIn()
-
-
-
 
     return (
         <div className={classNames(classes.wrapper)}>
@@ -112,64 +110,9 @@ export const SignIn = () => {
                     <Typography className={classes.loginSideSubTitle}>Присоединяйтесь к Твиттеру прямо
                         сейчас!</Typography>
                     <Button variant={'contained'} color={'primary'} fullWidth
-                            className={classes.loginSideButton} onClick={setOpen}>Зарегистрироваться</Button>
-                    <Button variant={'outlined'} color={'primary'} fullWidth>Войти</Button>
-                    <Dialog open={open}>
-                        <DialogTitle>
-                            <IconButton
-                                onClick={() => {
-                                }}
-                                color={'primary'}
-                                aria-label={'close'}
-                                className={''}
-                            >
-                                {/*<CloseIcon/>*/}
-                                <Button onClick={setClose}>click</Button>
-                            </IconButton>
-                            Настройка поиска
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores atque aut,
-                                deserunt esse expedita maxime molestias officia, quaerat quidem quo sed similique soluta
-                                vero, voluptate. Dolor eveniet nesciunt nostrum.
-                            </DialogContentText>
-                            <FormControl component={'fieldset'} fullWidth>
-                                <FormGroup aria-label={'position'} row>
-                                    <TextField
-                                        autoFocus
-                                        margin={'dense'}
-                                        id={'name'}
-                                        label={'Email Address'}
-                                        type={'email'}
-                                        fullWidth
-                                    />
-                                </FormGroup>
-                                <div>
-                                    <div>
-                                        <FormLabel>
-                                            <p>Скрыть содержимое</p>
-                                            <Checkbox color={'primary'}/>
-                                        </FormLabel>
-                                        <Typography variant={'body2'}>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet animi esse
-                                            explicabo, itaque nihil nisi ratione repellendus repudiandae? Ab illum
-                                            laboriosam maxime natus neque non nostrum quae quo tempora?
-                                        </Typography>
-                                    </div>
-                                    <div>
-                                        <Radio value={'a'} name={'radio-button'}/>
-                                    </div>
-                                </div>
-                            </FormControl>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => {
-                            }} color={'primary'} variant={'contained'}>Cancel</Button>
-                            <Button onClick={() => {
-                            }} variant={'contained'}>Subscribe</Button>
-                        </DialogActions>
-                    </Dialog>
+                            className={classes.loginSideButton}>Зарегистрироваться</Button>
+                    <Button variant={'outlined'} color={'primary'} fullWidth onClick={setOpen}>Войти</Button>
+                    <EntryDialog open={open} closeDialog={setClose}/>
                 </div>
             </section>
         </div>
