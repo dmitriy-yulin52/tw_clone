@@ -86,7 +86,6 @@ export const SignIn = () => {
         <div className={classNames(classes.wrapper)}>
             <div className={classNames(classes.leftSide)}>
                 <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
-                <Button variant={'contained'} color={'primary'}>click</Button>
             </div>
             <section className={classNames(classes.loginSide)}>
                 <div className={classNames(classes.loginSideWrapper)}>
