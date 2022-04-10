@@ -13,7 +13,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
     },
     leftSide: {
         backgroundImage:'url(https://abs.twimg.com/sticky/illustrations/lohp_1302x955.png)',
-        // backgroundColor: '#71C9f8',
+        backgroundSize: 'cover',
         flex: '0 0 50%',
         display:'flex',
         alignItems:'center',
@@ -28,7 +28,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
         height:'60%',
         width:'60%',
         transform:'translate(-50%,-50%)',
-        filter:'invert(101%) sepia(143%) saturate(0%) hue-rotate(103deg) brightness(187%) contrast(101%)'
+        filter:'invert(101%) sepia(143%) saturate(0%) hue-rotate(103deg) brightness(187%) contrast(101%) drop-shadow(2px 4px 6px black)'
     },
     leftSideListInfo:{
         position:'relative',
