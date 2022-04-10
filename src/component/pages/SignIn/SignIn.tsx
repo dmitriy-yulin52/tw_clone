@@ -2,9 +2,7 @@ import * as React from 'react'
 import {Button, makeStyles, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
-import SearchIcon from '@material-ui/icons/Search';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+
 
 export const useStylesSignIn = makeStyles((theme) => ({
     wrapper: {
@@ -88,6 +86,7 @@ export const SignIn = () => {
         <div className={classNames(classes.wrapper)}>
             <div className={classNames(classes.leftSide)}>
                 <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
+                <Button variant={'contained'} color={'primary'}>click</Button>
             </div>
             <section className={classNames(classes.loginSide)}>
                 <div className={classNames(classes.loginSideWrapper)}>
