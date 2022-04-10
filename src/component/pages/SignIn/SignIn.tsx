@@ -2,6 +2,7 @@ import * as React from 'react'
 import {Button, makeStyles, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {useBooleanState} from "../../../utils/hook-utils";
 
 
 export const useStylesSignIn = makeStyles((theme) => ({
@@ -79,6 +80,9 @@ export const useStylesSignIn = makeStyles((theme) => ({
 
 
 export const SignIn = () => {
+
+
+    const [open,setClose,setOpen]=useBooleanState(false)
 
     const classes = useStylesSignIn()
 
