@@ -1,10 +1,11 @@
 import * as React from 'react'
-import {ReactElement} from 'react'
-import {Button, makeStyles, Typography} from "@material-ui/core";
+import {ReactElement, useCallback, useState} from 'react'
+import {Button, Dialog, makeStyles, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {EntryDialog} from "../entry-dialog/EntryDialog";
+
 
 export const useStylesSignIn = makeStyles((theme) => ({
     wrapper: {
@@ -84,7 +85,19 @@ export const SignIn = (): ReactElement => {
 
     const [open, setClose, setOpen] = useBooleanState(false)
 
+
+    // const [open,setOpen] = useState(false)
+
     const classes = useStylesSignIn()
+    //
+    //
+    // const closeDialog = useCallback(()=> {
+    //     setOpen(false)
+    // },[setOpen])
+    //
+    // const openDialog = useCallback(()=> {
+    //     setOpen(true)
+    // },[setOpen])
 
     return (
         <div className={classNames(classes.wrapper)}>
@@ -100,8 +113,12 @@ export const SignIn = (): ReactElement => {
                         сейчас!</Typography>
                     <Button variant={'contained'} color={'primary'} fullWidth
                             className={classes.loginSideButton}>Зарегистрироваться</Button>
-                    <Button variant={'outlined'} color={'primary'} fullWidth onClick={setOpen}>Войти</Button>
-                    <EntryDialog open={open} closeDialog={setClose}/>
+                    <Button onClick={setOpen} variant={'outlined'} color={'primary'} fullWidth>
+                        Войти
+                    </Button>
+                    <div>
+                        <EntryDialog open={open} closeDialog={setClose}/>
+                    </div>
                 </div>
             </section>
         </div>
