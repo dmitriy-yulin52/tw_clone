@@ -9,7 +9,7 @@ import {
     DialogTitle,
     FormControl,
     FormGroup,
-    IconButton,
+    IconButton, makeStyles,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -22,14 +22,23 @@ interface EntryDialogProps {
 }
 
 
+const useStylesEntryDialog = makeStyles((theme)=>({
+    dialogTitle:{
+        display:'flex',
+        alignItems:'center'
+    }
+}))
+
+
 export const EntryDialog = memo(function EntryDialog(props: EntryDialogProps) {
     const {open, closeDialog} = props
 
 
+    const classes = useStylesEntryDialog()
     return (
         <div>
             <Dialog open={open}>
-                <DialogTitle>
+                <DialogTitle className={classes.dialogTitle}>
                     <IconButton
                         onClick={closeDialog}
                         color={'primary'}
@@ -38,48 +47,28 @@ export const EntryDialog = memo(function EntryDialog(props: EntryDialogProps) {
                     >
                         <CloseIcon color={'primary'}/>
                     </IconButton>
-                    Настройка поиска
-                </DialogTitle>
-                <DialogContent>
                     <Typography gutterBottom variant={'h6'}>
                         Войти в Твиттер
                     </Typography>
+                </DialogTitle>
+                <DialogContent>
                     <TextField
-                                    autoFocus
-                                    margin={'dense'}
-                                    id={'email'}
-                                    label={'E-mail'}
-                                    type={'email'}
-                                    fullWidth
-                                />
-                     <TextField
-                                    autoFocus
-                                    margin={'dense'}
-                                    id={'email'}
-                                    label={'E-mail'}
-                                    type={'email'}
-                                    fullWidth
-                                />
-                        {/*<FormControl component={'fieldset'} fullWidth>*/}
-                        {/*    <FormGroup aria-label={'position'} row>*/}
-                        {/*        <TextField*/}
-                        {/*            autoFocus*/}
-                        {/*            margin={'dense'}*/}
-                        {/*            id={'email'}*/}
-                        {/*            label={'E-mail'}*/}
-                        {/*            type={'email'}*/}
-                        {/*            fullWidth*/}
-                        {/*        />*/}
-                        {/*        <TextField*/}
-                        {/*            autoFocus*/}
-                        {/*            margin={'dense'}*/}
-                        {/*            id={'email'}*/}
-                        {/*            label={'E-mail'}*/}
-                        {/*            type={'email'}*/}
-                        {/*            fullWidth*/}
-                        {/*        />*/}
-                        {/*    </FormGroup>*/}
-                        {/*</FormControl>*/}
+                        autoFocus
+                        margin={'dense'}
+                        id={'email'}
+                        label={'E-mail'}
+                        type={'email'}
+                        fullWidth
+                    />
+                    <TextField
+                        autoFocus
+                        margin={'dense'}
+                        id={'password'}
+                        label={'Пароль'}
+                        type={'password'}
+                        fullWidth
+                    />
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDialog} color={'primary'} variant={'contained'}>Cancel</Button>
