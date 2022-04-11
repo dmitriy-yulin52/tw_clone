@@ -9,9 +9,9 @@ import {ThemeProvider} from '@material-ui/core/styles';
 const container = document.getElementById('root');
 
 const root = createRoot(container as Element | DocumentFragment);
-root.render(<React.StrictMode>
+root.render(
         <ThemeProvider theme={theme}>
             <App/>
         </ThemeProvider>
-    </React.StrictMode>,);
+    );
 
