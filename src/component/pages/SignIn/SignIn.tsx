@@ -1,10 +1,10 @@
 import * as React from 'react'
 import {ReactElement, useCallback, useState} from 'react'
-import {Button, Dialog, makeStyles, Typography} from "@material-ui/core";
+import {Button, Dialog, makeStyles, TextField, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
-import {EntryDialog} from "../entry-dialog/EntryDialog";
+import {EntryDialog} from "../../entry-dialog/EntryDialog";
 
 
 export const useStylesSignIn = makeStyles((theme) => ({
@@ -83,21 +83,9 @@ export const useStylesSignIn = makeStyles((theme) => ({
 
 export const SignIn = (): ReactElement => {
 
-    const [open, setClose, setOpen] = useBooleanState(false)
-
-
-    // const [open,setOpen] = useState(false)
 
     const classes = useStylesSignIn()
-    //
-    //
-    // const closeDialog = useCallback(()=> {
-    //     setOpen(false)
-    // },[setOpen])
-    //
-    // const openDialog = useCallback(()=> {
-    //     setOpen(true)
-    // },[setOpen])
+
 
     return (
         <div className={classNames(classes.wrapper)}>
@@ -113,11 +101,28 @@ export const SignIn = (): ReactElement => {
                         сейчас!</Typography>
                     <Button variant={'contained'} color={'primary'} fullWidth
                             className={classes.loginSideButton}>Зарегистрироваться</Button>
-                    <Button onClick={setOpen} variant={'outlined'} color={'primary'} fullWidth>
+                    <Button onClick={()=>{}} variant={'outlined'} color={'primary'} fullWidth>
                         Войти
                     </Button>
                     <div>
-                        <EntryDialog open={open} closeDialog={setClose}/>
+                        <EntryDialog title={'Войти в аккаунт'}>
+                            <TextField
+                                autoFocus
+                                margin={'dense'}
+                                id={'email'}
+                                label={'E-mail'}
+                                type={'email'}
+                                fullWidth
+                            />
+                            <TextField
+                                autoFocus
+                                margin={'dense'}
+                                id={'password'}
+                                label={'Пароль'}
+                                type={'password'}
+                                fullWidth
+                            />
+                        </EntryDialog>
                     </div>
                 </div>
             </section>
