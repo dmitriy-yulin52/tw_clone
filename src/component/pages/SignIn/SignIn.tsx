@@ -1,9 +1,8 @@
 import * as React from 'react'
-import {ReactElement, useCallback, useState} from 'react'
-import {Button, Dialog, makeStyles, TextField, Typography} from "@material-ui/core";
+import {ReactElement} from 'react'
+import {Button, makeStyles, TextField, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {useBooleanState} from "../../../utils/hook-utils";
 import {EntryDialog} from "../../entry-dialog/EntryDialog";
 
 
