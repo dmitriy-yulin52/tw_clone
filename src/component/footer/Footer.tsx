@@ -7,7 +7,7 @@ const useStylesFooter = makeStyles((theme) => ({
     wrapper: {
         flexGrow: 1,
         flexWrap: 'wrap',
-        padding: '16px 0px',
+        padding: '16px 10px',
         '& a': {
             cursor: 'pointer',
             fontSize: '16px',
