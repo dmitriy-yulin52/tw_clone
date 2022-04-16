@@ -8,6 +8,8 @@ import {useBooleanState} from "../../utils/hook-utils";
 interface EntryDialogProps {
     title:string
     children:ReactNode
+    open:boolean
+    closeDialog:()=> void
 }
 
 
@@ -20,9 +22,8 @@ const useStylesEntryDialog = makeStyles((theme)=>({
 
 
 export const EntryDialog = memo(function EntryDialog(props: EntryDialogProps):ReactElement {
-    const {title,children} = props
+    const {title,children,open,closeDialog} = props
 
-        const [open, setClose, setOpen] = useBooleanState(false)
 
 
     const classes = useStylesEntryDialog()
@@ -31,7 +32,7 @@ export const EntryDialog = memo(function EntryDialog(props: EntryDialogProps):Re
             <Dialog open={open}>
                 <DialogTitle className={classes.dialogTitle}>
                     <IconButton
-                        onClick={setClose}
+                        onClick={closeDialog}
                         color={'primary'}
                         aria-label={'close'}
                         className={''}
