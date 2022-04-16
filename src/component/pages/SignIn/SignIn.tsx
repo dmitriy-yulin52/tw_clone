@@ -5,6 +5,7 @@ import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {MaterialDialog} from "../../../utils/components-utils";
+import {SignUp} from "../../SignUp/SignUp";
 
 
 export const useStylesSignIn = makeStyles((theme) => ({
@@ -77,8 +78,8 @@ export const useStylesSignIn = makeStyles((theme) => ({
     loginSideButton: {
         marginBottom: theme.spacing(2)
     },
-    loginSideInput:{
-        marginBottom:theme.spacing(2)
+    loginSideInput: {
+        marginBottom: theme.spacing(2)
     }
 
 }))
@@ -104,12 +105,17 @@ export const SignIn = (): ReactElement => {
                         сейчас</Typography>
                     <Typography className={classes.loginSideSubTitle}>Присоединяйтесь к Твиттеру прямо
                         сейчас!</Typography>
-                    <Button variant={'contained'} color={'primary'} fullWidth
-                            className={classes.loginSideButton}>Зарегистрироваться</Button>
+                    <Button variant={'contained'}
+                            color={'primary'} fullWidth
+                            onClick={setOpenSignUp}
+                            className={classes.loginSideButton}
+                    >
+                        Зарегистрироваться</Button>
                     <Button onClick={setOpenSignIn} variant={'outlined'} color={'primary'} fullWidth>
                         Войти
                     </Button>
                     <div>
+                        <SignUp openSignUp={openSignUp} setCloseSignUp={setCloseSignUp}/>
                         <MaterialDialog
                             open={openSignIn}
                             closeDialog={setCloseSignIn}
@@ -117,7 +123,7 @@ export const SignIn = (): ReactElement => {
                             labelButton={'Войти'}
                         >
                             <TextField
-                                size={'medium'}
+                                variant={'filled'}
                                 autoFocus
                                 margin={'dense'}
                                 id={'email'}
@@ -128,6 +134,7 @@ export const SignIn = (): ReactElement => {
                             />
                             <TextField
                                 autoFocus
+                                variant={'filled'}
                                 margin={'dense'}
                                 id={'password'}
                                 label={'Пароль'}
@@ -135,6 +142,7 @@ export const SignIn = (): ReactElement => {
                                 fullWidth
                             />
                         </MaterialDialog>
+
                     </div>
                 </div>
             </section>

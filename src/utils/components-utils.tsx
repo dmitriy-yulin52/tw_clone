@@ -13,7 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import * as React from "react";
 
 
-interface MaterialDialog {
+interface MaterialDialogProps {
     open: boolean
     closeDialog: () => void
     label: string
@@ -31,7 +31,7 @@ const useStylesMaterialDialog = makeStyles((theme) => ({
 }))
 
 
-export const MaterialDialog = memo((props: MaterialDialog): ReactElement => {
+export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
 
     const {open, closeDialog, label, children, onChange, labelButton} = props
     const classes = useStylesMaterialDialog()
