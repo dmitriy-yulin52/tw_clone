@@ -18,7 +18,7 @@ interface MaterialDialog {
     closeDialog: () => void
     label: string
     children: ReactNode
-    onChange?: (dfl?: any) => void
+    onChange?: () => void
     labelButton: string
 }
 
@@ -36,7 +36,7 @@ export const MaterialDialog = memo((props: MaterialDialog): ReactElement => {
     const {open, closeDialog, label, children, onChange, labelButton} = props
     const classes = useStylesMaterialDialog()
 
-    const onClickHandler = useCallback(() => {
+    const onClickHandler = useCallback(():void => {
         onChange?.()
         closeDialog()
     }, [onChange, closeDialog])

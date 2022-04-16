@@ -3,7 +3,6 @@ import {ReactElement} from 'react'
 import {Button, makeStyles, TextField, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {EntryDialog} from "../../entry-dialog/EntryDialog";
 import {useBooleanState} from "../../../utils/hook-utils";
 import {MaterialDialog} from "../../../utils/components-utils";
 
@@ -77,6 +76,9 @@ export const useStylesSignIn = makeStyles((theme) => ({
     },
     loginSideButton: {
         marginBottom: theme.spacing(2)
+    },
+    loginSideInput:{
+        marginBottom:theme.spacing(2)
     }
 
 }))
@@ -84,7 +86,8 @@ export const useStylesSignIn = makeStyles((theme) => ({
 
 export const SignIn = (): ReactElement => {
 
-    const [open, setClose, setOpen] = useBooleanState(false)
+    const [openSignIn, setCloseSignIn, setOpenSignIn] = useBooleanState(false)
+    const [openSignUp, setCloseSignUp, setOpenSignUp] = useBooleanState(false)
 
     const classes = useStylesSignIn()
 
@@ -103,22 +106,24 @@ export const SignIn = (): ReactElement => {
                         сейчас!</Typography>
                     <Button variant={'contained'} color={'primary'} fullWidth
                             className={classes.loginSideButton}>Зарегистрироваться</Button>
-                    <Button onClick={setOpen} variant={'outlined'} color={'primary'} fullWidth>
+                    <Button onClick={setOpenSignIn} variant={'outlined'} color={'primary'} fullWidth>
                         Войти
                     </Button>
                     <div>
                         <MaterialDialog
-                            open={open}
-                            closeDialog={setClose}
+                            open={openSignIn}
+                            closeDialog={setCloseSignIn}
                             label={'Войти в аккаунт'}
                             labelButton={'Войти'}
                         >
                             <TextField
+                                size={'medium'}
                                 autoFocus
                                 margin={'dense'}
                                 id={'email'}
                                 label={'E-mail'}
                                 type={'email'}
+                                className={classes.loginSideInput}
                                 fullWidth
                             />
                             <TextField
