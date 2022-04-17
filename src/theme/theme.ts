@@ -1,5 +1,5 @@
 import {createTheme} from "@material-ui/core";
-import {red} from "@material-ui/core/colors";
+import {grey, red} from "@material-ui/core/colors";
 
 
 export const theme = createTheme({
@@ -13,7 +13,8 @@ export const theme = createTheme({
             'Ubuntu',
             'Helvetica Neue',
             'sans-serif',
-        ] as any
+        ] as any,
+
     },
     palette:{
         primary:{
@@ -22,7 +23,7 @@ export const theme = createTheme({
             contrastText:'#fff',
         },
         secondary:{
-            main:'rgb(26,145,218)'
+            main:'rgb(211, 211, 211)'
         },
         error:{
             main: red.A400,
@@ -33,6 +34,21 @@ export const theme = createTheme({
     },
     shadows:[] as any,
     overrides:{
+        MuiTypography:{
+            colorPrimary:{
+                color:'#000',
+                fontWeight:700,
+                fontSize:'18px'
+            },
+            colorSecondary:{
+                color:grey[500],
+                fontSize:'18px'
+            },
+            colorTextPrimary:{
+                color:'#000',
+                fontSize:'18px'
+            }
+        },
         MuiButton:{
             root:{
                borderRadius: 30,
