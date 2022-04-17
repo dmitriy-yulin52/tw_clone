@@ -1,5 +1,15 @@
 import * as React from 'react'
-import {Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core";
+import {
+    Avatar, Box,
+    Container,
+    createStyles,
+    Grid,
+    IconButton, InputBase,
+    makeStyles, Paper,
+    TextField,
+    Typography,
+    withStyles
+} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
@@ -12,120 +22,177 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 export const useStylesHome = makeStyles((theme) => ({
     homeWrapper: {
-        height: '100%'
+        height: '100%',
     },
-    homeWrapperIcon: {
-        filter: 'invert(49%) sepia(127%) saturate(484%) hue-rotate(195deg) brightness(171%) contrast(100%)',
-        '&:hover': {
-            filter: 'invert(117%) sepia(280%) saturate(430%) hue-rotate(152deg) brightness(102%) contrast(100%)'
+    homeWrapperBlock: {
+        "@media (max-width: 1600px)": {
+            flexBasis: 0,
+            marginRight: theme.spacing(4)
         }
-    }
+    },
+    list: {
+        listStyle: 'none',
+        '& li': {
+            '& button': {
+                marginBottom: theme.spacing(2),
+                '&:hover': {
+                    '& svg': {
+                        filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
+                    }
+                },
+
+                '& span': {
+                    fontWeight: 700,
+                    color: 'black',
+                    "@media (max-width: 1600px)": {
+                        '& span': {
+                            display: 'none'
+                        }
+                    },
+                    '& svg': {
+                        "@media (max-width: 1600px)": {
+                            marginRight: 0,
+                        }
+                    }
+                },
+                borderRadius: '30px',
+                '& svg': {
+                    marginRight: theme.spacing(2),
+                    filter: 'invert(121%) hue-rotate(136deg) brightness(9%) contrast(72%)',
+
+                }
+            },
+        }
+    },
+    tweetsWrapper: {
+        height: '100%',
+        borderTop: 'none',
+        borderBottom: 'none',
+    },
+    tweetsWrapperHeader: {
+        borderTop: 'none',
+        borderLeft: 'none',
+        borderRight: 'none',
+        padding: '15px',
+
+    },
 
 }))
 
+
+const SearchTextField = withStyles((theme) => createStyles({
+    input: {
+        borderRadius: '30px',
+        backgroundColor: '#E6ECF0',
+        padding: 0,
+        height: '35px'
+    }
+}))(InputBase)
+
+
+const twitterFilter = {
+    filter: 'none',
+    marginRight: '0px'
+} as const
 
 export const Home = () => {
 
     const classes = useStylesHome()
 
     return (
-        <div className={classes.homeWrapper}>
-            <Grid container spacing={3} className={classes.homeWrapper}>
-                <Grid item style={{backgroundColor: 'red'}} xs={2}>
-                    <List>
-                        <ListItem component={IconButton}>
-                            <ListItemIcon>
-                                    <TwitterIcon color={'primary'}/>
-                            </ListItemIcon>
-                            <ListItemText>Twitter</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <IconButton>
-                                    <HomeIcon color={'primary'}/>
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText>Home</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <IconButton>
-                                    <SearchIcon color={'secondary'} className={classes.homeWrapperIcon}/>
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText>Search</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <IconButton>
-                                    <SearchIcon color={'secondary'} className={classes.homeWrapperIcon}/>
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText>Home</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <IconButton>
-                                    <SearchIcon color={'secondary'} className={classes.homeWrapperIcon}/>
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText>Home</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <IconButton>
-                                    <SearchIcon color={'secondary'} className={classes.homeWrapperIcon}/>
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText>Home</ListItemText>
-                        </ListItem>
-                    </List>
-                    <ul>
+        // <Container maxWidth={"xl"} className={classes.homeWrapper}>
+            <Grid container className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'}>
+                <Grid item xs={2} className={classes.homeWrapperBlock}>
+                    <ul className={classes.list}>
                         <li>
                             <IconButton>
-                                <TwitterIcon color={'primary'}/>
+                                <TwitterIcon color={'primary'} fontSize={'large'} style={twitterFilter}/>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <HomeIcon color={'primary'}/>
+                                <HomeIcon fontSize={'large'}/>
+                                <Typography variant={'h5'} component={'span'}
+                                >Home</Typography>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <SearchIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <SearchIcon fontSize={'large'}/>
+                                <Typography variant={'h5'} component={'span'}>Explore</Typography>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <NotificationsNoneIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <NotificationsNoneIcon fontSize={'large'}
+                                />
+                                <Typography variant={'h5'} component={'span'}>Notifications</Typography>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <MailOutlineIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <MailOutlineIcon fontSize={'large'}
+                                />
+                                <Typography variant={'h5'} component={'span'}>Messages</Typography>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <BookmarkBorderIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <BookmarkBorderIcon fontSize={'large'}
+                                />
+                                <Typography variant={'h5'} component={'span'}>Bookmarks</Typography>
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <ListAltIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <ListAltIcon fontSize={'large'}
+                                />
+                                <Typography variant={'h5'} component={'span'}>Lists</Typography>
+
                             </IconButton>
                         </li>
                         <li>
                             <IconButton>
-                                <PersonOutlineIcon color={'secondary'} className={classes.homeWrapperIcon}/>
+                                <PersonOutlineIcon fontSize={'large'}
+                                />
+                                <Typography variant={'h5'} component={'span'}>Profile</Typography>
                             </IconButton>
                         </li>
                     </ul>
                 </Grid>
-                <Grid item style={{backgroundColor: 'green'}} xs={6}></Grid>
-                <Grid item style={{backgroundColor: 'blue'}} xs={4}></Grid>
+                <Grid item xs={6}>
+                    <Paper className={classes.tweetsWrapper} variant={'outlined'}>
+                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
+                            <Typography variant={'h6'} color={'primary'}>Home</Typography>
+                        </Paper>
+                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
+                            <Grid container>
+                                <Grid item xs={1}>
+                                    <Avatar alt="user"
+                                            src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
+                                </Grid>
+                                <Grid item xs={11}>
+                                    <Box display={'flex'}>
+                                        <Typography color={'primary'} style={{marginRight: '8px'}}>hi,di</Typography>
+                                        <Typography color={'secondary'}>@mail</Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant={'body1'} color={'textPrimary'}>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci autem
+                                            ducimus impedit maiores molestiae nemo nesciunt nisi non officia
+                                            perspiciatis praesentium, quae quasi quidem similique sit! Commodi qui quia
+                                            sequi.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Paper>
+                </Grid>
+                <Grid item xs={3}>
+                    <SearchTextField fullWidth/>
+                </Grid>
             </Grid>
-        </div>
+        // </Container>
     )
 }
