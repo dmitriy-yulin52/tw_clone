@@ -6,7 +6,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {MaterialDialog} from "../../../utils/components-utils";
 import {SignUp} from "../../SignUp/SignUp";
-
+import {Footer} from "../../footer/Footer";
 
 
 export const useStylesSignIn = makeStyles((theme) => ({
@@ -95,58 +95,62 @@ export const SignIn = (): ReactElement => {
 
 
     return (
-        <div className={classNames(classes.wrapper)}>
-            <div className={classNames(classes.leftSide)}>
-                <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
-            </div>
-            <section className={classNames(classes.loginSide)}>
-                <div className={classNames(classes.loginSideWrapper)}>
-                    <TwitterIcon color={'primary'} className={classes.loginSideTwitterIcon}/>
-                    <Typography variant={'h4'} className={classes.loginSideTitle}>Узнайте, что происходит в мире прямо
-                        сейчас</Typography>
-                    <Typography className={classes.loginSideSubTitle}>Присоединяйтесь к Твиттеру прямо
-                        сейчас!</Typography>
-                    <Button variant={'contained'}
-                            color={'primary'} fullWidth
-                            onClick={setOpenSignUp}
-                            className={classes.loginSideButton}
-                    >
-                        Зарегистрироваться</Button>
-                    <Button onClick={setOpenSignIn} variant={'outlined'} color={'primary'} fullWidth>
-                        Войти
-                    </Button>
-                    <div>
-                        <SignUp openSignUp={openSignUp} setCloseSignUp={setCloseSignUp}/>
-                        <MaterialDialog
-                            open={openSignIn}
-                            closeDialog={setCloseSignIn}
-                            label={'Войти в аккаунт'}
-                            labelButton={'Войти'}
-                        >
-                            <TextField
-                                variant={'filled'}
-                                autoFocus
-                                margin={'dense'}
-                                id={'email'}
-                                label={'E-mail'}
-                                type={'email'}
-                                className={classes.loginSideInput}
-                                fullWidth
-                            />
-                            <TextField
-                                autoFocus
-                                variant={'filled'}
-                                margin={'dense'}
-                                id={'password'}
-                                label={'Пароль'}
-                                type={'password'}
-                                fullWidth
-                            />
-                        </MaterialDialog>
-
-                    </div>
+        <>
+            <div className={classNames(classes.wrapper)}>
+                <div className={classNames(classes.leftSide)}>
+                    <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
                 </div>
-            </section>
-        </div>
+                <section className={classNames(classes.loginSide)}>
+                    <div className={classNames(classes.loginSideWrapper)}>
+                        <TwitterIcon color={'primary'} className={classes.loginSideTwitterIcon}/>
+                        <Typography variant={'h4'} className={classes.loginSideTitle}>Узнайте, что происходит в мире
+                            прямо
+                            сейчас</Typography>
+                        <Typography className={classes.loginSideSubTitle}>Присоединяйтесь к Твиттеру прямо
+                            сейчас!</Typography>
+                        <Button variant={'contained'}
+                                color={'primary'} fullWidth
+                                onClick={setOpenSignUp}
+                                className={classes.loginSideButton}
+                        >
+                            Зарегистрироваться</Button>
+                        <Button onClick={setOpenSignIn} variant={'outlined'} color={'primary'} fullWidth>
+                            Войти
+                        </Button>
+                        <div>
+                            <SignUp openSignUp={openSignUp} setCloseSignUp={setCloseSignUp}/>
+                            <MaterialDialog
+                                open={openSignIn}
+                                closeDialog={setCloseSignIn}
+                                label={'Войти в аккаунт'}
+                                labelButton={'Войти'}
+                            >
+                                <TextField
+                                    variant={'filled'}
+                                    autoFocus
+                                    margin={'dense'}
+                                    id={'email'}
+                                    label={'E-mail'}
+                                    type={'email'}
+                                    className={classes.loginSideInput}
+                                    fullWidth
+                                />
+                                <TextField
+                                    autoFocus
+                                    variant={'filled'}
+                                    margin={'dense'}
+                                    id={'password'}
+                                    label={'Пароль'}
+                                    type={'password'}
+                                    fullWidth
+                                />
+                            </MaterialDialog>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <Footer/>
+        </>
     )
 }
