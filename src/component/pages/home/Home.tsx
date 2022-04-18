@@ -1,12 +1,13 @@
 import * as React from 'react'
 import {
-    Avatar, Box,
-    Container,
+    Avatar,
+    Box,
     createStyles,
     Grid,
-    IconButton, InputBase,
-    makeStyles, Paper,
-    TextField,
+    IconButton,
+    InputBase,
+    makeStyles,
+    Paper,
     Typography,
     withStyles
 } from "@material-ui/core";
@@ -23,43 +24,47 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 export const useStylesHome = makeStyles((theme) => ({
     homeWrapper: {
         height: '100%',
+        flexWrap:'nowrap'
     },
-    homeWrapperBlock: {
-        "@media (max-width: 1600px)": {
-            flexBasis: 0,
-            marginRight: theme.spacing(4)
+    WrapperLeftBlock: {
+        flexBasis:'300px',
+        flexShrink:0,
+        "@media (max-width: 1300px)": {
+            flexBasis: '100px',
         }
     },
     list: {
         listStyle: 'none',
+        marginRight:theme.spacing(3),
+        '@media (max-width: 1050px)':{
+          paddingLeft:'10px'
+        },
         '& li': {
             '& button': {
                 marginBottom: theme.spacing(2),
+                borderRadius: '30px',
                 '&:hover': {
                     '& svg': {
                         filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
                     }
                 },
-
                 '& span': {
                     fontWeight: 700,
                     color: 'black',
-                    "@media (max-width: 1600px)": {
+                    "@media (max-width: 1300px)": {
                         '& span': {
                             display: 'none'
                         }
                     },
-                    '& svg': {
-                        "@media (max-width: 1600px)": {
-                            marginRight: 0,
-                        }
-                    }
                 },
-                borderRadius: '30px',
                 '& svg': {
                     marginRight: theme.spacing(2),
                     filter: 'invert(121%) hue-rotate(136deg) brightness(9%) contrast(72%)',
-
+                },
+                '@media (max-width: 1300px)':{
+                    '& svg':{
+                        marginRight:'0px'
+                    }
                 }
             },
         }
@@ -76,6 +81,12 @@ export const useStylesHome = makeStyles((theme) => ({
         padding: '15px',
 
     },
+    wrapperRightBlock:{
+        flexBasis:'300px',
+        '@media (max-width: 1050px)':{
+            display:'none'
+        }
+    }
 
 }))
 
@@ -100,9 +111,8 @@ export const Home = () => {
     const classes = useStylesHome()
 
     return (
-        // <Container maxWidth={"xl"} className={classes.homeWrapper}>
             <Grid container className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'}>
-                <Grid item xs={2} className={classes.homeWrapperBlock}>
+                <Grid item  className={classes.WrapperLeftBlock} >
                     <ul className={classes.list}>
                         <li>
                             <IconButton>
@@ -160,7 +170,7 @@ export const Home = () => {
                         </li>
                     </ul>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item style={{flexBasis:'600px'}}>
                     <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                             <Typography variant={'h6'} color={'primary'}>Home</Typography>
@@ -189,10 +199,9 @@ export const Home = () => {
                         </Paper>
                     </Paper>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item className={classes.wrapperRightBlock}>
                     <SearchTextField fullWidth/>
                 </Grid>
             </Grid>
-        // </Container>
     )
 }
