@@ -125,10 +125,35 @@ const twitterFilter = {
     marginRight: '0px'
 } as const
 
+
+function x(num1:number,num2:number){
+    return num1 + num2
+}
+
+x(1,2)
+
+
+type LocationType = {
+    city:string
+}
+type CarType = {
+    bmw:'',
+
+}
+
+type Users = {
+    name:string,
+    age:number,
+    location:LocationType,
+    cars:CarType[]
+    func?:()=>void
+}
+
+
+
 export const Home = () => {
 
     const classes = useStylesHome()
-
 
     return (
         <Grid container className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'}>
