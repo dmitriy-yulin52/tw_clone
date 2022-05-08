@@ -1,6 +1,5 @@
 import React from 'react';
 import {SignIn} from "./component/pages/SignIn/SignIn";
-import {Footer} from "./component/footer/Footer";
 import {Route, Routes} from "react-router-dom";
 import {Home} from "./component/pages/home/Home";
 
