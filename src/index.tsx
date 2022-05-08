@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import {theme} from "./theme/theme";
 import {ThemeProvider} from '@material-ui/core/styles';
-import {BrowserRouter, HashRouter} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 
 
 const container = document.getElementById('root');
