@@ -1,8 +1,11 @@
 import * as React from 'react'
-import {Grid, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Avatar, Box, Button, Grid, IconButton, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
-import {TweetsContent} from "./Tweets-content";
 import {RightSide} from "./Right-side";
+import {TweetsContent} from "./Tweets-content";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -12,8 +15,8 @@ export const useStylesHome = makeStyles((theme) => ({
     },
     tweets: {
         flexBasis: '600px',
-        overflow:'auto',
-        scrollbarWidth:'none'
+        overflow: 'auto',
+        scrollbarWidth: 'none'
     },
     tweetsWrapper: {
         height: '100%',
@@ -49,6 +52,36 @@ export const Home = () => {
                 <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                     <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                         <Typography variant={'h6'} color={'primary'}>Home</Typography>
+
+                    </Paper>
+                    <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
+
+                        <Grid container spacing={2} style={{flexWrap: 'nowrap'}}>
+                            <Grid item style={{flexBasis: '55px'}}>
+                                <Avatar alt={`Аватар пользователя ${user.fullName}`}
+                                        src={user.avatarUrl}/>
+                            </Grid>
+                            <Grid item style={{flexGrow: '1'}}>
+                                <Box display={'flex'} flexDirection={'column'}>
+                                    <TextField placeholder={'Что происходит?'} variant={'standard'} size={'medium'} multiline/>
+                                    <Box display={'flex'} marginTop={'32px'} justifyContent={'space-between'}>
+                                        <Box display={'flex'}>
+                                            <IconButton color={'primary'}>
+                                                <PermMediaIcon/>
+                                            </IconButton>
+                                            <IconButton color={'primary'}>
+                                                <SentimentSatisfiedIcon/>
+                                            </IconButton>
+                                        </Box>
+                                        <Box>
+                                            <Button variant={'contained'} color={'primary'}>Твитнуть</Button>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
+
+
                     </Paper>
                     {new Array(20).fill(<Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                         <TweetsContent text={'str'} user={user}/>
