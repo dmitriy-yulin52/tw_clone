@@ -6,9 +6,10 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
+import {MaterialBlock} from "../../../utils/components-utils";
 
 
-const TweetsContentStyles = makeStyles((theme) => ({
+export const TweetsContentStyles = makeStyles((theme) => ({
     tweetsWrapperContent: {
         display: 'flex',
         justifyContent: 'space-between'
@@ -85,6 +86,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
 
     const classes = TweetsContentStyles()
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 
     return <Grid container wrap={'nowrap'} spacing={2}>
@@ -154,6 +156,13 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         </Box>
                     </Grid>
 =======
+=======
+    const headerTitle = {
+        userName: 'Кого читать',
+        fullName: undefined
+    } as const
+
+>>>>>>> add_component-utils
     return <MaterialBlock headerTitle={user} avatarUrl={user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
@@ -176,6 +185,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
                     </Box>
+<<<<<<< HEAD
                 </Grid>
                 <Grid item style={gridPadding}>
                     <Box display={'flex'}
@@ -211,9 +221,115 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         </IconButton>
                     </Box>
 >>>>>>> Stashed changes
+=======
+>>>>>>> add_component-utils
                 </Grid>
-            </Box>
-        </Grid>
-    </Grid>
+                <Grid item style={gridPadding}>
+                    <Box display={'flex'}
+                         alignItems={'center'}
+                         className={classNames(classes.tweetsWrapperRepeatIcon, classes.tweetsWrapperBox)}
+                    >
+                        <IconButton>
+                            <RepeatIcon/>
+                        </IconButton>
+                        <Typography component={'span'}>14</Typography>
+                    </Box>
+                </Grid>
+                <Grid item style={gridPadding}>
+                    <Box
+                        display={'flex'}
+                        alignItems={'center'}
+                        className={classNames(classes.tweetsWrapperLikeIcon, classes.tweetsWrapperBox)}
+                    >
+                        <IconButton>
+                            <FavoriteBorderIcon/>
+                        </IconButton>
+                        <Typography component={'span'}>14</Typography>
+
+                    </Box>
+                </Grid>
+                <Grid item style={gridPadding}>
+                    <Box display={'flex'}
+                         alignItems={'center'}
+                         className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
+                    >
+                        <IconButton>
+                            <OpenInBrowserIcon/>
+                        </IconButton>
+                    </Box>
+                </Grid>
+            </Grid>
+        </Box>
+    </MaterialBlock>
+    // return <Grid container wrap={'nowrap'} spacing={2}>
+    //     <Grid item className={classes.tweetsWrapperItemIcon}>
+    //         <Avatar alt={`Аватар пользователя ${user.fullName}`}
+    //                 src={user.avatarUrl}/>
+    //     </Grid>
+    //     <Grid item style={gridFlexGrow}>
+    //         <Box display={'flex'}>
+    //             <Typography color={'primary'} style={typographyMargin}>{user.userName}</Typography>
+    //             <Typography color={'secondary'}>{user.fullName}</Typography>
+    //         </Box>
+    //         <Box>
+    //             <Typography variant={'body1'} color={'textPrimary'}>
+    //                 {/*{text}*/}
+    //                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet at corporis
+    //                 distinctio dolore, dolores, ex facere ipsam ipsum iste labore molestiae mollitia odit
+    //                 quis ratione repudiandae saepe soluta veritatis.
+    //             </Typography>
+    //         </Box>
+    //         <Box marginTop={'16px'}>
+    //             <Grid container spacing={1} className={classes.tweetsWrapperContent}>
+    //                 <Grid item style={gridPadding}>
+    //                     <Box
+    //                         display={'flex'}
+    //                         alignItems={'center'}
+    //                         className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
+    //                     >
+    //                         <IconButton>
+    //                             <ChatBubbleOutlineIcon/>
+    //                         </IconButton>
+    //                         <Typography component={'span'}>14</Typography>
+    //                     </Box>
+    //                 </Grid>
+    //                 <Grid item style={gridPadding}>
+    //                     <Box display={'flex'}
+    //                          alignItems={'center'}
+    //                          className={classNames(classes.tweetsWrapperRepeatIcon, classes.tweetsWrapperBox)}
+    //                     >
+    //                         <IconButton>
+    //                             <RepeatIcon/>
+    //                         </IconButton>
+    //                         <Typography component={'span'}>14</Typography>
+    //                     </Box>
+    //                 </Grid>
+    //                 <Grid item style={gridPadding}>
+    //                     <Box
+    //                         display={'flex'}
+    //                         alignItems={'center'}
+    //                         className={classNames(classes.tweetsWrapperLikeIcon, classes.tweetsWrapperBox)}
+    //                     >
+    //                         <IconButton>
+    //                             <FavoriteBorderIcon/>
+    //                         </IconButton>
+    //                         <Typography component={'span'}>14</Typography>
+    //
+    //                     </Box>
+    //                 </Grid>
+    //                 <Grid item style={gridPadding}>
+    //                     <Box display={'flex'}
+    //                          alignItems={'center'}
+    //                          className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
+    //                     >
+    //                         <IconButton>
+    //                             <OpenInBrowserIcon/>
+    //                         </IconButton>
+    //                     </Box>
+    //                 </Grid>
+    //             </Grid>
+    //         </Box>
+    //     </Grid>
+    // </Grid>
 
 })

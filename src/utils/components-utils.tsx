@@ -1,10 +1,11 @@
 import {memo, ReactElement, ReactNode, useCallback} from "react";
 import {
+    Avatar, Box,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, Grid,
     IconButton,
     makeStyles,
     Typography
@@ -37,7 +38,7 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     const {open, closeDialog, label, children, onChange, labelButton} = props
     const classes = useStylesMaterialDialog()
 
-    const onClickHandler = useCallback(():void => {
+    const onClickHandler = useCallback((): void => {
         onChange?.()
         closeDialog()
     }, [onChange, closeDialog])
@@ -64,8 +65,11 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> add_component-utils
 type TitleType = {
     userName: string,
     fullName: string
@@ -76,19 +80,25 @@ interface MaterialBlockProps {
     headerButton?: ReactNode,
     children?: ReactNode,
     avatarUrl?:string
+<<<<<<< HEAD
     style?:boolean
+=======
+>>>>>>> add_component-utils
 }
 
 
 const MaterialBlockStyles = makeStyles(() => ({
     avatarBlock: {
         flexBasis: '55px',
+<<<<<<< HEAD
     },
     hover:{
          '&:hover': {
             backgroundColor: 'rgb(232, 234, 234)',
             cursor: 'pointer'
         }
+=======
+>>>>>>> add_component-utils
     }
 }))
 
@@ -100,11 +110,16 @@ const typographyMargin = {
 
 export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
 
+<<<<<<< HEAD
     const {avatarUrl,headerTitle, headerButton, children,style} = props
+=======
+    const {avatarUrl,headerTitle, headerButton, children} = props
+>>>>>>> add_component-utils
     const classes = MaterialBlockStyles()
 
 
     return <Box flexWrap={'nowrap'} display={'flex'}>
+<<<<<<< HEAD
         {avatarUrl && <Box marginRight={'8px'}>
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
@@ -112,6 +127,13 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
         <Box display={'flex'} flexDirection={'column'} flexGrow={1} padding={'8px'} className={classNames({
             [classes.hover]:style
         })}>
+=======
+        {avatarUrl && <Box marginRight={'16px'}>
+            <Avatar alt={`Аватар пользователя`}
+                    src={avatarUrl}/>
+        </Box>}
+        <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
+>>>>>>> add_component-utils
             {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
                 <Box display={'flex'}>
                     {headerTitle.userName &&
@@ -127,4 +149,7 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
 
     </Box>
 })
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> add_component-utils
