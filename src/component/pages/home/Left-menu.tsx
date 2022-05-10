@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ReactElement} from "react";
+import {memo, ReactElement} from 'react'
 import {Button, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import HomeIcon from "@material-ui/icons/Home";
@@ -9,8 +9,6 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-
 
 
 const leftMenuStyles = makeStyles((theme) => ({
@@ -73,7 +71,7 @@ const twitterFilter = {
     marginRight: '0px'
 } as const
 
-export const LeftMenu = function LeftMenu(): ReactElement {
+export const LeftMenu = memo(function LeftMenu(): ReactElement {
 
     const classes = leftMenuStyles()
 
@@ -138,4 +136,4 @@ export const LeftMenu = function LeftMenu(): ReactElement {
             </div>
         </ul>
     </Grid>
-}
+})
