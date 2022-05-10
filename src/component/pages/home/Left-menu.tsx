@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {memo, ReactElement} from 'react'
-import {Button, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
+import {Button, Grid, Hidden, IconButton, makeStyles, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
@@ -9,12 +9,14 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const leftMenuStyles = makeStyles((theme) => ({
     WrapperLeftBlock: {
-        flexBasis: '300px',
-        flexShrink: 0,
+        position:'sticky',
+        top:0,
+        flexShrink: 1,
         "@media (max-width: 1300px)": {
             flexBasis: '100px',
         },
@@ -24,13 +26,8 @@ const leftMenuStyles = makeStyles((theme) => ({
     },
     list: {
         listStyle: 'none',
-        marginRight: theme.spacing(3),
-        '@media (max-width: 1050px)': {
-            paddingLeft: '10px'
-        },
-        '@media (max-width: 700px)': {
-            marginRight: '0px'
-        },
+        padding:'8px 16px 8px 8px',
+        marginRight: theme.spacing(0),
         '& li': {
             '& button': {
                 marginBottom: theme.spacing(2),
@@ -43,12 +40,6 @@ const leftMenuStyles = makeStyles((theme) => ({
                 '& span': {
                     fontWeight: 700,
                     color: 'black',
-                    "@media (max-width: 1300px)": {
-                        '& span': {
-                            display: 'none'
-                        }
-                    },
-
                 },
 
                 '& svg': {
@@ -85,42 +76,57 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
             <li>
                 <IconButton>
                     <HomeIcon fontSize={'large'}/>
-                    <Typography variant={'h5'} component={'span'}
-                    >Home</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}
+                        >Home</Typography>
+                    </Hidden>
                 </IconButton>
             </li>
             <li>
                 <IconButton>
                     <SearchIcon fontSize={'large'}/>
-                    <Typography variant={'h5'} component={'span'}>Explore</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Explore</Typography>
+                    </Hidden>
                 </IconButton>
             </li>
             <li>
                 <IconButton>
                     <NotificationsNoneIcon fontSize={'large'}
                     />
-                    <Typography variant={'h5'} component={'span'}>Notifications</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Notifications</Typography>
+                    </Hidden>
                 </IconButton>
             </li>
             <li>
                 <IconButton>
                     <MailOutlineIcon fontSize={'large'}
                     />
-                    <Typography variant={'h5'} component={'span'}>Messages</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Messages</Typography>
+
+                    </Hidden>
                 </IconButton>
             </li>
             <li>
                 <IconButton>
                     <BookmarkBorderIcon fontSize={'large'}
                     />
-                    <Typography variant={'h5'} component={'span'}>Bookmarks</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Bookmarks</Typography>
+
+                    </Hidden>
                 </IconButton>
             </li>
             <li>
                 <IconButton>
                     <ListAltIcon fontSize={'large'}
                     />
-                    <Typography variant={'h5'} component={'span'}>Lists</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Lists</Typography>
+
+                    </Hidden>
 
                 </IconButton>
             </li>
@@ -128,11 +134,16 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                 <IconButton>
                     <PersonOutlineIcon fontSize={'large'}
                     />
-                    <Typography variant={'h5'} component={'span'}>Profile</Typography>
+                    <Hidden smDown mdDown>
+                        <Typography variant={'h5'} component={'span'}>Profile</Typography>
+                    </Hidden>
                 </IconButton>
             </li>
             <div>
-                <Button fullWidth color={'primary'} variant={'contained'}>Tweets</Button>
+                <Button fullWidth color={'primary'} variant={'contained'}>
+                    <Hidden smDown>Твитнуть</Hidden>
+                    <Hidden mdUp><CreateIcon/></Hidden>
+                </Button>
             </div>
         </ul>
     </Grid>

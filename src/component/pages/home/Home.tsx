@@ -14,7 +14,7 @@ export const useStylesHome = makeStyles((theme) => ({
         height: '100%',
         display: 'flex',
         flexWrap: 'nowrap',
-        overflow: 'hidden'
+        overflow: 'auto'
     },
     tweets: {
         flexBasis: '600px',
@@ -32,7 +32,8 @@ export const useStylesHome = makeStyles((theme) => ({
         padding: '15px',
         '&:hover': {
             backgroundColor: 'rgb(245,248,250)',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition:'0.5s'
         }
     },
 }))
@@ -47,9 +48,9 @@ const user = {
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
     return (
-        <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'}>
+        <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>
-            <Box display={'flex'} flexBasis={'900px'} overflow={'auto'}>
+            <Box display={'flex'} flexBasis={'900px'} >
                 <Box className={classes.tweets}>
                     <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
