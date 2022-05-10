@@ -77,6 +77,7 @@ interface MaterialBlockProps {
     children?: ReactNode,
     avatarUrl?: string
     style?: boolean
+    subTitle?: string
 }
 
 
@@ -84,10 +85,19 @@ const MaterialBlockStyles = makeStyles(() => ({
     avatarBlock: {
         flexBasis: '55px',
     },
+    paddingUp: {
+        padding: '8px'
+    },
+    paddingDown: {
+        padding: '0px'
+    },
     hover: {
+        padding:'8px',
+        alignItems:'center',
         '&:hover': {
             backgroundColor: 'rgb(232, 234, 234)',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition:'0.7s'
         }
     }
 }))
@@ -100,28 +110,36 @@ const typographyMargin = {
 
 export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
 
-    const {avatarUrl, headerTitle, headerButton, children, style} = props
+    const {avatarUrl, headerTitle, headerButton, children, style = false, subTitle} = props
     const classes = MaterialBlockStyles()
 
 
-    return <Box flexWrap={'nowrap'} display={'flex'}>
-        {avatarUrl && <Box marginRight={'8px'}>
+    return <Box flexWrap={'nowrap'} display={'flex'}  className={classNames({
+        [classes.hover]: style,
+    })}>
+        {avatarUrl && <Box marginRight={'16px'}>
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
-        <Box display={'flex'} flexDirection={'column'} flexGrow={1} padding={'8px'} className={classNames({
-            [classes.hover]: style
-        })}>
+        <Box display={'flex'} flexDirection={'column'} flexGrow={1}
+             className={classNames({[classes.paddingDown]: style})}>
             <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
-                {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
-                    <Box display={'flex'}>
-                        {headerTitle.userName &&
-                            <Typography color={'primary'} style={typographyMargin}>{headerTitle.userName}</Typography>}
-                        {headerTitle.fullName && <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                {headerTitle && <Box display={'flex'} flexDirection={'column'}>
+                    <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+                        <Box display={'flex'} flexDirection={'column'}>
+                            <Box display={'flex'}>
+                                {headerTitle.userName &&
+                                    <Typography color={'primary'}
+                                                style={typographyMargin}>{headerTitle.userName}</Typography>}
+                                {headerTitle.fullName &&
+                                    <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                            </Box>
+                            {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
+                        </Box>
+                        {headerButton !== null && <Box>
+                            {headerButton}
+                        </Box>}
                     </Box>
-                    {headerButton !== null && <Box>
-                        {headerButton}
-                    </Box>}
                 </Box>}
                 {children}
             </Box>

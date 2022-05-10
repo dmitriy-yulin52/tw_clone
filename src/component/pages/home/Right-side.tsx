@@ -3,7 +3,7 @@ import {ReactElement} from 'react'
 import {MaterialBlock} from "../../../utils/components-utils";
 
 import {
-    Box,
+    Box, Button,
     createStyles,
     IconButton,
     InputAdornment,
@@ -115,10 +115,13 @@ const iconButtonPadding = {
     padding: '5px'
 } as const
 
-const headerTitle = {
-    userName: 'Кого читать',
+const headerTitleTweets = {
+    userName: 'События:',
+    fullName: 'Румыния'
 } as const
-
+const headerTitleRead = {
+    userName: 'События:',
+} as const
 
 
 export const RightSide = function RightSide(): ReactElement {
@@ -141,18 +144,33 @@ export const RightSide = function RightSide(): ReactElement {
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Актуальные темы для вас</Typography>
             </Paper>
-            {new Array(15).fill(
+            {new Array(3).fill(
                 <MaterialBlock
                     style
-                    headerTitle={headerTitle}
+                    headerTitle={headerTitleTweets}
+                    subTitle={'Dmitriy'}
                     headerButton={<IconButton color={"primary"}
                                               style={iconButtonPadding}><MoreHorizIcon/></IconButton>}>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores culpa
-                        doloremque exercitationem libero nisi pariatur porro ratione temporibus? Corporis culpa
-                        delectus deleniti facilis ipsum nisi, quasi repellendus repudiandae vero.
+                        Твитов: 14
                     </Typography>
                 </MaterialBlock>)}
+        </Paper>
+
+        <Paper className={classes.paperWrapper}>
+            <Paper className={classes.paperHeader}>
+                <Typography variant={'h6'}>Кого читать</Typography>
+            </Paper>
+            {new Array(3).fill(
+                <MaterialBlock
+                    style
+                    avatarUrl={'https://jooinn.com/images/man-standing-on-street.jpg'}
+                    headerTitle={headerTitleRead}
+                    subTitle={'Dmitriy'}
+                    headerButton={<Button variant={'contained'} color={"primary"}
+                                              style={iconButtonPadding}>Читать</Button>}/>
+
+                )}
         </Paper>
     </Box>
 }

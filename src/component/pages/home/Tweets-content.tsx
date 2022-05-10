@@ -135,7 +135,6 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         </IconButton>
                     </Box>
                 </Grid>
-
             </Grid>
         </Box>
     </MaterialBlock>
