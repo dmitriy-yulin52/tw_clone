@@ -6,6 +6,7 @@ import {TweetsContent} from "./Tweets-content";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
+import {MaterialBlock} from "../../../utils/components-utils";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -52,18 +53,12 @@ export const Home = () => {
                 <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                     <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                         <Typography variant={'h6'} color={'primary'}>Home</Typography>
-
                     </Paper>
                     <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-
-                        <Grid container spacing={2} style={{flexWrap: 'nowrap'}}>
-                            <Grid item style={{flexBasis: '55px'}}>
-                                <Avatar alt={`Аватар пользователя ${user.fullName}`}
-                                        src={user.avatarUrl}/>
-                            </Grid>
-                            <Grid item style={{flexGrow: '1'}}>
-                                <Box display={'flex'} flexDirection={'column'}>
-                                    <TextField placeholder={'Что происходит?'} variant={'standard'} size={'medium'} multiline/>
+                        <MaterialBlock avatarUrl={user.avatarUrl}>
+                            <Box display={'flex'} flexDirection={'column'}>
+                                    <TextField placeholder={'Что происходит?'} variant={'standard'} size={'medium'}
+                                               multiline/>
                                     <Box display={'flex'} marginTop={'32px'} justifyContent={'space-between'}>
                                         <Box display={'flex'}>
                                             <IconButton color={'primary'}>
@@ -78,10 +73,7 @@ export const Home = () => {
                                         </Box>
                                     </Box>
                                 </Box>
-                            </Grid>
-                        </Grid>
-
-
+                        </MaterialBlock>
                     </Paper>
                     {new Array(20).fill(<Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                         <TweetsContent text={'str'} user={user}/>
