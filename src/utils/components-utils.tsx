@@ -1,17 +1,19 @@
+import * as React from "react";
 import {memo, ReactElement, ReactNode, useCallback} from "react";
 import {
-    Avatar, Box,
+    Avatar,
+    Box,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Grid,
+    DialogTitle,
     IconButton,
     makeStyles,
     Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import * as React from "react";
+import classNames from "classnames";
 
 
 interface MaterialDialogProps {
@@ -73,13 +75,20 @@ interface MaterialBlockProps {
     headerTitle?: Partial<TitleType>,
     headerButton?: ReactNode,
     children?: ReactNode,
-    avatarUrl?:string
+    avatarUrl?: string
+    style?: boolean
 }
 
 
 const MaterialBlockStyles = makeStyles(() => ({
     avatarBlock: {
         flexBasis: '55px',
+    },
+    hover: {
+        '&:hover': {
+            backgroundColor: 'rgb(232, 234, 234)',
+            cursor: 'pointer'
+        }
     }
 }))
 
@@ -91,28 +100,32 @@ const typographyMargin = {
 
 export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
 
-    const {avatarUrl,headerTitle, headerButton, children} = props
+    const {avatarUrl, headerTitle, headerButton, children, style} = props
     const classes = MaterialBlockStyles()
 
 
     return <Box flexWrap={'nowrap'} display={'flex'}>
-        {avatarUrl && <Box marginRight={'16px'}>
+        {avatarUrl && <Box marginRight={'8px'}>
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
-        <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
-            {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
-                <Box display={'flex'}>
-                    {headerTitle.userName &&
-                        <Typography color={'primary'} style={typographyMargin}>{headerTitle.userName}</Typography>}
-                    {headerTitle.fullName && <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
-                </Box>
-                {headerButton && <Box>
-                    {headerButton}
+        <Box display={'flex'} flexDirection={'column'} flexGrow={1} padding={'8px'} className={classNames({
+            [classes.hover]: style
+        })}>
+            <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
+                {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
+                    <Box display={'flex'}>
+                        {headerTitle.userName &&
+                            <Typography color={'primary'} style={typographyMargin}>{headerTitle.userName}</Typography>}
+                        {headerTitle.fullName && <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                    </Box>
+                    {headerButton !== null && <Box>
+                        {headerButton}
+                    </Box>}
                 </Box>}
-            </Box>}
-            {children}
-        </Box>
+                {children}
+            </Box>
 
+        </Box>
     </Box>
 })

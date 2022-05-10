@@ -1,9 +1,11 @@
 import * as React from 'react'
 import {ReactElement} from 'react'
+import {MaterialBlock} from "../../../utils/components-utils";
+
 import {
     Box,
     createStyles,
-    Grid, IconButton,
+    IconButton,
     InputAdornment,
     InputBase,
     makeStyles,
@@ -11,12 +13,7 @@ import {
     Typography,
     withStyles
 } from "@material-ui/core";
-import {MaterialBlock} from "../../../utils/components-utils";
-import classNames from "classnames";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import RepeatIcon from "@material-ui/icons/Repeat";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
@@ -24,6 +21,12 @@ const RightSideStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(4),
         '@media (max-width: 1050px)': {
             display: 'none'
+        }
+    },
+    hover: {
+        '&:hover': {
+            backgroundColor: 'rgb(232, 234, 234)',
+            cursor: 'pointer'
         }
     },
     paperContent: {
@@ -38,60 +41,59 @@ const RightSideStyles = makeStyles((theme) => ({
         }
     },
     paperWrapper: {
-        borderTop: 'none',
-        borderLeft: 'none',
-        borderRight: 'none',
+        borderRadius: '10px',
         backgroundColor: '#f7f9f9',
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(3),
+
     },
     paperHeader: {
+        borderRadius: '10px',
         padding: '18px',
         backgroundColor: '#f7f9f9',
-    },
-    //TODO
-       tweetsWrapperContent: {
-        display: 'flex',
-        justifyContent: 'space-between'
-    },
-    tweetsWrapperItemIcon: {
-        flexBasis: '55px',
-    },
-    tweetsWrapperCommitIcon: {
-        '&:hover': {
-            filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
-        },
 
-    },
-    tweetsWrapperRepeatIcon: {
-        '&:hover': {
-            filter: 'invert(53%) sepia(17%) saturate(6503%) hue-rotate(59deg) brightness(102%) contrast(98%)'
+        //TODO
+        tweetsWrapperContent: {
+            display: 'flex',
+            justifyContent: 'space-between'
         },
-
-    },
-    tweetsWrapperLikeIcon: {
-        '&:hover': {
-            filter: 'invert(15%) sepia(95%) saturate(4053%) hue-rotate(329deg) brightness(91%) contrast(113%)'
+        tweetsWrapperItemIcon: {
+            flexBasis: '55px',
         },
+        tweetsWrapperCommitIcon: {
+            '&:hover': {
+                filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
+            },
 
-    },
-    tweets: {
-        flexBasis: '600px',
-    },
-    tweetsWrapperBox: {
-        display: 'flex',
-        alignItems: "center",
-        justifyContent: 'center',
-        marginTop: theme.spacing(2),
-        '& button': {
-            marginRight: theme.spacing(1),
-            padding: '0px'
+        },
+        tweetsWrapperRepeatIcon: {
+            '&:hover': {
+                filter: 'invert(53%) sepia(17%) saturate(6503%) hue-rotate(59deg) brightness(102%) contrast(98%)'
+            },
+
+        },
+        tweetsWrapperLikeIcon: {
+            '&:hover': {
+                filter: 'invert(15%) sepia(95%) saturate(4053%) hue-rotate(329deg) brightness(91%) contrast(113%)'
+            },
+
+        },
+        tweets: {
+            flexBasis: '600px',
+        },
+        tweetsWrapperBox: {
+            display: 'flex',
+            alignItems: "center",
+            justifyContent: 'center',
+            marginTop: theme.spacing(2),
+            '& button': {
+                marginRight: theme.spacing(1),
+                padding: '0px'
+            }
+        },
+        tweetsWrapperIconButton: {
+            marginRight: theme.spacing(1)
         }
-    },
-    tweetsWrapperIconButton: {
-        marginRight: theme.spacing(1)
     }
-
-
 }))
 
 const SearchTextField = withStyles((theme) => createStyles({
@@ -108,17 +110,15 @@ const SearchTextField = withStyles((theme) => createStyles({
     }
 }))(InputBase)
 
-const typographyMargin = {
-    marginRight: '8px'
+
+const iconButtonPadding = {
+    padding: '5px'
 } as const
 
-const gridPadding = {
-    padding: '0px'
+const headerTitle = {
+    userName: 'Кого читать',
 } as const
 
-const gridFlexGrow = {
-    flexGrow: 1
-} as const
 
 
 export const RightSide = function RightSide(): ReactElement {
@@ -126,33 +126,33 @@ export const RightSide = function RightSide(): ReactElement {
     const classes = RightSideStyles()
 
 
-
-
-
-    return <Grid item className={classes.wrapperRightBlock}>
-        <Box>
-            <SearchTextField
-                style={{padding: '8px'}}
-                fullWidth
-                placeholder={'Поиск в Твиттере'}
-                inputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">Kg</InputAdornment>
-                    ),
-                }}
-            />
-            <Box>
-                <Paper className={classes.paperWrapper}>
-                    <Paper className={classes.paperHeader}>
-                        <Typography variant={'h6'}>Актуальные темы для вас</Typography>
-                    </Paper>
-                    {new Array(5).fill(<Paper className={classes.paperContent}>
-                        <Typography variant={'h6'}>twitter</Typography>
-                        <Box> Твиттов: 16</Box>
-                    </Paper>)}
-                </Paper>
-            </Box>
-
-        </Box>
-    </Grid>
+    return <Box className={classes.wrapperRightBlock}>
+        <SearchTextField
+            style={{padding: '8px'}}
+            fullWidth
+            placeholder={'Поиск в Твиттере'}
+            inputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">Kg</InputAdornment>
+                ),
+            }}
+        />
+        <Paper className={classes.paperWrapper}>
+            <Paper className={classes.paperHeader}>
+                <Typography variant={'h6'}>Актуальные темы для вас</Typography>
+            </Paper>
+            {new Array(15).fill(
+                <MaterialBlock
+                    style
+                    headerTitle={headerTitle}
+                    headerButton={<IconButton color={"primary"}
+                                              style={iconButtonPadding}><MoreHorizIcon/></IconButton>}>
+                    <Typography>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores culpa
+                        doloremque exercitationem libero nisi pariatur porro ratione temporibus? Corporis culpa
+                        delectus deleniti facilis ipsum nisi, quasi repellendus repudiandae vero.
+                    </Typography>
+                </MaterialBlock>)}
+        </Paper>
+    </Box>
 }
