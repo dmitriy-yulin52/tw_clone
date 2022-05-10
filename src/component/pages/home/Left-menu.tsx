@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {ReactElement} from "react";
-import {Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
+import {Button, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
@@ -9,14 +9,19 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+
 
 
 const leftMenuStyles = makeStyles((theme) => ({
-     WrapperLeftBlock: {
+    WrapperLeftBlock: {
         flexBasis: '300px',
         flexShrink: 0,
         "@media (max-width: 1300px)": {
             flexBasis: '100px',
+        },
+        "@media (max-width: 750px)": {
+            flexBasis: '80px',
         }
     },
     list: {
@@ -24,6 +29,9 @@ const leftMenuStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(3),
         '@media (max-width: 1050px)': {
             paddingLeft: '10px'
+        },
+        '@media (max-width: 700px)': {
+            marginRight: '0px'
         },
         '& li': {
             '& button': {
@@ -42,7 +50,9 @@ const leftMenuStyles = makeStyles((theme) => ({
                             display: 'none'
                         }
                     },
+
                 },
+
                 '& svg': {
                     marginRight: theme.spacing(2),
                     filter: 'invert(121%) hue-rotate(136deg) brightness(9%) contrast(72%)',
@@ -51,12 +61,12 @@ const leftMenuStyles = makeStyles((theme) => ({
                     '& svg': {
                         marginRight: '0px'
                     }
-                }
+                },
+
             },
         }
     },
 }))
-
 
 const twitterFilter = {
     filter: 'none',
@@ -123,6 +133,9 @@ export const LeftMenu = function LeftMenu(): ReactElement {
                     <Typography variant={'h5'} component={'span'}>Profile</Typography>
                 </IconButton>
             </li>
+            <div>
+                <Button fullWidth color={'primary'} variant={'contained'}>Tweets</Button>
+            </div>
         </ul>
     </Grid>
 }

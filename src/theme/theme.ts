@@ -14,7 +14,6 @@ export const theme = createTheme({
             'Helvetica Neue',
             'sans-serif',
         ] as any,
-
     },
     palette:{
         primary:{
