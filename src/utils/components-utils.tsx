@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import * as React from "react";
+import classNames from "classnames";
 
 
 interface MaterialDialogProps {
@@ -63,3 +64,67 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
+<<<<<<< Updated upstream
+=======
+type TitleType = {
+    userName: string,
+    fullName: string
+}
+
+interface MaterialBlockProps {
+    headerTitle?: Partial<TitleType>,
+    headerButton?: ReactNode,
+    children?: ReactNode,
+    avatarUrl?:string
+    style?:boolean
+}
+
+
+const MaterialBlockStyles = makeStyles(() => ({
+    avatarBlock: {
+        flexBasis: '55px',
+    },
+    hover:{
+         '&:hover': {
+            backgroundColor: 'rgb(232, 234, 234)',
+            cursor: 'pointer'
+        }
+    }
+}))
+
+
+const typographyMargin = {
+    marginRight: '8px'
+} as const
+
+
+export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
+
+    const {avatarUrl,headerTitle, headerButton, children,style} = props
+    const classes = MaterialBlockStyles()
+
+
+    return <Box flexWrap={'nowrap'} display={'flex'}>
+        {avatarUrl && <Box marginRight={'8px'}>
+            <Avatar alt={`Аватар пользователя`}
+                    src={avatarUrl}/>
+        </Box>}
+        <Box display={'flex'} flexDirection={'column'} flexGrow={1} padding={'8px'} className={classNames({
+            [classes.hover]:style
+        })}>
+            {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
+                <Box display={'flex'}>
+                    {headerTitle.userName &&
+                        <Typography color={'primary'} style={typographyMargin}>{headerTitle.userName}</Typography>}
+                    {headerTitle.fullName && <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                </Box>
+                {headerButton && <Box>
+                    {headerButton}
+                </Box>}
+            </Box>}
+            {children}
+        </Box>
+
+    </Box>
+})
+>>>>>>> Stashed changes
