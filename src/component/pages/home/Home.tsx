@@ -25,8 +25,8 @@ export const useStylesHome = makeStyles((theme) => ({
     },
     tweetsWrapperHeader: {
         borderTop: 'none',
-        borderLeft: 'none',
-        borderRight: 'none',
+        // borderLeft: 'none',
+        // borderRight: 'none',
         padding: '15px',
         '&:hover': {
             backgroundColor: 'rgb(245,248,250)',

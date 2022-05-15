@@ -28,7 +28,7 @@ const leftMenuStyles = makeStyles((theme) => ({
     },
     list: {
         listStyle: 'none',
-        padding: '8px 16px 8px 8px',
+        padding: '8px',
         marginRight: theme.spacing(0),
         '& li': {
             '& button': {
@@ -111,7 +111,6 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                         />
                         <Hidden smDown mdDown>
                             <Typography variant={'h5'} component={'span'}>Messages</Typography>
-
                         </Hidden>
                     </IconButton>
                 </li>
@@ -131,9 +130,7 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                         />
                         <Hidden smDown mdDown>
                             <Typography variant={'h5'} component={'span'}>Lists</Typography>
-
                         </Hidden>
-
                     </IconButton>
                 </li>
                 <li>

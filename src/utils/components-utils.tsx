@@ -1,5 +1,5 @@
 import * as React from "react";
-import {memo, ReactElement, ReactNode} from "react";
+import {ChangeEvent, memo, ReactElement, ReactNode, useCallback, useState} from "react";
 import {
     Avatar,
     Box,
@@ -8,7 +8,7 @@ import {
     DialogContent,
     Divider,
     IconButton,
-    makeStyles,
+    makeStyles, TextField,
     Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -151,10 +151,49 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
                         </Box>}
                     </Box>
                 </Box>}
-                    {children}
+                {children}
             </Box>
 
         </Box>
     </Box>
+})
+
+
+interface MaterialTextFieldProps {
+    onChange: (e: any) => void
+    placeholder?: string
+    variant?: "filled" | "standard" | "outlined"
+    value: any
+    id?: string
+    label?: string
+    type?: string
+    style?: any
+    autoFocus?: boolean
+    size?: "medium" | "small"
+    rows?: number
+    maxRows?: number
+}
+
+export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
+
+    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows} = props
+
+    return <TextField
+        size={size}
+        autoFocus={autoFocus}
+        onChange={onChange}
+        placeholder={placeholder}
+        variant={variant}
+        margin={'dense'}
+        rows={rows}
+        maxRows={maxRows}
+        value={value}
+        id={id}
+        label={label}
+        type={type}
+        className={style}
+        fullWidth
+        multiline
+    />
 })
 

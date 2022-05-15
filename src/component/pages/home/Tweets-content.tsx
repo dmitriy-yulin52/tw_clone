@@ -7,6 +7,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
 import {MaterialBlock} from "../../../utils/components-utils";
+import {preventDefault} from "../../../utils/hook-utils";
 
 
 export const TweetsContentStyles = makeStyles((theme) => ({
@@ -72,9 +73,7 @@ interface TweetsContentProps {
 
 export const TweetsContent = memo(function CenterContent(props: TweetsContentProps): ReactElement {
 
-
     const {text, user} = props
-
 
     const classes = TweetsContentStyles()
 
@@ -95,7 +94,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         alignItems={'center'}
                         className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <ChatBubbleOutlineIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -106,7 +105,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                          alignItems={'center'}
                          className={classNames(classes.tweetsWrapperRepeatIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <RepeatIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -118,7 +117,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         alignItems={'center'}
                         className={classNames(classes.tweetsWrapperLikeIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <FavoriteBorderIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -130,7 +129,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                          alignItems={'center'}
                          className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <OpenInBrowserIcon/>
                         </IconButton>
                     </Box>
