@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {memo, ReactElement} from "react";
-import {TextField} from "@material-ui/core";
+import {Button, TextField} from "@material-ui/core";
 import {MaterialDialog} from "../../utils/components-utils";
 
 
@@ -19,7 +19,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
         <MaterialDialog
             open={openSignUp} closeDialog={setCloseSignUp}
             label={'Создайте учетную запись'}
-            labelButton={'Регистрация'}
+            actionButton={<Button color={'primary'} variant={'contained'}>Регистрация</Button>}
         >
             <TextField
                 size={'medium'}
@@ -28,7 +28,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'name'}
                 label={'Имя'}
                 type={'name'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
             <TextField
@@ -38,7 +38,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'email'}
                 label={'E-mail'}
                 type={'email'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
             <TextField
@@ -47,7 +47,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'password'}
                 label={'Пароль'}
                 type={'password'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
         </MaterialDialog>
