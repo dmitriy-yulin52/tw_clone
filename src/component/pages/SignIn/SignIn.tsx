@@ -1,28 +1,18 @@
 import * as React from 'react'
 import {ReactElement} from 'react'
-import {Button, makeStyles, TextField, Typography} from "@material-ui/core";
+import {Box, Button, makeStyles, TextField, Typography} from "@material-ui/core";
 import classNames from "classnames";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {useBooleanState} from "../../../utils/hook-utils";
-import {MaterialDialog} from "../../../utils/components-utils";
+import {MaterialDialog, MaterialTextField} from "../../../utils/components-utils";
 import {SignUp} from "../../SignUp/SignUp";
 import {Footer} from "../../footer/Footer";
 
 
 export const useStylesSignIn = makeStyles((theme) => ({
-    wrapper: {
-        display: 'flex',
-        height: '100%'
-    },
     leftSide: {
         backgroundImage: 'url(https://abs.twimg.com/sticky/illustrations/lohp_1302x955.png)',
         backgroundSize: 'cover',
-        flex: '0 0 50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        overflow: 'hidden'
     },
     leftSideBigIcon: {
         position: 'absolute',
@@ -64,9 +54,6 @@ export const useStylesSignIn = makeStyles((theme) => ({
     loginSideTwitterIcon: {
         fontSize: 45,
     },
-    loginSideWrapper: {
-        width: '380px'
-    },
     loginSideTitle: {
         fontWeight: 700,
         fontSize: '32px',
@@ -96,12 +83,20 @@ export const SignIn = (): ReactElement => {
 
     return (
         <>
-            <div className={classNames(classes.wrapper)}>
-                <div className={classNames(classes.leftSide)}>
+            <Box display={'flex'} height={'100%'}>
+                <Box
+                    flex={'0 0 50%'}
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    position={'relative'}
+                    overflow={'hidden'}
+                    className={classes.leftSide}
+                >
                     <TwitterIcon color={'primary'} className={classes.leftSideBigIcon}/>
-                </div>
+                </Box>
                 <section className={classNames(classes.loginSide)}>
-                    <div className={classNames(classes.loginSideWrapper)}>
+                    <Box width={'380px'}>
                         <TwitterIcon color={'primary'} className={classes.loginSideTwitterIcon}/>
                         <Typography variant={'h4'} className={classes.loginSideTitle}>Узнайте, что происходит в мире
                             прямо
@@ -117,7 +112,7 @@ export const SignIn = (): ReactElement => {
                         <Button onClick={setOpenSignIn} variant={'outlined'} color={'primary'} fullWidth>
                             Войти
                         </Button>
-                        <div>
+                        <Box>
                             <SignUp openSignUp={openSignUp} setCloseSignUp={setCloseSignUp}/>
                             <MaterialDialog
                                 open={openSignIn}
@@ -125,30 +120,33 @@ export const SignIn = (): ReactElement => {
                                 label={'Войти в аккаунт'}
                                 actionButton={<Button color={'primary'} variant={'contained'}>Войти</Button>}
                             >
-                                <TextField
-                                    variant={'outlined'}
-                                    autoFocus
-                                    margin={'dense'}
-                                    id={'email'}
-                                    label={'E-mail'}
-                                    type={'email'}
-                                    className={classes.loginSideInput}
-                                    fullWidth
-                                />
-                                <TextField
-                                    autoFocus
-                                    variant={'outlined'}
-                                    margin={'dense'}
-                                    id={'password'}
-                                    label={'Пароль'}
-                                    type={'password'}
-                                    fullWidth
-                                />
+                                <Box display={'flex'} flexDirection={'column'}>
+                                    <MaterialTextField
+                                        value={''}
+                                        onChange={() => {
+                                        }}
+                                        id={'email'}
+                                        label={'E-mail'}
+                                        type={'email'}
+                                        autoFocus
+                                        variant={'outlined'}
+                                    />
+                                    <MaterialTextField
+                                        value={''}
+                                        onChange={() => {
+                                        }}
+                                        id={'password'}
+                                        label={'Пароль'}
+                                        type={'password'}
+                                        autoFocus
+                                        variant={'outlined'}
+                                    />
+                                </Box>
                             </MaterialDialog>
-                        </div>
-                    </div>
+                        </Box>
+                    </Box>
                 </section>
-            </div>
+            </Box>
             <Footer/>
         </>
     )

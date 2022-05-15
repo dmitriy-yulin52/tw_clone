@@ -9,6 +9,7 @@ import {
     Divider,
     IconButton,
     makeStyles,
+    TextField,
     Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -35,6 +36,10 @@ const useStylesMaterialDialog = makeStyles((theme) => ({
         marginTop: theme.spacing(2)
     }
 }))
+
+const buttonPadding = {
+    padding:'0px'
+}as const
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
@@ -151,10 +156,51 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
                         </Box>}
                     </Box>
                 </Box>}
-                    {children}
+                {children}
             </Box>
 
         </Box>
     </Box>
+})
+
+
+interface MaterialTextFieldProps {
+    onChange: (e: any) => void
+    placeholder?: string
+    variant?: "filled" | "standard" | "outlined"
+    value: any
+    id?: string
+    label?: string
+    type?: string
+    style?: any
+    autoFocus?: boolean
+    size?: "medium" | "small"
+    rows?: number
+    maxRows?: number
+    multiline?:boolean
+    fullWidth?:boolean
+}
+
+export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
+
+    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows,multiline,fullWidth} = props
+
+    return <TextField
+        size={size}
+        autoFocus={autoFocus}
+        onChange={onChange}
+        placeholder={placeholder}
+        variant={variant}
+        margin={'dense'}
+        rows={rows}
+        maxRows={maxRows}
+        value={value}
+        id={id}
+        label={label}
+        type={type}
+        className={style}
+        fullWidth={fullWidth}
+        multiline={multiline}
+    />
 })
 

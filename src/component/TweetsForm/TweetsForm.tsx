@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {ChangeEvent, memo, ReactElement, useCallback, useState} from 'react'
-import {Box, Button, CircularProgress, IconButton, makeStyles, TextField, Typography} from "@material-ui/core";
-import {MaterialBlock} from "../../utils/components-utils";
+import {Box, Button, CircularProgress, IconButton, makeStyles, TextField} from "@material-ui/core";
+import {MaterialBlock, MaterialTextField} from "../../utils/components-utils";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import classNames from "classnames";
@@ -17,6 +17,12 @@ const TweetsFormStyles = makeStyles((theme) => ({
     circularProgressRelative: {
         position: 'relative',
         color: 'rgba(0,0,0,0.1)'
+    },
+    widthBlock:{
+        width:'350px',
+         '@media (max-width: 450px)': {
+                    width:'250px'
+                },
     }
 }))
 
@@ -29,13 +35,8 @@ interface TweetsFormProps {
     }
 }
 
-const circularProgressAbsolute = {
-    position: 'absolute'
-} as const
-const circularProgressRelative = {
-    position: 'relative',
-    color: 'rgba(0,0,0,0.1)'
-} as const
+
+const MAX_LENGTH = 281
 
 
 export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
@@ -43,32 +44,35 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
     const classes = TweetsFormStyles()
 
     const [text, setText] = useState<string>('')
-    const limitPercent = Math.round(text.length / 280 * 100)
+    const limitPercent = Math.round(text.length / MAX_LENGTH * 100)
+    const countLimit = MAX_LENGTH - text.length
 
 
-    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
         if (e.currentTarget) {
             setText(e.currentTarget.value)
-
         }
     }, [text, setText])
 
 
+    const handlerClickAddTweet = useCallback((): void => {
+        setText('')
+    }, [setText, text])
+
+
     return <MaterialBlock avatarUrl={user.avatarUrl}>
         <Box display={'flex'} flexDirection={'column'}>
-            <TextField
+            <MaterialTextField
                 onChange={handleChange}
-                placeholder={'Что происходит?'}
-                variant={'standard'}
-                margin={'dense'}
                 rows={1}
                 maxRows={15}
-                value={text}
-                style={{color:'red'} }
-                fullWidth
                 multiline
+                fullWidth
+                placeholder={'Что происходит?'}
+                variant={'standard'}
+                value={text}
             />
-            <Box display={'flex'} marginTop={'16px'} justifyContent={'space-between'}>
+            <Box display={'flex'} marginTop={'16px'} justifyContent={'space-between'} flexWrap={'wrap'}>
                 <Box display={'flex'}>
                     <IconButton color={'primary'}>
                         <PermMediaIcon/>
@@ -77,19 +81,18 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
                         <SentimentSatisfiedIcon/>
                     </IconButton>
                 </Box>
-
                 <Box display={'flex'} alignItems={'center'}>
                     {text && <Box marginRight={'8px'} display={'flex'} alignItems={'center'}>
-                        <Box marginRight={'8px'}>{text.length}</Box>
+                        <Box marginRight={'8px'}>{countLimit}</Box>
                         <Box display={'flex'}>
                             <CircularProgress
                                 className={classNames(classes.circularProgressAbsolute, {
-                                    [classes.circularProgressAbsoluteError]: limitPercent >= 100
+                                    [classes.circularProgressAbsoluteError]: text.length >= MAX_LENGTH
                                 })}
                                 variant={'static'}
                                 size={20}
                                 thickness={5}
-                                value={limitPercent >= 100 ? 100 : limitPercent}
+                                value={text.length >= MAX_LENGTH ? 100 : limitPercent}
                             />
                             <CircularProgress
                                 className={classes.circularProgressRelative}
@@ -100,7 +103,12 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
                             />
                         </Box>
                     </Box>}
-                    <Button disabled={limitPercent >= 100} variant={'contained'} color={'primary'}>Твитнуть</Button>
+                    <Button
+                        onClick={handlerClickAddTweet}
+                        disabled={text.length >= MAX_LENGTH}
+                        variant={'contained'}
+                        color={'primary'}
+                    >Твитнуть</Button>
                 </Box>
             </Box>
         </Box>

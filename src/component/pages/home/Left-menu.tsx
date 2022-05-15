@@ -12,6 +12,7 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import CreateIcon from '@material-ui/icons/Create';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {TweetsDialog} from "../../TweetsDialog/TweetsDialog";
+import {TweetsForm} from "../../TweetsForm/TweetsForm";
 
 
 const leftMenuStyles = makeStyles((theme) => ({
@@ -28,8 +29,11 @@ const leftMenuStyles = makeStyles((theme) => ({
     },
     list: {
         listStyle: 'none',
-        padding: '8px 16px 8px 8px',
-        marginRight: theme.spacing(0),
+        padding: '8px',
+        marginRight: theme.spacing(4),
+        '@media (max-width: 1300px)': {
+            marginRight: theme.spacing(0)
+        },
         '& li': {
             '& button': {
                 marginBottom: theme.spacing(2),
@@ -63,6 +67,13 @@ const twitterFilter = {
     filter: 'none',
     marginRight: '0px'
 } as const
+
+const user = {
+    fullName: '@mail.ru',
+    userName: 'Dmitriy',
+    avatarUrl: 'https://jooinn.com/images/man-standing-on-street.jpg'
+} as const
+
 
 export const LeftMenu = memo(function LeftMenu(): ReactElement {
 
@@ -111,7 +122,6 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                         />
                         <Hidden smDown mdDown>
                             <Typography variant={'h5'} component={'span'}>Messages</Typography>
-
                         </Hidden>
                     </IconButton>
                 </li>
@@ -131,9 +141,7 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                         />
                         <Hidden smDown mdDown>
                             <Typography variant={'h5'} component={'span'}>Lists</Typography>
-
                         </Hidden>
-
                     </IconButton>
                 </li>
                 <li>
@@ -153,6 +161,8 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                 </div>
             </ul>
         </Grid>
-      <TweetsDialog open={openDialog} closeDialog={setCloseDialog}/>
+        <TweetsDialog open={openDialog} closeDialog={setCloseDialog}>
+            <TweetsForm user={user}/>
+        </TweetsDialog>
     </>
 })

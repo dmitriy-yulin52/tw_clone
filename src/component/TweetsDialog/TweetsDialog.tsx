@@ -1,26 +1,20 @@
 import * as React from 'react'
-import {memo, ReactElement} from 'react'
+import {memo, ReactElement, ReactNode} from 'react'
 import {MaterialDialog} from "../../utils/components-utils";
-import {TweetsForm} from "../TweetsForm/TweetsForm";
 
 
 interface TweetsDialogProps {
     open: boolean
     closeDialog: () => void
+    children?:ReactNode
 }
 
-const user = {
-    fullName: '@mail.ru',
-    userName: 'Dmitriy',
-    avatarUrl: 'https://jooinn.com/images/man-standing-on-street.jpg'
-} as const
-
 export const TweetsDialog = memo(function EntryDialog(props: TweetsDialogProps): ReactElement {
-    const {open, closeDialog} = props
+    const {open, closeDialog,children} = props
 
     return (
         <MaterialDialog open={open} closeDialog={closeDialog} label={'Твитнуть'}>
-            <TweetsForm user={user}/>
+            {children}
         </MaterialDialog>
     )
 })
