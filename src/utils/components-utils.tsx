@@ -18,9 +18,9 @@ import classNames from "classnames";
 interface MaterialDialogProps {
     open: boolean
     closeDialog: () => void
-    label: string
+    label?: string
     children: ReactNode
-    actionButton?:ReactNode
+    actionButton?: ReactNode
 }
 
 
@@ -30,15 +30,16 @@ const useStylesMaterialDialog = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    divider:{
-        marginBottom:theme.spacing(2)
+    divider: {
+        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(2)
     }
 }))
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
 
-    const {open, closeDialog, label, children,actionButton} = props
+    const {open, closeDialog, label, children, actionButton} = props
     const classes = useStylesMaterialDialog()
 
 
@@ -48,7 +49,7 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
                 display={'flex'}
                 alignItems={'center'}
                 justifyContent={'space-between'}
-                padding={'16px 24px 8px 24px'}>
+                padding={'16px 24px 0px 24px'}>
                 <IconButton
                     onClick={closeDialog}
                     color={'primary'}
@@ -60,13 +61,15 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
             </Box>
             <Divider className={classes.divider}/>
             <DialogContent>
-                <Box >
-                {children}
+                <Box>
+                    {children}
                 </Box>
             </DialogContent>
-            <DialogActions>
-                {actionButton}
-            </DialogActions>
+            {actionButton && (<> <Divider className={classes.divider}/>
+                <DialogActions>
+                    {actionButton}
+                </DialogActions></>)}
+
         </Dialog>
     )
 })
@@ -148,7 +151,7 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
                         </Box>}
                     </Box>
                 </Box>}
-                {children}
+                    {children}
             </Box>
 
         </Box>
