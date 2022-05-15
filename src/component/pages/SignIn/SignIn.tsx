@@ -123,10 +123,10 @@ export const SignIn = (): ReactElement => {
                                 open={openSignIn}
                                 closeDialog={setCloseSignIn}
                                 label={'Войти в аккаунт'}
-                                labelButton={'Войти'}
+                                actionButton={<Button variant={'contained'} color={'primary'} onClick={setCloseSignUp}>Войти</Button>}
                             >
                                 <TextField
-                                    variant={'filled'}
+                                    variant={'outlined'}
                                     autoFocus
                                     margin={'dense'}
                                     id={'email'}
@@ -137,7 +137,7 @@ export const SignIn = (): ReactElement => {
                                 />
                                 <TextField
                                     autoFocus
-                                    variant={'filled'}
+                                    variant={'outlined'}
                                     margin={'dense'}
                                     id={'password'}
                                     label={'Пароль'}

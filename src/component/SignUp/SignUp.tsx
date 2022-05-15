@@ -1,25 +1,23 @@
 import * as React from 'react'
-import {memo, ReactElement} from "react";
-import {TextField} from "@material-ui/core";
+import {memo, ReactElement} from 'react'
+import {Button, TextField} from "@material-ui/core";
 import {MaterialDialog} from "../../utils/components-utils";
 
 
-
-
 type SignUpProps = {
-    openSignUp:boolean
-    setCloseSignUp:()=>void
+    openSignUp: boolean
+    setCloseSignUp: () => void
 }
 
-export const SignUp = memo((props:SignUpProps): ReactElement => {
+export const SignUp = memo((props: SignUpProps): ReactElement => {
 
-    const {openSignUp,setCloseSignUp}=props
+    const {openSignUp, setCloseSignUp} = props
 
     return (
         <MaterialDialog
             open={openSignUp} closeDialog={setCloseSignUp}
             label={'Создайте учетную запись'}
-            labelButton={'Регистрация'}
+            actionButton={<Button variant={'contained'} color={'primary'} onClick={setCloseSignUp}>Регистрация</Button>}
         >
             <TextField
                 size={'medium'}
@@ -28,7 +26,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'name'}
                 label={'Имя'}
                 type={'name'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
             <TextField
@@ -38,7 +36,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'email'}
                 label={'E-mail'}
                 type={'email'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
             <TextField
@@ -47,7 +45,7 @@ export const SignUp = memo((props:SignUpProps): ReactElement => {
                 id={'password'}
                 label={'Пароль'}
                 type={'password'}
-                variant={'filled'}
+                variant={'outlined'}
                 fullWidth
             />
         </MaterialDialog>

@@ -1,17 +1,17 @@
-import {memo, ReactElement, ReactNode, useCallback} from "react";
+import * as React from "react";
+import {memo, ReactElement, ReactNode} from "react";
 import {
-    Avatar, Box,
-    Button,
+    Avatar,
+    Box,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Grid,
+    Divider,
     IconButton,
     makeStyles,
     Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import * as React from "react";
 import classNames from "classnames";
 
 
@@ -20,32 +20,35 @@ interface MaterialDialogProps {
     closeDialog: () => void
     label: string
     children: ReactNode
-    onChange?: () => void
-    labelButton: string
+    actionButton?:ReactNode
 }
 
 
 const useStylesMaterialDialog = makeStyles((theme) => ({
-    materialDialog: {
+    header: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    divider:{
+        marginBottom:theme.spacing(2)
     }
 }))
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
 
-    const {open, closeDialog, label, children, onChange, labelButton} = props
+    const {open, closeDialog, label, children,actionButton} = props
     const classes = useStylesMaterialDialog()
 
-    const onClickHandler = useCallback((): void => {
-        onChange?.()
-        closeDialog()
-    }, [onChange, closeDialog])
 
     return (
-        <Dialog open={open}>
-            <DialogTitle className={classes.materialDialog}>
+        <Dialog open={open} className={classes.header}>
+            <Box
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+                padding={'16px 24px 8px 24px'}>
                 <IconButton
                     onClick={closeDialog}
                     color={'primary'}
@@ -54,22 +57,20 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
                     <CloseIcon color={'primary'}/>
                 </IconButton>
                 <Typography variant={'h6'} component={'span'}>{label}</Typography>
-            </DialogTitle>
+            </Box>
+            <Divider className={classes.divider}/>
             <DialogContent>
+                <Box >
                 {children}
+                </Box>
             </DialogContent>
             <DialogActions>
-                <Button variant={'contained'} color={'primary'} onClick={onClickHandler}>{labelButton}</Button>
+                {actionButton}
             </DialogActions>
         </Dialog>
     )
 })
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> add_component-utils
 type TitleType = {
     userName: string,
     fullName: string
@@ -79,26 +80,32 @@ interface MaterialBlockProps {
     headerTitle?: Partial<TitleType>,
     headerButton?: ReactNode,
     children?: ReactNode,
-    avatarUrl?:string
-<<<<<<< HEAD
-    style?:boolean
-=======
->>>>>>> add_component-utils
+    avatarUrl?: string
+    style?: boolean
+    subTitle?: string
 }
 
 
 const MaterialBlockStyles = makeStyles(() => ({
     avatarBlock: {
         flexBasis: '55px',
-<<<<<<< HEAD
     },
-    hover:{
-         '&:hover': {
+    paddingUp: {
+        padding: '8px'
+    },
+    paddingDown: {
+        padding: '0px'
+    },
+    hover: {
+        padding: '8px',
+        alignItems: 'center',
+        '&:hover': {
             backgroundColor: 'rgb(232, 234, 234)',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: '0.7s',
+            transform: "scale(1.1)",
+            borderRadius: '10px'
         }
-=======
->>>>>>> add_component-utils
     }
 }))
 
@@ -110,46 +117,41 @@ const typographyMargin = {
 
 export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
 
-<<<<<<< HEAD
-    const {avatarUrl,headerTitle, headerButton, children,style} = props
-=======
-    const {avatarUrl,headerTitle, headerButton, children} = props
->>>>>>> add_component-utils
+    const {avatarUrl, headerTitle, headerButton, children, style = false, subTitle} = props
     const classes = MaterialBlockStyles()
 
 
-    return <Box flexWrap={'nowrap'} display={'flex'}>
-<<<<<<< HEAD
-        {avatarUrl && <Box marginRight={'8px'}>
-            <Avatar alt={`Аватар пользователя`}
-                    src={avatarUrl}/>
-        </Box>}
-        <Box display={'flex'} flexDirection={'column'} flexGrow={1} padding={'8px'} className={classNames({
-            [classes.hover]:style
-        })}>
-=======
+    return <Box flexWrap={'nowrap'} display={'flex'} className={classNames({
+        [classes.hover]: style,
+    })}>
         {avatarUrl && <Box marginRight={'16px'}>
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
-        <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
->>>>>>> add_component-utils
-            {headerTitle && <Box display={'flex'} justifyContent={'space-between'}>
-                <Box display={'flex'}>
-                    {headerTitle.userName &&
-                        <Typography color={'primary'} style={typographyMargin}>{headerTitle.userName}</Typography>}
-                    {headerTitle.fullName && <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
-                </Box>
-                {headerButton && <Box>
-                    {headerButton}
+        <Box display={'flex'} flexDirection={'column'} flexGrow={1}
+             className={classNames({[classes.paddingDown]: style})}>
+            <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
+                {headerTitle && <Box display={'flex'} flexDirection={'column'}>
+                    <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+                        <Box display={'flex'} flexDirection={'column'}>
+                            <Box display={'flex'}>
+                                {headerTitle.userName &&
+                                    <Typography color={'primary'}
+                                                style={typographyMargin}>{headerTitle.userName}</Typography>}
+                                {headerTitle.fullName &&
+                                    <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                            </Box>
+                            {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
+                        </Box>
+                        {headerButton !== null && <Box>
+                            {headerButton}
+                        </Box>}
+                    </Box>
                 </Box>}
-            </Box>}
-            {children}
-        </Box>
+                {children}
+            </Box>
 
+        </Box>
     </Box>
 })
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> add_component-utils
+
