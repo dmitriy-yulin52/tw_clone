@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChangeEvent, memo, ReactElement, ReactNode, useCallback, useState} from "react";
+import {memo, ReactElement, ReactNode} from "react";
 import {
     Avatar,
     Box,
@@ -8,7 +8,8 @@ import {
     DialogContent,
     Divider,
     IconButton,
-    makeStyles, TextField,
+    makeStyles,
+    TextField,
     Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -35,6 +36,10 @@ const useStylesMaterialDialog = makeStyles((theme) => ({
         marginTop: theme.spacing(2)
     }
 }))
+
+const buttonPadding = {
+    padding:'0px'
+}as const
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
@@ -172,11 +177,13 @@ interface MaterialTextFieldProps {
     size?: "medium" | "small"
     rows?: number
     maxRows?: number
+    multiline?:boolean
+    fullWidth?:boolean
 }
 
 export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
 
-    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows} = props
+    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows,multiline,fullWidth} = props
 
     return <TextField
         size={size}
@@ -192,8 +199,8 @@ export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElem
         label={label}
         type={type}
         className={style}
-        fullWidth
-        multiline
+        fullWidth={fullWidth}
+        multiline={multiline}
     />
 })
 

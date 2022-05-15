@@ -120,24 +120,28 @@ export const SignIn = (): ReactElement => {
                                 label={'Войти в аккаунт'}
                                 actionButton={<Button color={'primary'} variant={'contained'}>Войти</Button>}
                             >
-                                <MaterialTextField
-                                    value={''}
-                                    onChange={()=>{}}
-                                    id={'email'}
-                                    label={'E-mail'}
-                                    type={'email'}
-                                    autoFocus
-                                    variant={'outlined'}
-                                />
-                                <MaterialTextField
-                                    value={''}
-                                    onChange={()=>{}}
-                                    id={'password'}
-                                    label={'Пароль'}
-                                    type={'password'}
-                                    autoFocus
-                                    variant={'outlined'}
-                                />
+                                <Box display={'flex'} flexDirection={'column'}>
+                                    <MaterialTextField
+                                        value={''}
+                                        onChange={() => {
+                                        }}
+                                        id={'email'}
+                                        label={'E-mail'}
+                                        type={'email'}
+                                        autoFocus
+                                        variant={'outlined'}
+                                    />
+                                    <MaterialTextField
+                                        value={''}
+                                        onChange={() => {
+                                        }}
+                                        id={'password'}
+                                        label={'Пароль'}
+                                        type={'password'}
+                                        autoFocus
+                                        variant={'outlined'}
+                                    />
+                                </Box>
                             </MaterialDialog>
                         </Box>
                     </Box>

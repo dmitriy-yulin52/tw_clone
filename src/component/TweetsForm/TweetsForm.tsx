@@ -17,6 +17,12 @@ const TweetsFormStyles = makeStyles((theme) => ({
     circularProgressRelative: {
         position: 'relative',
         color: 'rgba(0,0,0,0.1)'
+    },
+    widthBlock:{
+        width:'350px',
+         '@media (max-width: 450px)': {
+                    width:'250px'
+                },
     }
 }))
 
@@ -58,6 +64,10 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
+                rows={1}
+                maxRows={15}
+                multiline
+                fullWidth
                 placeholder={'Что происходит?'}
                 variant={'standard'}
                 value={text}
