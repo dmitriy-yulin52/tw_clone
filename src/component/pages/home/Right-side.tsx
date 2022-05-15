@@ -1,15 +1,16 @@
 import * as React from 'react'
 import {ReactElement} from 'react'
 import {MaterialBlock} from "../../../utils/components-utils";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import {
-    Box, Button,
-    createStyles,
+    Box,
     IconButton,
     InputAdornment,
-    InputBase,
     makeStyles,
     Paper,
+    TextField,
+    Theme,
     Typography,
     withStyles
 } from "@material-ui/core";
@@ -50,65 +51,40 @@ const RightSideStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '18px',
         backgroundColor: '#f7f9f9',
-
-        //TODO
-        tweetsWrapperContent: {
-            display: 'flex',
-            justifyContent: 'space-between'
-        },
-        tweetsWrapperItemIcon: {
-            flexBasis: '55px',
-        },
-        tweetsWrapperCommitIcon: {
-            '&:hover': {
-                filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
-            },
-
-        },
-        tweetsWrapperRepeatIcon: {
-            '&:hover': {
-                filter: 'invert(53%) sepia(17%) saturate(6503%) hue-rotate(59deg) brightness(102%) contrast(98%)'
-            },
-
-        },
-        tweetsWrapperLikeIcon: {
-            '&:hover': {
-                filter: 'invert(15%) sepia(95%) saturate(4053%) hue-rotate(329deg) brightness(91%) contrast(113%)'
-            },
-
-        },
-        tweets: {
-            flexBasis: '600px',
-        },
-        tweetsWrapperBox: {
-            display: 'flex',
-            alignItems: "center",
-            justifyContent: 'center',
-            marginTop: theme.spacing(2),
-            '& button': {
-                marginRight: theme.spacing(1),
-                padding: '0px'
-            }
-        },
-        tweetsWrapperIconButton: {
-            marginRight: theme.spacing(1)
-        }
     }
 }))
 
-const SearchTextField = withStyles((theme) => createStyles({
-    input: {
-        borderRadius: '30px',
-        backgroundColor: '#E6ECF0',
-        padding: '8px 8px 8px 16px',
-        height: '35px',
-        marginTop: '8px',
-        '&:focus': {
-            backgroundColor: '#fff',
-            border: '1px solid #1da1f2'
-        }
+const SearchTextField = withStyles((theme: Theme) => ({
+    root: {
+        '& .MuiOutlinedInput-root': {
+            borderRadius: '30px',
+            backgroundColor: '#E6ECF0',
+            padding: '0px 0px 0px 15px',
+            '&.Mui-focused': {
+                backgroundColor: '#fff',
+                '& fieldset': {
+                    borderWidth: 1, borderColor: theme.palette.primary.main
+                },
+                '& svg path': {
+                    fill: theme.palette.primary.main
+                },
+            },
+            '&:hover': {
+                '& fieldset': {
+                    borderColor: 'transparent'
+                }
+            },
+            '& fieldset': {
+                borderColor: 'transparent',
+                borderWidth: 1
+            }
+            ,
+        },
+        '& .MuiOutlinedInput-input': {
+            padding: '12px 14px 14px 5px'
+        },
     }
-}))(InputBase)
+}))(TextField)
 
 
 const iconButtonPadding = {
@@ -130,16 +106,18 @@ export const RightSide = function RightSide(): ReactElement {
 
 
     return <Box className={classes.wrapperRightBlock}>
-        <SearchTextField
-            style={{padding: '8px'}}
-            fullWidth
-            placeholder={'Поиск в Твиттере'}
-            inputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">Kg</InputAdornment>
-                ),
-            }}
-        />
+        <Box marginTop={'32px'}>
+            <SearchTextField
+                variant={'outlined'}
+                fullWidth
+                placeholder={'Поиск в Твиттере'}
+                inputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">Kg</InputAdornment>
+                    ),
+                }}
+            />
+        </Box>
         <Paper className={classes.paperWrapper}>
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Актуальные темы для вас</Typography>
@@ -167,10 +145,10 @@ export const RightSide = function RightSide(): ReactElement {
                     avatarUrl={'https://jooinn.com/images/man-standing-on-street.jpg'}
                     headerTitle={headerTitleRead}
                     subTitle={'Dmitriy'}
-                    headerButton={<Button variant={'contained'} color={"primary"}
-                                              style={iconButtonPadding}>Читать</Button>}/>
-
-                )}
+                    headerButton={
+                        <IconButton color={"primary"}
+                        ><PersonAddIcon/></IconButton>}/>
+            )}
         </Paper>
     </Box>
 }
