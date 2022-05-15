@@ -49,7 +49,7 @@ export const Home = memo((): ReactElement => {
     return (
         <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>
-            <Box display={'flex'} flexBasis={'900px'}>
+            <Box display={'flex'} flexBasis={'600px'} flexGrow={1} flexShrink={0}>
                 <Box className={classes.tweets}>
                     <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
@@ -63,8 +63,8 @@ export const Home = memo((): ReactElement => {
                         </Paper>)}
                     </Paper>
                 </Box>
-                <RightSide/>
             </Box>
+            <RightSide/>
         </Box>
     )
 })

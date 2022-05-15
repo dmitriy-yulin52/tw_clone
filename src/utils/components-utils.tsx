@@ -106,7 +106,7 @@ const MaterialBlockStyles = makeStyles(() => ({
             backgroundColor: 'rgb(232, 234, 234)',
             cursor: 'pointer',
             transition: '0.7s',
-            transform: "scale(1.1)",
+            transform: "scale(0.95)",
             borderRadius: '10px'
         }
     }

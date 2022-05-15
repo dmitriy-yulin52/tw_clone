@@ -18,7 +18,10 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
-        flexBasis: '300px',
+        position:'sticky',
+        top:0,
+        overflow:'auto',
+        flexBasis: '400px',
         marginLeft: theme.spacing(4),
         '@media (max-width: 1050px)': {
             display: 'none'
