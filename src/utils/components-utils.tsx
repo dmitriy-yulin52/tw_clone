@@ -1,13 +1,12 @@
 import * as React from "react";
-import {memo, ReactElement, ReactNode, useCallback} from "react";
+import {memo, ReactElement, ReactNode} from "react";
 import {
     Avatar,
     Box,
-    Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    Divider,
     IconButton,
     makeStyles,
     Typography
@@ -21,32 +20,35 @@ interface MaterialDialogProps {
     closeDialog: () => void
     label: string
     children: ReactNode
-    onChange?: () => void
-    labelButton: string
+    actionButton?:ReactNode
 }
 
 
 const useStylesMaterialDialog = makeStyles((theme) => ({
-    materialDialog: {
+    header: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    divider:{
+        marginBottom:theme.spacing(2)
     }
 }))
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
 
-    const {open, closeDialog, label, children, onChange, labelButton} = props
+    const {open, closeDialog, label, children,actionButton} = props
     const classes = useStylesMaterialDialog()
 
-    const onClickHandler = useCallback((): void => {
-        onChange?.()
-        closeDialog()
-    }, [onChange, closeDialog])
 
     return (
-        <Dialog open={open}>
-            <DialogTitle className={classes.materialDialog}>
+        <Dialog open={open} className={classes.header}>
+            <Box
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+                padding={'16px 24px 8px 24px'}>
                 <IconButton
                     onClick={closeDialog}
                     color={'primary'}
@@ -55,12 +57,15 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
                     <CloseIcon color={'primary'}/>
                 </IconButton>
                 <Typography variant={'h6'} component={'span'}>{label}</Typography>
-            </DialogTitle>
+            </Box>
+            <Divider className={classes.divider}/>
             <DialogContent>
+                <Box >
                 {children}
+                </Box>
             </DialogContent>
             <DialogActions>
-                <Button variant={'contained'} color={'primary'} onClick={onClickHandler}>{labelButton}</Button>
+                {actionButton}
             </DialogActions>
         </Dialog>
     )
@@ -92,12 +97,14 @@ const MaterialBlockStyles = makeStyles(() => ({
         padding: '0px'
     },
     hover: {
-        padding:'8px',
-        alignItems:'center',
+        padding: '8px',
+        alignItems: 'center',
         '&:hover': {
             backgroundColor: 'rgb(232, 234, 234)',
             cursor: 'pointer',
-            transition:'0.7s'
+            transition: '0.7s',
+            transform: "scale(1.1)",
+            borderRadius: '10px'
         }
     }
 }))
@@ -114,7 +121,7 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
     const classes = MaterialBlockStyles()
 
 
-    return <Box flexWrap={'nowrap'} display={'flex'}  className={classNames({
+    return <Box flexWrap={'nowrap'} display={'flex'} className={classNames({
         [classes.hover]: style,
     })}>
         {avatarUrl && <Box marginRight={'16px'}>
@@ -147,3 +154,4 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
         </Box>
     </Box>
 })
+
