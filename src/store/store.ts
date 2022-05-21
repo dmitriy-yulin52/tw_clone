@@ -1,4 +1,7 @@
-import { compose, createStore} from "redux";
+import {compose, createStore,applyMiddleware} from "redux";
+import {rootReducer} from "./rootReducer";
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from "./sagas";
 
 
 declare global {
@@ -7,12 +10,10 @@ declare global {
     }
 }
 
-const composeEnhancers =
+export const composeEnhancers =
     (typeof window !== 'undefined' &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
     compose;
-
-// export let root = combineReducers({})
 
 function root(state = 0, action: any): void {
     console.log(state, action)
@@ -20,8 +21,11 @@ function root(state = 0, action: any): void {
 
 export type AppStateType = ReturnType<typeof root>
 
-// @ts-ignore
-export let store = createStore(root)
+const sagaMiddleware = createSagaMiddleware()
+
+export const store = createStore(rootReducer,composeEnhancers(applyMiddleware(sagaMiddleware)))
+
+sagaMiddleware.run(rootSaga)
 
 // @ts-ignore
 window.store = store
