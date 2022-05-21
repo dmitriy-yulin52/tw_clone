@@ -1,13 +1,10 @@
 
-
-
 export enum LoadingState{
     LOADED = 'LOADED',
     ERROR = 'ERROR',
     NEVER = 'NEVER',
 
 }
-
 
 export interface Tweet {
     user:{
@@ -16,7 +13,6 @@ export interface Tweet {
         avatarUrl:string
     }
 }
-
 
 export interface TweetsState {
     items:Tweet[]
