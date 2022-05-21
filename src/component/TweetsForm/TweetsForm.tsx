@@ -23,6 +23,10 @@ const TweetsFormStyles = makeStyles((theme) => ({
          '@media (max-width: 450px)': {
                     width:'250px'
                 },
+    },
+    styleErrorText:{
+        color:theme.palette.error.main,
+        height:'400px'
     }
 }))
 
@@ -64,13 +68,14 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
-                rows={1}
+                rows={4}
                 maxRows={15}
                 multiline
                 fullWidth
                 placeholder={'Что происходит?'}
                 variant={'standard'}
                 value={text}
+                error={(countLimit -1) < 0}
             />
             <Box display={'flex'} marginTop={'16px'} justifyContent={'space-between'} flexWrap={'wrap'}>
                 <Box display={'flex'}>

@@ -13,7 +13,7 @@ export const TweetsDialog = memo(function EntryDialog(props: TweetsDialogProps):
     const {open, closeDialog,children} = props
 
     return (
-        <MaterialDialog open={open} closeDialog={closeDialog} label={'Твитнуть'}>
+        <MaterialDialog open={open} closeDialog={closeDialog} label={'Твит'}>
             {children}
         </MaterialDialog>
     )

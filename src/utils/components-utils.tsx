@@ -179,11 +179,14 @@ interface MaterialTextFieldProps {
     maxRows?: number
     multiline?:boolean
     fullWidth?:boolean
+    error?:boolean
+    color?:'primary' | "secondary" | undefined
+    disabled?:boolean
 }
 
 export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
 
-    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows,multiline,fullWidth} = props
+    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows,multiline,fullWidth,error,color,disabled} = props
 
     return <TextField
         size={size}
@@ -201,6 +204,9 @@ export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElem
         className={style}
         fullWidth={fullWidth}
         multiline={multiline}
+        error={error}
+        color={color}
+        disabled={disabled}
     />
 })
 
