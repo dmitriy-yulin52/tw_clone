@@ -73,11 +73,6 @@ export const RightSide = function RightSide(): ReactElement {
                 variant={'outlined'}
                 fullWidth
                 placeholder={'Поиск в Твиттере'}
-                inputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">Kg</InputAdornment>
-                    ),
-                }}
             />
         </Box>
         <Paper className={classes.paperWrapper}>

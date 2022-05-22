@@ -68,7 +68,7 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
-                rows={4}
+                minRows={4}
                 maxRows={15}
                 multiline
                 fullWidth
