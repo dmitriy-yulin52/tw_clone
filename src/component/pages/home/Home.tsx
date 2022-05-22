@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {memo, ReactElement, useEffect} from 'react'
-import {Box, CircularProgress, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Box, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
 import {TweetsContent} from "./Tweets-content";
@@ -11,7 +11,6 @@ import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
 import {RootState} from "../../../store/store";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
-import {fetchTweetsRequest} from "../../../store/reducers/ducks/tweets/saga";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -54,8 +53,8 @@ const user = {
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
 
-    const tweets = useSelector<RootState,Tweet[]>(selectTweetsItems)
-    const isLoading = useSelector(selectIsTweetsLoading)
+    const tweets:Tweet[] = useSelector<RootState,Tweet[]>(selectTweetsItems)
+    const isLoading:boolean = useSelector(selectIsTweetsLoading)
     const fetch_tweets:()=> void = useAction(fetchTweets)
 
     useEffect(() => {

@@ -1,8 +1,6 @@
-import {call, CallEffect, put, takeLatest} from 'redux-saga/effects'
+import {put, takeLatest} from 'redux-saga/effects'
 import {setTweets, setTweetsLoadingState, TweetsActionsType} from "./actions";
-import {AxiosResponse} from 'axios'
-import {tweetsApi} from "../../../../services/api/tweets";
-import {LoadingState, Tweet} from "./types";
+import {LoadingState} from "./types";
 
 const users = {
     items: [
