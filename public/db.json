@@ -61,11 +61,13 @@
     "userName": "gorky_52",
     "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
   },
-  "themes": [{
-    "name": "Victor"
+  "tags": [{
+    "name": "Victor",
+    "count": 1
   },
     {
-    "name": "Oleg"
+    "name": "Oleg",
+      "count": 2
   }],
   "users": [
     {
