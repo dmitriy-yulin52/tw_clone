@@ -74,7 +74,6 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
                 <DialogActions>
                     {actionButton}
                 </DialogActions></>)}
-
         </Dialog>
     )
 })
@@ -175,7 +174,7 @@ interface MaterialTextFieldProps {
     style?: any
     autoFocus?: boolean
     size?: "medium" | "small"
-    rows?: number
+    minRows?: number
     maxRows?: number
     multiline?:boolean
     fullWidth?:boolean
@@ -186,7 +185,7 @@ interface MaterialTextFieldProps {
 
 export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
 
-    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, rows, maxRows,multiline,fullWidth,error,color,disabled} = props
+    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, minRows, maxRows,multiline,fullWidth,error,color,disabled} = props
 
     return <TextField
         size={size}
@@ -195,7 +194,7 @@ export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElem
         placeholder={placeholder}
         variant={variant}
         margin={'dense'}
-        rows={rows}
+        minRows={minRows}
         maxRows={maxRows}
         value={value}
         id={id}

@@ -44,7 +44,7 @@ const users = {
         },
         {
             "id": "6288da62b69f36a7d77a4132",
-            "text": "Exercitation elit aute dolor ipsum consectetur ut dolore Lorem ipsum est excepteur eiusmod.",
+            "text": "Exercitation elit aute dolor ipsum consectetur ut dolore Lorem ipsum est excepteur eiusmodExercitation elit aute dolor ipsum consectetur ut dolore Lorem ipsum est excepteur eiusmodExercitation elit aute dolor ipsum consectetur ut dolore Lorem ipsum est excepteur eiusmod.",
             "user": {
                 "fullName": "Meyers Doyle",
                 "userName": "haley",
@@ -55,13 +55,10 @@ const users = {
 }
 
 
-export function* fetchTweetsRequest(): Generator<any> {
-
+export function* fetchTweetsRequest(){
     try {
-        const data = yield call(tweetsApi.fetchTweets)
+        // const data = yield call(tweetsApi.fetchTweets)
         yield put(setTweets(users.items))
-        console.log(data, 'data')
-
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingState.ERROR))
     }

@@ -38,7 +38,7 @@ export const TweetsContentStyles = makeStyles((theme) => ({
     },
     tweets: {
         flexBasis: '600px',
-        flexGrow:1
+        flexGrow: 1
     },
     tweetsWrapperBox: {
         display: 'flex',
@@ -65,9 +65,13 @@ const gridPadding = {
 interface TweetsContentProps {
     text: string
     user: {
-        fullName: string
-        userName: string
-        avatarUrl: string
+        id: string,
+        text: string
+        user: {
+            fullName: string
+            userName: string
+            avatarUrl: string
+        }
     }
 }
 
@@ -77,13 +81,10 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
 
     const classes = TweetsContentStyles()
 
-    return <MaterialBlock headerTitle={user} avatarUrl={user.avatarUrl}>
+    return <MaterialBlock headerTitle={user.user} avatarUrl={user.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
-                {/*{text}*/}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet at corporis
-                distinctio dolore, dolores, ex facere ipsam ipsum iste labore molestiae mollitia odit
-                quis ratione repudiandae saepe soluta veritatis.
+                {text}
             </Typography>
         </Box>
         <Box marginTop={'16px'}>
