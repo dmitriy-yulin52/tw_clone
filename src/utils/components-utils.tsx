@@ -79,18 +79,19 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
-type TitleType = {
-    userName: string,
-    fullName: string
-}
-
-interface MaterialBlockProps<T> {
-    headerTitle?: T,
+interface MaterialBlockProps {
     headerButton?: ReactNode,
-    children?: ReactNode,
-    avatarUrl?: string
     style?: boolean
     subTitle?: string
+}
+
+interface WrapperAndBlockProps
+    extends WrapperMaterialBlockType {
+    children?: ReactNode,
+    text?: string,
+    fullName?: string,
+    userName?: string,
+    avatarUrl?: string,
 }
 
 
@@ -119,12 +120,13 @@ const MaterialBlockStyles = makeStyles(() => ({
 
 
 const typographyMargin = {
-    marginRight: '8px'
+    marginRight: '8px',
+    fontWeight: 500
 } as const
 
-function MaterialBlockImpl<T extends TestType>(props: MaterialBlockProps<T>): ReactElement {
+function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
 
-    const {avatarUrl, headerTitle, headerButton, children, style = false, subTitle} = props
+    const {headerButton, style = false, subTitle, text,avatarUrl,userName,fullName,children} = props
     const classes = MaterialBlockStyles()
 
 
@@ -132,47 +134,45 @@ function MaterialBlockImpl<T extends TestType>(props: MaterialBlockProps<T>): Re
         [classes.hover]: style,
     })}>
         {avatarUrl && <Box marginRight={'16px'}>
+
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
         <Box display={'flex'} flexDirection={'column'} flexGrow={1}
              className={classNames({[classes.paddingDown]: style})}>
             <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
-                {headerTitle !== undefined && <Box display={'flex'} flexDirection={'column'}>
+                <Box display={'flex'} flexDirection={'column'}>
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'}>
-                                {headerTitle.name !== null &&
-                                    <Typography color={'primary'}
-                                                style={typographyMargin}>{headerTitle.name}:</Typography>}
-                                {headerTitle.nickName !== null &&
-                                    <Typography color={'secondary'}>{headerTitle.nickName}</Typography>}
+                                {fullName !== null &&
+                                    <Typography color={'secondary'}
+                                                style={typographyMargin}>{`${fullName}:`}</Typography>}
+                                {userName !== null &&
+                                    <Typography color={'secondary'}>{userName}</Typography>}
                             </Box>
+                            {text !== null &&
+                                <Typography color={'primary'}>{text}</Typography>}
                             {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
                         </Box>
                         {headerButton !== null && <Box>
                             {headerButton}
                         </Box>}
                     </Box>
-                </Box>}
+                </Box>
                 {children}
             </Box>
-
         </Box>
     </Box>
 }
 
-type TestType = {
-    id: string,
-    name: string
-    nickName: string
-    count: number
-}
-type WrapperMaterialBlockType<T> = { children?: ReactNode } & Omit<MaterialBlockProps<T>, 'children'>
+type WrapperMaterialBlockType =
+    { children?: ReactNode, text?: string, fullName?: string, userName?: string, avatarUrl?: string, count?: number }
+    & MaterialBlockProps
 export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
 
-export function WrapperMaterialBlock<T extends TestType>(props: WrapperMaterialBlockType<T>):ReactElement {
-    return <MaterialBlock {...props} headerTitle={props.headerTitle}/>
+export function WrapperMaterialBlock(props: WrapperMaterialBlockType): ReactElement {
+    return <MaterialBlock {...props}/>
 }
 
 

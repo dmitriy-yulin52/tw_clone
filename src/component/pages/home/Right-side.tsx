@@ -7,9 +7,13 @@ import {Box, IconButton, InputAdornment, makeStyles, Paper, Typography} from "@m
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {SearchTextField} from '../../SerachTextField/SearchTextField';
 import {useDispatch, useSelector} from "react-redux";
-import {tags_items} from "../../../store/reducers/ducks/tags/selectors";
 import {Tag} from "../../../store/reducers/ducks/tags/types";
 import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
+import {tags_items} from "../../../store/reducers/ducks/tags/selectors";
+import {selectUsers} from "../../../store/reducers/ducks/users/selectors";
+import {User} from "../../../store/reducers/ducks/users/types";
+import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
+import {RightSideUsers} from "../../Right-side-users";
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
@@ -72,6 +76,7 @@ export const RightSide = function RightSide(): ReactElement {
     const dispatch = useDispatch()
 
     const tags: Tag[] = useSelector(tags_items)
+    const users: User[] = useSelector(selectUsers)
 
 
      useEffect(()=>{
@@ -96,7 +101,6 @@ export const RightSide = function RightSide(): ReactElement {
                     key={tags.length - index}
                     style
                     headerTitle={tag}
-                    subTitle={'Dmitriy'}
                     headerButton={
                         <IconButton
                             color={"primary"}
@@ -113,16 +117,16 @@ export const RightSide = function RightSide(): ReactElement {
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Кого читать</Typography>
             </Paper>
-            {/*{new Array(3).fill(*/}
-            {/*    <WrapperMaterialBlock<any>*/}
+            {/*{users.map((user)=>*/}
+            {/*    <WrapperMaterialBlock<User>*/}
             {/*        style*/}
-            {/*        avatarUrl={'https://jooinn.com/images/man-standing-on-street.jpg'}*/}
-            {/*        headerTitle={headerTitleRead}*/}
-            {/*        subTitle={'Dmitriy'}*/}
+            {/*        avatarUrl={user.avatarUrl}*/}
+            {/*        headerTitle={user}*/}
             {/*        headerButton={*/}
             {/*            <IconButton color={"primary"}*/}
             {/*            ><PersonAddIcon/></IconButton>}/>*/}
             {/*)}*/}
+            <RightSideUsers users={users}/>
         </Paper>
     </Box>
 }
