@@ -24,7 +24,7 @@ export interface SetTagsLoadingStateType extends Action<TagsActionsType> {
 }
 
 /** actions */
-export const setTweets = (payload: Tag[]): SetTagsType => {
+export const setTags = (payload: Tag[]): SetTagsType => {
 
     console.log(payload,'payload')
     return {
@@ -32,13 +32,13 @@ export const setTweets = (payload: Tag[]): SetTagsType => {
         payload
     }
 }
-export const setTweetsLoadingState = (payload:LoadingState): SetTagsLoadingStateType => {
+export const setTagsLoadingState = (payload:LoadingState): SetTagsLoadingStateType => {
     return {
         type: TagsActionsType.SET_LOADING_STATE,
         payload
     }
 }
-export const fetchTweets = (): FetchTagsType => {
+export const fetchTags = (): FetchTagsType => {
     return {
         type: TagsActionsType.FETCH_ITEMS,
     }
