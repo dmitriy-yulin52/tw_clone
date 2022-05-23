@@ -7,15 +7,15 @@ export enum LoadingState{
 
 }
 
-export interface Tag {
+export interface User {
     id:string,
     fullName:string
     userName:string
-    count:number
+    avatarUrl:string
 }
 
-export interface TagsState {
-    items:Tag[]
+export interface UsersState {
+    items:User[]
     loadingState:LoadingState
 
 }

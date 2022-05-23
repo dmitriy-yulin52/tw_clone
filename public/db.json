@@ -63,23 +63,29 @@
   },
   "tags": [
     {
-      "name": "Victor",
-      "nickName": "Russia",
+      "id": "1",
+      "fullName": "Victor",
+      "userName": "gorky_52",
+      "text": "Non do nisi adipisicing ad ullamco nulla id adipisicing veniam occaecat pariatur aute adipisicing voluptate",
       "count": 1
     },
     {
-      "name": "Oleg",
-      "nickName": "zdoroviy",
+      "id": "2",
+      "fullName": "Oleg",
+      "userName": "gorky_52",
+      "text": "Non do nisi adipisicing ad ullamco nulla id adipisicing veniam occaecat pariatur aute adipisicing voluptate",
       "count": 2
     }
   ],
   "users": [
     {
+      "id": "1",
       "fullName": "Ivanov ivan",
       "userName": "ivanka",
       "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
     },
     {
+      "id": "2",
       "fullName": "Therese Gilliam",
       "userName": "queen",
       "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"

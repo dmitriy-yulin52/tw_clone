@@ -15,19 +15,12 @@ export function* fetchTweetsRequest(){
         yield put(setTweetsLoadingState(LoadingState.ERROR))
     }
 }
-export function* fetchTagsRequest(){
-    try {
-        const data:Tag[] = yield call(tagsApi.fetchTags)
-        yield put(setTags(data))
-    } catch (e) {
-        yield put(setTagsLoadingState(LoadingState.ERROR))
-    }
-}
+
 
 
 
 
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest)
-    yield takeLatest(TagsActionsType.FETCH_ITEMS, fetchTagsRequest)
+
 }
