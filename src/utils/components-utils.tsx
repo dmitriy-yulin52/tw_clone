@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
+import {Tag} from "../store/reducers/ducks/tags/types";
 
 
 interface MaterialDialogProps {
@@ -38,8 +39,8 @@ const useStylesMaterialDialog = makeStyles((theme) => ({
 }))
 
 const buttonPadding = {
-    padding:'0px'
-}as const
+    padding: '0px'
+} as const
 
 
 export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement => {
@@ -83,8 +84,8 @@ type TitleType = {
     fullName: string
 }
 
-interface MaterialBlockProps {
-    headerTitle?: Partial<TitleType>,
+interface MaterialBlockProps<T> {
+    headerTitle?: T,
     headerButton?: ReactNode,
     children?: ReactNode,
     avatarUrl?: string
@@ -110,7 +111,7 @@ const MaterialBlockStyles = makeStyles(() => ({
             backgroundColor: 'rgb(232, 234, 234)',
             cursor: 'pointer',
             transition: '0.7s',
-            transform: "scale(0.95)",
+            transform: "scale(0.99)",
             borderRadius: '10px'
         }
     }
@@ -121,8 +122,7 @@ const typographyMargin = {
     marginRight: '8px'
 } as const
 
-
-export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockProps): ReactElement {
+function MaterialBlockImpl<T extends TestType>(props: MaterialBlockProps<T>): ReactElement {
 
     const {avatarUrl, headerTitle, headerButton, children, style = false, subTitle} = props
     const classes = MaterialBlockStyles()
@@ -138,15 +138,15 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
         <Box display={'flex'} flexDirection={'column'} flexGrow={1}
              className={classNames({[classes.paddingDown]: style})}>
             <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
-                {headerTitle && <Box display={'flex'} flexDirection={'column'}>
+                {headerTitle !== undefined && <Box display={'flex'} flexDirection={'column'}>
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'}>
-                                {headerTitle.userName &&
+                                {headerTitle.name !== null &&
                                     <Typography color={'primary'}
-                                                style={typographyMargin}>{headerTitle.userName}</Typography>}
-                                {headerTitle.fullName &&
-                                    <Typography color={'secondary'}>{headerTitle.fullName}</Typography>}
+                                                style={typographyMargin}>{headerTitle.name}:</Typography>}
+                                {headerTitle.nickName !== null &&
+                                    <Typography color={'secondary'}>{headerTitle.nickName}</Typography>}
                             </Box>
                             {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
                         </Box>
@@ -160,7 +160,20 @@ export const MaterialBlock = memo(function MaterialBlock(props: MaterialBlockPro
 
         </Box>
     </Box>
-})
+}
+
+type TestType = {
+    id: string,
+    name: string
+    nickName: string
+    count: number
+}
+type WrapperMaterialBlockType<T> = { children?: ReactNode } & Omit<MaterialBlockProps<T>, 'children'>
+export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
+
+export function WrapperMaterialBlock<T extends TestType>(props: WrapperMaterialBlockType<T>):ReactElement {
+    return <MaterialBlock {...props} headerTitle={props.headerTitle}/>
+}
 
 
 interface MaterialTextFieldProps {
@@ -176,16 +189,34 @@ interface MaterialTextFieldProps {
     size?: "medium" | "small"
     minRows?: number
     maxRows?: number
-    multiline?:boolean
-    fullWidth?:boolean
-    error?:boolean
-    color?:'primary' | "secondary" | undefined
-    disabled?:boolean
+    multiline?: boolean
+    fullWidth?: boolean
+    error?: boolean
+    color?: 'primary' | "secondary" | undefined
+    disabled?: boolean
 }
 
 export const MaterialTextField = memo((props: MaterialTextFieldProps): ReactElement => {
 
-    const {onChange, placeholder, variant, value, id, label, type, style, autoFocus, size, minRows, maxRows,multiline,fullWidth,error,color,disabled} = props
+    const {
+        onChange,
+        placeholder,
+        variant,
+        value,
+        id,
+        label,
+        type,
+        style,
+        autoFocus,
+        size,
+        minRows,
+        maxRows,
+        multiline,
+        fullWidth,
+        error,
+        color,
+        disabled
+    } = props
 
     return <TextField
         size={size}

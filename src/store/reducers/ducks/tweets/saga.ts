@@ -3,6 +3,9 @@ import {setTweets, setTweetsLoadingState, TweetsActionsType} from "./actions";
 import {AxiosResponse} from 'axios'
 import {tweetsApi} from "../../../../services/api/tweets";
 import {LoadingState, Tweet} from "./types";
+import {setTags, setTagsLoadingState, TagsActionsType} from "../tags/actions";
+import {tagsApi} from "../../../../services/api/tags";
+import {Tag} from "../tags/types";
 
 export function* fetchTweetsRequest(){
     try {
@@ -12,7 +15,19 @@ export function* fetchTweetsRequest(){
         yield put(setTweetsLoadingState(LoadingState.ERROR))
     }
 }
+export function* fetchTagsRequest(){
+    try {
+        const data:Tag[] = yield call(tagsApi.fetchTags)
+        yield put(setTags(data))
+    } catch (e) {
+        yield put(setTagsLoadingState(LoadingState.ERROR))
+    }
+}
+
+
+
 
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest)
+    yield takeLatest(TagsActionsType.FETCH_ITEMS, fetchTagsRequest)
 }

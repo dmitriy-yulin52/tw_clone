@@ -10,6 +10,7 @@ export enum LoadingState{
 export interface Tag {
     id:string,
     name:string
+    nickName:string
     count:number
 }
 

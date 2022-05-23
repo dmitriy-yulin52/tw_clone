@@ -61,24 +61,28 @@
     "userName": "gorky_52",
     "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
   },
-  "tags": [{
-    "name": "Victor",
-    "count": 1
-  },
+  "tags": [
     {
-    "name": "Oleg",
+      "name": "Victor",
+      "nickName": "Russia",
+      "count": 1
+    },
+    {
+      "name": "Oleg",
+      "nickName": "zdoroviy",
       "count": 2
-  }],
+    }
+  ],
   "users": [
     {
       "fullName": "Ivanov ivan",
-    "userName": "ivanka",
-    "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
+      "userName": "ivanka",
+      "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
     },
     {
-        "fullName": "Therese Gilliam",
-        "userName": "queen",
-        "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
-      }
+      "fullName": "Therese Gilliam",
+      "userName": "queen",
+      "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg"
+    }
   ]
 }

@@ -6,7 +6,7 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
-import {MaterialBlock} from "../../../utils/components-utils";
+import {MaterialBlock, WrapperMaterialBlock} from "../../../utils/components-utils";
 import {preventDefault} from "../../../utils/hook-utils";
 
 
@@ -81,7 +81,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
 
     const classes = TweetsContentStyles()
 
-    return <MaterialBlock headerTitle={user.user} avatarUrl={user.user.avatarUrl}>
+    return <WrapperMaterialBlock<any> headerTitle={user.user} avatarUrl={user.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
                 {text}
@@ -137,7 +137,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                 </Grid>
             </Grid>
         </Box>
-    </MaterialBlock>
+    </WrapperMaterialBlock>
 
 
 })
