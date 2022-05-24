@@ -9,7 +9,7 @@ export enum LoadingState{
 
 export interface User {
     id:string,
-    fullName:string
+    name:string
     userName:string
     avatarUrl:string
 }
