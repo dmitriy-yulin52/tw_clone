@@ -14,7 +14,6 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
-import {Tag} from "../store/reducers/ducks/tags/types";
 
 
 interface MaterialDialogProps {
@@ -83,15 +82,12 @@ interface MaterialBlockProps {
     headerButton?: ReactNode,
     style?: boolean
     subTitle?: string
-}
-
-interface WrapperAndBlockProps
-    extends WrapperMaterialBlockType {
     children?: ReactNode,
     text?: string,
     fullName?: string,
     userName?: string,
     avatarUrl?: string,
+    count?: number
 }
 
 
@@ -124,9 +120,11 @@ const typographyMargin = {
     fontWeight: 500
 } as const
 
-function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
 
-    const {headerButton, style = false, subTitle, text,avatarUrl,userName,fullName,children} = props
+
+function MaterialBlockImpl(props: MaterialBlockProps): ReactElement {
+
+    const {headerButton, style = false, subTitle, text, avatarUrl, userName, fullName, children, count} = props
     const classes = MaterialBlockStyles()
 
 
@@ -145,17 +143,17 @@ function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'}>
-                                {fullName !== null &&
+                                {fullName &&
                                     <Typography color={'secondary'}
-                                                style={typographyMargin}>{`${fullName}:`}</Typography>}
-                                {userName !== null &&
+                                                style={typographyMargin}>{fullName}</Typography>}
+                                {userName &&
                                     <Typography color={'secondary'}>{userName}</Typography>}
                             </Box>
-                            {text !== null &&
+                            {text &&
                                 <Typography color={'primary'}>{text}</Typography>}
                             {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
                         </Box>
-                        {headerButton !== null && <Box>
+                        {headerButton && <Box>
                             {headerButton}
                         </Box>}
                     </Box>
@@ -166,14 +164,7 @@ function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
     </Box>
 }
 
-type WrapperMaterialBlockType =
-    { children?: ReactNode, text?: string, fullName?: string, userName?: string, avatarUrl?: string, count?: number }
-    & MaterialBlockProps
-export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
-
-export function WrapperMaterialBlock(props: WrapperMaterialBlockType): ReactElement {
-    return <MaterialBlock {...props}/>
-}
+export const MaterialBlock = memo(MaterialBlockImpl)
 
 
 interface MaterialTextFieldProps {

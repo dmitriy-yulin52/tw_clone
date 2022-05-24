@@ -7,7 +7,7 @@ import {setTags, setTagsLoadingState, TagsActionsType} from "../tags/actions";
 import {tagsApi} from "../../../../services/api/tags";
 import {Tag} from "../tags/types";
 
-export function* fetchTweetsRequest(){
+ function* fetchTweetsRequest(){
     try {
         const data:Tweet[] = yield call(tweetsApi.fetchTweets)
         yield put(setTweets(data))

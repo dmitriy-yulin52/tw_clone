@@ -1,5 +1,7 @@
 import {RootState} from "../../../store";
-import {User} from "./types";
+import {User, UsersState} from "./types";
+import {createSelector} from "reselect";
 
 
-export const selectUsers = (state: RootState): User[] => state.users.items
+export const selectUsers = (state: RootState): UsersState => state.users
+export const selectUsersItems = createSelector(selectUsers,(users)=>users.items)

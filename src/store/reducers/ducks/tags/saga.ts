@@ -5,7 +5,7 @@ import {tagsApi} from "../../../../services/api/tags";
 import {setTags, setTagsLoadingState, TagsActionsType} from "./actions";
 
 
-export function* fetchTagsRequest(){
+ function* fetchTagsRequest(){
     try {
         const data:Tag[] = yield call(tagsApi.fetchTags)
         yield put(setTags(data))

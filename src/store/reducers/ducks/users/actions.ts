@@ -3,9 +3,9 @@ import {LoadingState, User} from "./types";
 
 
 export enum UsersActionsType {
-    SET_ITEMS = 'tags/SET_ITEMS',
-    FETCH_ITEMS = 'tags/FETCH_ITEMS',
-    SET_LOADING_STATE = 'tags/SET_LOADING_STATE'
+    SET_ITEMS = 'users/SET_ITEMS',
+    FETCH_ITEMS = 'users/FETCH_ITEMS',
+    SET_LOADING_STATE = 'users/SET_LOADING_STATE'
 }
 
 export type UsersActions = SetUsersType | SetUsersLoadingStateType | FetchUsersType

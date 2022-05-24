@@ -11,6 +11,9 @@ import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
 import {RootState} from "../../../store/store";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
+import {RightSideUsers} from "../../Right-side-users";
+import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
+import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -53,9 +56,9 @@ const user = {
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
 
-    const tweets:Tweet[] = useSelector<RootState,Tweet[]>(selectTweetsItems)
-    const isLoading:boolean = useSelector(selectIsTweetsLoading)
-    const fetch_tweets:()=> void = useAction(fetchTweets)
+    const tweets: Tweet[] = useSelector<RootState, Tweet[]>(selectTweetsItems)
+    const isLoading: boolean = useSelector(selectIsTweetsLoading)
+    const fetch_tweets: () => void = useAction(fetchTweets)
 
     useEffect(() => {
         fetch_tweets()
@@ -72,15 +75,16 @@ export const Home = memo((): ReactElement => {
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                             <TweetsForm user={user}/>
                         </Paper>
-                        {isLoading ? (<Box><LinearProgress color="primary" /></Box>) : tweets.map((user,index)=>(
-                            <Paper key={tweets.length - index} variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <TweetsContent text={user.text} user={user}/>
-                        </Paper>
+                        {isLoading ? (<Box><LinearProgress color="primary"/></Box>) : tweets.map((user, index) => (
+                            <Paper key={tweets.length - index} variant={'outlined'}
+                                   className={classes.tweetsWrapperHeader}>
+                                <TweetsContent text={user.text} user={user}/>
+                            </Paper>
                         ))}
                     </Paper>
                 </Box>
             </Box>
-            <RightSide/>
+            <RightSide isLoading={isLoading}/>
         </Box>
     )
 })

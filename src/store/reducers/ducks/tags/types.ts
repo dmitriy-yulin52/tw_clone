@@ -12,6 +12,7 @@ export interface Tag {
     fullName:string
     userName:string
     count:number
+    text:string
 }
 
 export interface TagsState {

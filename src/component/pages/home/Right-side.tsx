@@ -1,19 +1,19 @@
 import * as React from 'react'
-import {ReactElement, useEffect} from 'react'
-import {MaterialBlock, WrapperMaterialBlock} from "../../../utils/components-utils";
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import {memo, ReactElement, ReactNode, useEffect} from 'react'
+import {MaterialBlock} from "../../../utils/components-utils";
 
-import {Box, IconButton, InputAdornment, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Box, IconButton, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {SearchTextField} from '../../SerachTextField/SearchTextField';
 import {useDispatch, useSelector} from "react-redux";
 import {Tag} from "../../../store/reducers/ducks/tags/types";
 import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
-import {tags_items} from "../../../store/reducers/ducks/tags/selectors";
-import {selectUsers} from "../../../store/reducers/ducks/users/selectors";
+import {selectTagsItems} from "../../../store/reducers/ducks/tags/selectors";
+import {selectUsersItems} from "../../../store/reducers/ducks/users/selectors";
 import {User} from "../../../store/reducers/ducks/users/types";
-import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 import {RightSideUsers} from "../../Right-side-users";
+import {useAction} from "../../../utils/hook-utils";
+import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
@@ -70,18 +70,26 @@ const headerTitleRead = {
 } as const
 
 
-export const RightSide = function RightSide(): ReactElement {
+interface RightSideProps {
+    isLoading:boolean
+}
 
+export const RightSide = memo(function RightSide(props:RightSideProps): ReactElement {
+
+    const {isLoading}=props
     const classes = RightSideStyles()
-    const dispatch = useDispatch()
 
-    const tags: Tag[] = useSelector(tags_items)
-    const users: User[] = useSelector(selectUsers)
+    const tags: Tag[] = useSelector(selectTagsItems)
+    const users: User[] = useSelector(selectUsersItems)
+    const fetch_users: () => void = useAction(fetchUsers)
+    const fetch_tags: () => void = useAction(fetchTags)
 
 
      useEffect(()=>{
-         dispatch(fetchTags())
-     },[fetchTags])
+         fetch_tags()
+         fetch_users()
+     },[fetch_tags,fetch_users])
+
 
     return <Box className={classes.wrapperRightBlock}>
         <Box marginTop={'32px'}>
@@ -95,12 +103,13 @@ export const RightSide = function RightSide(): ReactElement {
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Актуальные темы для вас</Typography>
             </Paper>
-
-            {tags.map((tag,index) =>
-                <WrapperMaterialBlock<Tag>
+            {isLoading ? <Box><LinearProgress color="primary"/></Box>:tags.map((tag,index) =>
+                <MaterialBlock
                     key={tags.length - index}
                     style
-                    headerTitle={tag}
+                    fullName={tag.fullName}
+                    userName={tag.userName}
+                    text={tag.text}
                     headerButton={
                         <IconButton
                             color={"primary"}
@@ -110,23 +119,13 @@ export const RightSide = function RightSide(): ReactElement {
                     <Typography>
                         Твитов: {tag.count}
                     </Typography>
-                </WrapperMaterialBlock>)}
+                </MaterialBlock>)}
         </Paper>
-
         <Paper className={classes.paperWrapper}>
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Кого читать</Typography>
             </Paper>
-            {/*{users.map((user)=>*/}
-            {/*    <WrapperMaterialBlock<User>*/}
-            {/*        style*/}
-            {/*        avatarUrl={user.avatarUrl}*/}
-            {/*        headerTitle={user}*/}
-            {/*        headerButton={*/}
-            {/*            <IconButton color={"primary"}*/}
-            {/*            ><PersonAddIcon/></IconButton>}/>*/}
-            {/*)}*/}
-            <RightSideUsers users={users}/>
+            {isLoading ? <Box><LinearProgress color="primary"/></Box>:<RightSideUsers users={users}/>}
         </Paper>
     </Box>
-}
+})

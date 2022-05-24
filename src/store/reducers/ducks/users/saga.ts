@@ -3,7 +3,7 @@ import {setUsers, setUsersLoadingState, UsersActionsType} from "./actions";
 import {LoadingState, User} from "./types";
 import {usersApi} from "../../../../services/api/users";
 
-export function* usersTweetsRequest(){
+function* fetchUsersRequest(){
     try {
         const data:User[] = yield call(usersApi.fetchUsers)
         yield put(setUsers(data))
@@ -13,6 +13,6 @@ export function* usersTweetsRequest(){
 }
 
 export function* usersSaga() {
-    yield takeEvery(UsersActionsType.FETCH_ITEMS, usersTweetsRequest)
+    yield takeLatest(UsersActionsType.FETCH_ITEMS, fetchUsersRequest)
 
 }
