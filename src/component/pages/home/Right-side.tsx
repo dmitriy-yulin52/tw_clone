@@ -1,23 +1,26 @@
 import * as React from 'react'
-import {ReactElement} from 'react'
-import {MaterialBlock} from "../../../utils/components-utils";
+import {ReactElement, useEffect} from 'react'
+import {MaterialBlock, WrapperMaterialBlock} from "../../../utils/components-utils";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-import {
-    Box, Button,
-    createStyles,
-    IconButton,
-    InputAdornment,
-    InputBase,
-    makeStyles,
-    Paper,
-    Typography,
-    withStyles
-} from "@material-ui/core";
+import {Box, IconButton, InputAdornment, makeStyles, Paper, Typography} from "@material-ui/core";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import {SearchTextField} from '../../SerachTextField/SearchTextField';
+import {useDispatch, useSelector} from "react-redux";
+import {Tag} from "../../../store/reducers/ducks/tags/types";
+import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
+import {tags_items} from "../../../store/reducers/ducks/tags/selectors";
+import {selectUsers} from "../../../store/reducers/ducks/users/selectors";
+import {User} from "../../../store/reducers/ducks/users/types";
+import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
+import {RightSideUsers} from "../../Right-side-users";
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
-        flexBasis: '300px',
+        position: 'sticky',
+        top: 0,
+        overflow: 'auto',
+        flexBasis: '400px',
         marginLeft: theme.spacing(4),
         '@media (max-width: 1050px)': {
             display: 'none'
@@ -50,65 +53,8 @@ const RightSideStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '18px',
         backgroundColor: '#f7f9f9',
-
-        //TODO
-        tweetsWrapperContent: {
-            display: 'flex',
-            justifyContent: 'space-between'
-        },
-        tweetsWrapperItemIcon: {
-            flexBasis: '55px',
-        },
-        tweetsWrapperCommitIcon: {
-            '&:hover': {
-                filter: 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)'
-            },
-
-        },
-        tweetsWrapperRepeatIcon: {
-            '&:hover': {
-                filter: 'invert(53%) sepia(17%) saturate(6503%) hue-rotate(59deg) brightness(102%) contrast(98%)'
-            },
-
-        },
-        tweetsWrapperLikeIcon: {
-            '&:hover': {
-                filter: 'invert(15%) sepia(95%) saturate(4053%) hue-rotate(329deg) brightness(91%) contrast(113%)'
-            },
-
-        },
-        tweets: {
-            flexBasis: '600px',
-        },
-        tweetsWrapperBox: {
-            display: 'flex',
-            alignItems: "center",
-            justifyContent: 'center',
-            marginTop: theme.spacing(2),
-            '& button': {
-                marginRight: theme.spacing(1),
-                padding: '0px'
-            }
-        },
-        tweetsWrapperIconButton: {
-            marginRight: theme.spacing(1)
-        }
     }
 }))
-
-const SearchTextField = withStyles((theme) => createStyles({
-    input: {
-        borderRadius: '30px',
-        backgroundColor: '#E6ECF0',
-        padding: '8px 8px 8px 16px',
-        height: '35px',
-        marginTop: '8px',
-        '&:focus': {
-            backgroundColor: '#fff',
-            border: '1px solid #1da1f2'
-        }
-    }
-}))(InputBase)
 
 
 const iconButtonPadding = {
@@ -127,50 +73,60 @@ const headerTitleRead = {
 export const RightSide = function RightSide(): ReactElement {
 
     const classes = RightSideStyles()
+    const dispatch = useDispatch()
 
+    const tags: Tag[] = useSelector(tags_items)
+    const users: User[] = useSelector(selectUsers)
+
+
+     useEffect(()=>{
+         dispatch(fetchTags())
+     },[fetchTags])
 
     return <Box className={classes.wrapperRightBlock}>
-        <SearchTextField
-            style={{padding: '8px'}}
-            fullWidth
-            placeholder={'Поиск в Твиттере'}
-            inputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">Kg</InputAdornment>
-                ),
-            }}
-        />
+        <Box marginTop={'32px'}>
+            <SearchTextField
+                variant={'outlined'}
+                fullWidth
+                placeholder={'Поиск в Твиттере'}
+            />
+        </Box>
         <Paper className={classes.paperWrapper}>
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Актуальные темы для вас</Typography>
             </Paper>
-            {new Array(3).fill(
-                <MaterialBlock
+
+            {tags.map((tag,index) =>
+                <WrapperMaterialBlock<Tag>
+                    key={tags.length - index}
                     style
-                    headerTitle={headerTitleTweets}
-                    subTitle={'Dmitriy'}
-                    headerButton={<IconButton color={"primary"}
-                                              style={iconButtonPadding}><MoreHorizIcon/></IconButton>}>
+                    headerTitle={tag}
+                    headerButton={
+                        <IconButton
+                            color={"primary"}
+                            style={iconButtonPadding}>
+                            <MoreHorizIcon/>
+                        </IconButton>}>
                     <Typography>
-                        Твитов: 14
+                        Твитов: {tag.count}
                     </Typography>
-                </MaterialBlock>)}
+                </WrapperMaterialBlock>)}
         </Paper>
 
         <Paper className={classes.paperWrapper}>
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Кого читать</Typography>
             </Paper>
-            {new Array(3).fill(
-                <MaterialBlock
-                    style
-                    avatarUrl={'https://jooinn.com/images/man-standing-on-street.jpg'}
-                    headerTitle={headerTitleRead}
-                    subTitle={'Dmitriy'}
-                    headerButton={<Button variant={'contained'} color={"primary"}
-                                              style={iconButtonPadding}>Читать</Button>}/>
-
-                )}
+            {/*{users.map((user)=>*/}
+            {/*    <WrapperMaterialBlock<User>*/}
+            {/*        style*/}
+            {/*        avatarUrl={user.avatarUrl}*/}
+            {/*        headerTitle={user}*/}
+            {/*        headerButton={*/}
+            {/*            <IconButton color={"primary"}*/}
+            {/*            ><PersonAddIcon/></IconButton>}/>*/}
+            {/*)}*/}
+            <RightSideUsers users={users}/>
         </Paper>
     </Box>
 }

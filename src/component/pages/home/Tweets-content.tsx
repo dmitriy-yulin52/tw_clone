@@ -6,7 +6,8 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
-import {MaterialBlock} from "../../../utils/components-utils";
+import {MaterialBlock, WrapperMaterialBlock} from "../../../utils/components-utils";
+import {preventDefault} from "../../../utils/hook-utils";
 
 
 export const TweetsContentStyles = makeStyles((theme) => ({
@@ -37,7 +38,7 @@ export const TweetsContentStyles = makeStyles((theme) => ({
     },
     tweets: {
         flexBasis: '600px',
-        flexGrow:1
+        flexGrow: 1
     },
     tweetsWrapperBox: {
         display: 'flex',
@@ -64,27 +65,26 @@ const gridPadding = {
 interface TweetsContentProps {
     text: string
     user: {
-        fullName: string
-        userName: string
-        avatarUrl: string
+        id: string,
+        text: string
+        user: {
+            fullName: string
+            userName: string
+            avatarUrl: string
+        }
     }
 }
 
 export const TweetsContent = memo(function CenterContent(props: TweetsContentProps): ReactElement {
 
-
     const {text, user} = props
-
 
     const classes = TweetsContentStyles()
 
-    return <MaterialBlock headerTitle={user} avatarUrl={user.avatarUrl}>
+    return <WrapperMaterialBlock<any> headerTitle={user.user} avatarUrl={user.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
-                {/*{text}*/}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet at corporis
-                distinctio dolore, dolores, ex facere ipsam ipsum iste labore molestiae mollitia odit
-                quis ratione repudiandae saepe soluta veritatis.
+                {text}
             </Typography>
         </Box>
         <Box marginTop={'16px'}>
@@ -95,7 +95,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         alignItems={'center'}
                         className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <ChatBubbleOutlineIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -106,7 +106,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                          alignItems={'center'}
                          className={classNames(classes.tweetsWrapperRepeatIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <RepeatIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -118,7 +118,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                         alignItems={'center'}
                         className={classNames(classes.tweetsWrapperLikeIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <FavoriteBorderIcon/>
                         </IconButton>
                         <Typography component={'span'}>14</Typography>
@@ -130,14 +130,14 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                          alignItems={'center'}
                          className={classNames(classes.tweetsWrapperCommitIcon, classes.tweetsWrapperBox)}
                     >
-                        <IconButton>
+                        <IconButton onClick={preventDefault}>
                             <OpenInBrowserIcon/>
                         </IconButton>
                     </Box>
                 </Grid>
             </Grid>
         </Box>
-    </MaterialBlock>
+    </WrapperMaterialBlock>
 
 
 })

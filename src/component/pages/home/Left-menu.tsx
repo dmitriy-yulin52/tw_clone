@@ -10,12 +10,15 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import CreateIcon from '@material-ui/icons/Create';
+import {useBooleanState} from "../../../utils/hook-utils";
+import {TweetsDialog} from "../../TweetsDialog/TweetsDialog";
+import {TweetsForm} from "../../TweetsForm/TweetsForm";
 
 
 const leftMenuStyles = makeStyles((theme) => ({
     WrapperLeftBlock: {
-        position:'sticky',
-        top:0,
+        position: 'sticky',
+        top: 0,
         flexShrink: 1,
         "@media (max-width: 1300px)": {
             flexBasis: '100px',
@@ -26,8 +29,11 @@ const leftMenuStyles = makeStyles((theme) => ({
     },
     list: {
         listStyle: 'none',
-        padding:'8px 16px 8px 8px',
-        marginRight: theme.spacing(0),
+        padding: '8px',
+        marginRight: theme.spacing(4),
+        '@media (max-width: 1300px)': {
+            marginRight: theme.spacing(0)
+        },
         '& li': {
             '& button': {
                 marginBottom: theme.spacing(2),
@@ -62,89 +68,101 @@ const twitterFilter = {
     marginRight: '0px'
 } as const
 
+const user = {
+    fullName: '@mail.ru',
+    userName: 'Dmitriy',
+    avatarUrl: 'https://jooinn.com/images/man-standing-on-street.jpg'
+} as const
+
+
 export const LeftMenu = memo(function LeftMenu(): ReactElement {
 
     const classes = leftMenuStyles()
 
-    return <Grid item className={classes.WrapperLeftBlock}>
-        <ul className={classes.list}>
-            <li>
-                <IconButton>
-                    <TwitterIcon color={'primary'} fontSize={'large'} style={twitterFilter}/>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <HomeIcon fontSize={'large'}/>
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}
-                        >Home</Typography>
-                    </Hidden>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <SearchIcon fontSize={'large'}/>
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Explore</Typography>
-                    </Hidden>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <NotificationsNoneIcon fontSize={'large'}
-                    />
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Notifications</Typography>
-                    </Hidden>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <MailOutlineIcon fontSize={'large'}
-                    />
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Messages</Typography>
+    const [openDialog, setCloseDialog, setOpenDialog] = useBooleanState(false)
 
-                    </Hidden>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <BookmarkBorderIcon fontSize={'large'}
-                    />
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Bookmarks</Typography>
 
-                    </Hidden>
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <ListAltIcon fontSize={'large'}
-                    />
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Lists</Typography>
+    return <>
+        <Grid item className={classes.WrapperLeftBlock}>
+            <ul className={classes.list}>
+                <li>
+                    <IconButton>
+                        <TwitterIcon color={'primary'} fontSize={'large'} style={twitterFilter}/>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <HomeIcon fontSize={'large'}/>
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}
+                            >Home</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <SearchIcon fontSize={'large'}/>
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Explore</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <NotificationsNoneIcon fontSize={'large'}
+                        />
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Notifications</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <MailOutlineIcon fontSize={'large'}
+                        />
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Messages</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <BookmarkBorderIcon fontSize={'large'}
+                        />
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Bookmarks</Typography>
 
-                    </Hidden>
-
-                </IconButton>
-            </li>
-            <li>
-                <IconButton>
-                    <PersonOutlineIcon fontSize={'large'}
-                    />
-                    <Hidden smDown mdDown>
-                        <Typography variant={'h5'} component={'span'}>Profile</Typography>
-                    </Hidden>
-                </IconButton>
-            </li>
-            <div>
-                <Button fullWidth color={'primary'} variant={'contained'}>
-                    <Hidden smDown>Твитнуть</Hidden>
-                    <Hidden mdUp><CreateIcon/></Hidden>
-                </Button>
-            </div>
-        </ul>
-    </Grid>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <ListAltIcon fontSize={'large'}
+                        />
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Lists</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <li>
+                    <IconButton>
+                        <PersonOutlineIcon fontSize={'large'}
+                        />
+                        <Hidden smDown mdDown>
+                            <Typography variant={'h5'} component={'span'}>Profile</Typography>
+                        </Hidden>
+                    </IconButton>
+                </li>
+                <div>
+                    <Button fullWidth color={'primary'} variant={'contained'} onClick={setOpenDialog}>
+                        <Hidden smDown>Твитнуть</Hidden>
+                        <Hidden mdUp><CreateIcon/></Hidden>
+                    </Button>
+                </div>
+            </ul>
+        </Grid>
+        <TweetsDialog open={openDialog} closeDialog={setCloseDialog}>
+            <TweetsForm user={user}/>
+        </TweetsDialog>
+    </>
 })
