@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
 import {RootState} from "../../../store/store";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
-import {RightSideUsers} from "../../Right-side-users";
+import {RightSideUsers} from "../../Right-side/Right-side-users";
 import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
 
@@ -84,7 +84,7 @@ export const Home = memo((): ReactElement => {
                     </Paper>
                 </Box>
             </Box>
-            <RightSide isLoading={isLoading}/>
+            <RightSide/>
         </Box>
     )
 })
