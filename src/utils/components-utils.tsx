@@ -128,7 +128,7 @@ function MaterialBlockImpl(props: MaterialBlockProps): ReactElement {
     const classes = MaterialBlockStyles()
 
 
-    return <Box flexWrap={'nowrap'} display={'flex'} className={classNames({
+    return <Box data-testid={'user-item'} flexWrap={'nowrap'} display={'flex'} className={classNames({
         [classes.hover]: style,
     })}>
         {avatarUrl && <Box marginRight={'16px'}>

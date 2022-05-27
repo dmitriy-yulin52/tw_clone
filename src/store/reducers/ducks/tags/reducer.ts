@@ -3,7 +3,7 @@ import produce, {Draft} from "immer";
 import {TagsActions, TagsActionsType} from "./actions";
 
 
-const initialTweetsState: TagsState = {
+export const initialTweetsState: TagsState = {
     items: [],
     loadingState: LoadingState.NEVER
 }

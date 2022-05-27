@@ -68,6 +68,7 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
+                maxRows={10}
                 multiline
                 fullWidth
                 placeholder={'Что происходит?'}
@@ -92,14 +93,14 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
                                 className={classNames(classes.circularProgressAbsolute, {
                                     [classes.circularProgressAbsoluteError]: text.length >= MAX_LENGTH
                                 })}
-                                variant={'static'}
+                                variant={'determinate'}
                                 size={20}
                                 thickness={5}
                                 value={text.length >= MAX_LENGTH ? 100 : limitPercent}
                             />
                             <CircularProgress
                                 className={classes.circularProgressRelative}
-                                variant={'static'}
+                                variant={'determinate'}
                                 size={20}
                                 thickness={5}
                                 value={100}

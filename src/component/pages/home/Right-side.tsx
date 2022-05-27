@@ -84,7 +84,7 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
     useEffect(() => {
         fetch_tags()
         fetch_users()
-    }, [fetch_tags, fetch_users])
+    }, [fetch_tags,fetch_users])
 
 
     if (is_request_users_error || is_request_tags_error) {
@@ -92,7 +92,7 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
     }
 
     return <Box className={classes.wrapperRightBlock}>
-        <Box marginTop={'32px'}>
+        <Box marginTop={'8px'}>
             <SearchTextField
                 variant={'outlined'}
                 fullWidth
