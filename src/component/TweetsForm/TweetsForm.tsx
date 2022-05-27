@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {ChangeEvent, memo, ReactElement, useCallback, useState} from 'react'
-import {Box, Button, CircularProgress, IconButton, makeStyles, TextField} from "@material-ui/core";
+import {Box, Button, CircularProgress, IconButton, makeStyles} from "@material-ui/core";
 import {MaterialBlock, MaterialTextField} from "../../utils/components-utils";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
@@ -23,6 +23,10 @@ const TweetsFormStyles = makeStyles((theme) => ({
          '@media (max-width: 450px)': {
                     width:'250px'
                 },
+    },
+    styleErrorText:{
+        color:theme.palette.error.main,
+        height:'400px'
     }
 }))
 
@@ -60,17 +64,16 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
     }, [setText, text])
 
 
-    return <MaterialBlock avatarUrl={user.avatarUrl}>
+    return <MaterialBlock  avatarUrl={user.avatarUrl}>
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
-                rows={1}
-                maxRows={15}
                 multiline
                 fullWidth
                 placeholder={'Что происходит?'}
                 variant={'standard'}
                 value={text}
+                error={(countLimit -1) < 0}
             />
             <Box display={'flex'} marginTop={'16px'} justifyContent={'space-between'} flexWrap={'wrap'}>
                 <Box display={'flex'}>
