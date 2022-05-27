@@ -11,9 +11,9 @@ import {store} from "./store/store";
 
 const container = document.getElementById('root');
 
-const root = createRoot(container as Element | DocumentFragment);
+const rootRender = createRoot(container!);
 
-root.render(
+rootRender.render(
     <BrowserRouter>
         <ThemeProvider theme={theme}>
             <Provider store={store}>
