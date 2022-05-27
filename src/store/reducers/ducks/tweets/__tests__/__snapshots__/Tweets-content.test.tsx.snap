@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tweets test tweetsReducer 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "id": "6288da623155e75552339bad",
+      "text": "text1",
+      "user": Object {
+        "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg",
+        "fullName": "Pratt Owens",
+        "userName": "sophie",
+      },
+    },
+    Object {
+      "id": "6288da62e64597ea30b1edff",
+      "text": "text2",
+      "user": Object {
+        "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg",
+        "fullName": "Gallegos Irwin",
+        "userName": "mcknight",
+      },
+    },
+  ],
+  "loadingState": "LOADED",
+}
+`;

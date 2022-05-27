@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`users test usersReducer 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg",
+      "id": "1001",
+      "name": "Ivanov",
+      "userName": "ivanka",
+    },
+    Object {
+      "avatarUrl": "https://jooinn.com/images/man-standing-on-street.jpg",
+      "id": "1002",
+      "name": "Therese",
+      "userName": "queen",
+    },
+  ],
+  "loadingState": "LOADED",
+}
+`;

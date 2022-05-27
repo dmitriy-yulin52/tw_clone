@@ -64,7 +64,7 @@ const gridPadding = {
 
 interface TweetsContentProps {
     text: string
-    user: {
+    tweet: {
         id: string,
         text: string
         user: {
@@ -77,11 +77,12 @@ interface TweetsContentProps {
 
 export const TweetsContent = memo(function CenterContent(props: TweetsContentProps): ReactElement {
 
-    const {text, user} = props
+    const {text, tweet} = props
 
     const classes = TweetsContentStyles()
 
-    return <MaterialBlock fullName={user.user.fullName} userName={user.user.userName} avatarUrl={user.user.avatarUrl}>
+    return <MaterialBlock fullName={tweet.user.fullName} userName={tweet.user.userName}
+                          avatarUrl={tweet.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
                 {text}
@@ -97,8 +98,9 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <ChatBubbleOutlineIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
+
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>
@@ -108,8 +110,8 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <RepeatIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>
@@ -120,9 +122,8 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <FavoriteBorderIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
-
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>

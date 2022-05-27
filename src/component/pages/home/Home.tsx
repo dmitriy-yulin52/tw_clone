@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {memo, ReactElement, useEffect} from 'react'
-import {Box, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
+import {Box, Divider, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
 import {TweetsContent} from "./Tweets-content";
@@ -14,6 +14,7 @@ import {Tweet} from "../../../store/reducers/ducks/tweets/types";
 import {RightSideUsers} from "../../Right-side/Right-side-users";
 import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
+import {Route, Routes,Link} from "react-router-dom";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -33,7 +34,7 @@ export const useStylesHome = makeStyles((theme) => ({
         borderBottom: 'none',
     },
     tweetsWrapperHeader: {
-        borderTop: 'none',
+        // borderTop: 'none',
         // borderLeft: 'none',
         // borderRight: 'none',
         padding: '15px',
@@ -43,6 +44,9 @@ export const useStylesHome = makeStyles((theme) => ({
             transition: '0.5s'
         }
     },
+    link:{
+        textDecoration:'none'
+    }
 
 }))
 
@@ -72,15 +76,28 @@ export const Home = memo((): ReactElement => {
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                             <Typography variant={'h6'} color={'primary'}>Home</Typography>
                         </Paper>
-                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <TweetsForm user={user}/>
-                        </Paper>
-                        {isLoading ? (<Box><LinearProgress color="primary"/></Box>) : tweets.map((user, index) => (
-                            <Paper key={tweets.length - index} variant={'outlined'}
-                                   className={classes.tweetsWrapperHeader}>
-                                <TweetsContent text={user.text} user={user}/>
-                            </Paper>
-                        ))}
+                        <Routes>
+                            <Route path={'/home'} element={<>
+                                <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
+                                    <TweetsForm user={user}/>
+                                </Paper>
+                            </>}>
+                            </Route>
+                        </Routes>
+                        <Routes>
+                            <Route path={'/home/*'} element={<Box marginTop={'8px'}>
+                                {isLoading ? (
+                                    <Box><LinearProgress color="primary"/></Box>) : tweets.map((tweet, index) => (
+                                    <Paper key={tweets.length - index} variant={'outlined'}
+                                           className={classes.tweetsWrapperHeader}>
+                                            <Link to={`/home/tweet${tweet.id}`} className={classes.link}>
+                                                <TweetsContent text={tweet.text} tweet={tweet}/>
+                                            </Link>
+                                    </Paper>
+                                ))}
+                            </Box>}>
+                            </Route>
+                        </Routes>
                     </Paper>
                 </Box>
             </Box>

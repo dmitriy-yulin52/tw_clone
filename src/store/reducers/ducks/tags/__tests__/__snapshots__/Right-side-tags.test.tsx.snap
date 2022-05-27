@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tags test tagsReducer 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "count": 2,
+      "fullName": "Sanya",
+      "id": "2",
+      "text": "Non do nisi adipisicing ad ullamco nulla id adipisicing veniam occaecat pariatur aute adipisicing voluptate",
+      "userName": "bolshoy",
+    },
+  ],
+  "loadingState": "LOADED",
+}
+`;

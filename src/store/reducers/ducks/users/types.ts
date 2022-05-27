@@ -17,5 +17,4 @@ export interface User {
 export interface UsersState {
     items:User[]
     loadingState:LoadingState
-
 }
