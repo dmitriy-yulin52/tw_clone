@@ -1,10 +1,19 @@
 import * as React from 'react'
-import {memo, ReactElement} from 'react'
-import {Box, makeStyles, Paper, Typography} from "@material-ui/core";
+import {memo, ReactElement, useEffect} from 'react'
+import {Box, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
 import {TweetsContent} from "./Tweets-content";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
+import {useAction} from "../../../utils/hook-utils";
+import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
+import {useSelector} from "react-redux";
+import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
+import {RootState} from "../../../store/store";
+import {Tweet} from "../../../store/reducers/ducks/tweets/types";
+import {RightSideUsers} from "../../Right-side/Right-side-users";
+import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
+import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -25,8 +34,8 @@ export const useStylesHome = makeStyles((theme) => ({
     },
     tweetsWrapperHeader: {
         borderTop: 'none',
-        borderLeft: 'none',
-        borderRight: 'none',
+        // borderLeft: 'none',
+        // borderRight: 'none',
         padding: '15px',
         '&:hover': {
             backgroundColor: 'rgb(245,248,250)',
@@ -46,25 +55,36 @@ const user = {
 
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
+
+    const tweets: Tweet[] = useSelector<RootState, Tweet[]>(selectTweetsItems)
+    const isLoading: boolean = useSelector(selectIsTweetsLoading)
+    const fetch_tweets: () => void = useAction(fetchTweets)
+
+    useEffect(() => {
+        fetch_tweets()
+    }, [fetch_tweets])
     return (
         <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>
-            <Box display={'flex'} flexBasis={'900px'}>
+            <Box display={'flex'} flexBasis={'600px'}>
                 <Box className={classes.tweets}>
                     <Paper className={classes.tweetsWrapper} variant={'outlined'}>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
                             <Typography variant={'h6'} color={'primary'}>Home</Typography>
                         </Paper>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                                <TweetsForm user={user}/>
+                            <TweetsForm user={user}/>
                         </Paper>
-                        {new Array(20).fill(<Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <TweetsContent text={'str'} user={user}/>
-                        </Paper>)}
+                        {isLoading ? (<Box><LinearProgress color="primary"/></Box>) : tweets.map((user, index) => (
+                            <Paper key={tweets.length - index} variant={'outlined'}
+                                   className={classes.tweetsWrapperHeader}>
+                                <TweetsContent text={user.text} user={user}/>
+                            </Paper>
+                        ))}
                     </Paper>
                 </Box>
-                <RightSide/>
             </Box>
+            <RightSide/>
         </Box>
     )
 })
