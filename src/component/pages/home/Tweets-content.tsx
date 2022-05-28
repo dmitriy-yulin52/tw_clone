@@ -1,18 +1,15 @@
 import * as React from 'react'
-import {memo, ReactElement, useEffect, useMemo} from 'react'
+import {memo, ReactElement, useMemo} from 'react'
 import {Box, Grid, IconButton, makeStyles, Paper, Typography} from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
-import {MaterialBlock} from "../../../utils/components-utils";
-import {preventDefault, useAction} from "../../../utils/hook-utils";
+import {MaterialBlock, PopoverDialogType} from "../../../utils/components-utils";
+import {preventDefault} from "../../../utils/hook-utils";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
-import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
 import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
 import {ChildrenPopover} from "../../popoverDialog/ChildrenPopover";
 
@@ -119,7 +116,7 @@ export const TweetsContent = memo((props: TweetsContentProps) => {
 })
 
 
-type TweetToTransform = Partial<Omit<Tweet, 'id' | 'text'>>
+type TweetToTransform = Omit<Tweet, 'id' | 'text'>
 type TransformToTweet = {
     status?: string,
     readers?: number,
@@ -130,53 +127,40 @@ type TransformToTweet = {
 }
 
 
-function transform_tweet(tweet: TweetToTransform, status?: string, readers?: number, in_readable?: number): TransformToTweet | null {
+function transform_tweet(tweet: TweetToTransform, status?: string, readers?: number, in_readable?: number): TransformToTweet{
     const {user} = tweet
 
-    if (user) {
-        const {fullName, userName,avatarUrl} = user
-        return {
-            status,
-            fullName,
-            userName,
-            avatarUrl,
-            readers,
-            in_readable
-        }
+    const {fullName, userName, avatarUrl} = user
+    return {
+        status,
+        fullName,
+        userName,
+        avatarUrl,
+        readers,
+        in_readable
     }
-    return null
 }
 
 
 export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElement {
 
     const {text, tweet} = props
-
     const classes = TweetsContentStyles()
 
-    const props_children = transform_tweet(tweet)
-     const popover_dialog_for_tweet_block = {
-            Component: PopoverDialog,
-            children: ChildrenPopover,
-            propsChildren: props_children!,
-            showPopover: true
-        }
-
+    const props_children:TransformToTweet = transform_tweet(tweet)
     const memomize_popover_dialog = useMemo(() => {
 
-
-
-        const popover_dialog_for_tweet_block = {
+        const popover_dialog_for_tweet_block: PopoverDialogType<TransformToTweet> = {
             Component: PopoverDialog,
             children: ChildrenPopover,
-            propsChildren: props_children ? props_children : null,
+            propsChildren: props_children,
             showPopover: true
         }
         return popover_dialog_for_tweet_block
-    }, [PopoverDialog, ChildrenPopover,tweet])
+    }, [PopoverDialog, ChildrenPopover, tweet, props_children])
 
 
-    return <MaterialBlock popoverDialog={popover_dialog_for_tweet_block} styleFullname fullName={tweet.user.fullName}
+    return <MaterialBlock popoverDialog={memomize_popover_dialog} styleFullname fullName={tweet.user.fullName}
                           userName={tweet.user.userName}
                           avatarUrl={tweet.user.avatarUrl}>
         <Box marginRight={'8px'}>
@@ -196,7 +180,6 @@ export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElem
                             <ChatBubbleOutlineIcon/>
                             <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>

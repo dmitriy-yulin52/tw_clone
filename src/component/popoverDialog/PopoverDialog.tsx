@@ -4,7 +4,7 @@ import {Box, Popover, Typography} from "@material-ui/core";
 import {PopoverOrigin} from "@material-ui/core/Popover/Popover";
 
 
-interface PopoverDialogProps {
+export interface PopoverDialogProps {
     open?: boolean
     anchorEl?: HTMLElement | null
     anchorOrigin?: PopoverOrigin

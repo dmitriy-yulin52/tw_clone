@@ -19,7 +19,7 @@ interface ChildrenPopover {
 }
 
 
-export function ChildrenPopover(props: ChildrenPopover): ReactElement {
+export function ChildrenPopover<T extends ChildrenPopover>(props: T): ReactElement {
     const {
         fullName,
         userName,
@@ -31,17 +31,17 @@ export function ChildrenPopover(props: ChildrenPopover): ReactElement {
 
     return <Box padding={'24px'}>
         <Box>
-            <Box>
+            {avatarUrl && <Box>
                 {avatarUrl ? <Avatar style={avatarWidth}
                                      src={avatarUrl}/> : <Avatar style={avatarWidth}
                                                                  src={''}/>}
-            </Box>
+            </Box>}
             {fullName && <Typography color={'primary'}>{fullName}</Typography>}
             {userName && <Typography color={'secondary'}>{userName}</Typography>}
         </Box>
-        <Box marginTop={'8px'} width={'320px'}>
-            {status && <Typography>{status}</Typography>}
-        </Box>
+       {status &&  <Box marginTop={'8px'} width={'320px'}>
+            <Typography>{status}</Typography>
+        </Box>}
         <Box marginTop={'16px'} display={'flex'} justifyContent={'space-between'}>
             <Box display={'flex'}>
                 {in_readable && (<><Typography style={marginRightStyle} color={'primary'}>{in_readable} </Typography>
