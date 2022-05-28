@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {memo, ReactElement, ReactNode, useCallback, useEffect} from 'react'
-import {Avatar, Box, IconButton, LinearProgress, makeStyles, Paper, Popover, Typography} from "@material-ui/core";
+import {memo, ReactElement, useCallback, useEffect} from 'react'
+import {Box, IconButton, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
@@ -9,11 +9,10 @@ import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
 import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import {Routes, useNavigate} from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {TweetBlock, TweetsContent} from "./Tweets-content";
+import {TweetsContent} from "./Tweets-content";
 import {universalRenderPaths} from "../../../utils/components-utils";
-import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
 
 
 export const useStylesHome = makeStyles((theme) => ({
