@@ -1,9 +1,8 @@
 import * as React from 'react'
-import {memo, ReactElement, useEffect, MouseEvent, useCallback} from 'react'
-import {Box, IconButton, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
+import {memo, ReactElement, ReactNode, useCallback, useEffect} from 'react'
+import {Avatar, Box, IconButton, LinearProgress, makeStyles, Paper, Popover, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
-import {TweetsContent} from "./Tweets-content";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
 import {useAction} from "../../../utils/hook-utils";
 import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
@@ -12,6 +11,9 @@ import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
 import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {TweetBlock, TweetsContent} from "./Tweets-content";
+import {universalRenderPaths} from "../../../utils/components-utils";
+import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -26,12 +28,13 @@ export const useStylesHome = makeStyles((theme) => ({
         flexGrow: 1,
     },
     tweetsWrapper: {
-        height: '100%',
+        // height: '100%',
         borderTop: 'none',
         borderBottom: 'none',
     },
 
     tweetsWrapperHeader: {
+
         // borderTop: 'none',
         // borderLeft: 'none',
         // borderRight: 'none',
@@ -65,75 +68,102 @@ const user = {
 
 
 const header = {
-    display:'flex',
-    alignItems:'center'
-}as const
+    display: 'flex',
+    alignItems: 'center',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+} as const
 
 
 const paddingIcon = {
-    padding:0
-}as const
+    padding: 0
+} as const
+
 
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
 
     const history = useNavigate()
 
-
-    const onClickBack:()=>void = useCallback(()=> {
+    const onClickBack: () => void = useCallback(() => {
         history('/home');
-    },[history])
-
+    }, [history])
 
     const tweets: Tweet[] = useSelector(selectTweetsItems)
     const isLoading: boolean = useSelector(selectIsTweetsLoading)
+
     const fetch_tweets: () => void = useAction(fetchTweets)
 
     useEffect(() => {
         fetch_tweets()
     }, [fetch_tweets])
+
+
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
     return (
         <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>
             <Box display={'flex'} flexBasis={'600px'}>
                 <Box className={classes.tweets}>
-                    <Paper className={classes.tweetsWrapper} variant={'outlined'}>
+                    <Paper className={classes.tweetsWrapper}>
                         <Paper variant={'outlined'} className={classes.tweetsWrapperHeader} style={header}>
                             <Routes>
-                                <Route path={'/home'} element={<><Typography variant={'h6'}
-                                                                             color={'primary'}>Главная</Typography></>}/>
+                                {universalRenderPaths(['home'],
+                                    <Typography
+                                        variant={'h6'}
+                                        color={'primary'}
+                                    >
+                                        Главная
+                                    </Typography>)}
                             </Routes>
                             <Routes>
-                                <Route path={'/home/tweet:id'} element={<IconButton onClick={onClickBack} color={'primary'} style={paddingIcon}>
-                                    <ArrowBackIcon />
-                                </IconButton>}/>
-                            </Routes>
-                            <Routes>
-                                <Route path={'/home/tweet:id'} element={<Box marginLeft={'8px'}><Typography variant={'h6'}
-                                                                                      color={'primary'}>Твитнуть</Typography></Box>}/>
+                                {universalRenderPaths(['home/tweet:id', 'home/search'],
+                                    <>
+                                        <IconButton
+                                            onClick={onClickBack}
+                                            color={'primary'}
+                                            style={paddingIcon}
+                                        >
+                                            <ArrowBackIcon/>
+                                        </IconButton>
+                                        <Box marginLeft={'8px'}>
+                                            <Typography
+                                                variant={'h6'}
+                                                color={'primary'}>
+                                                Твит
+                                            </Typography>
+                                        </Box>
+                                    </>)}
                             </Routes>
                         </Paper>
                         <Routes>
-                            <Route path={'/home'} element={<>
-                                <Paper variant={'outlined'} className={classes.tweetsForm}>
+                            {universalRenderPaths(['home', 'home/search'],
+                                <Paper variant={'outlined'}
+                                       className={classes.tweetsForm}>
                                     <TweetsForm user={user}/>
-                                </Paper>
-                            </>}>
-                            </Route>
+                                </Paper>)}
                         </Routes>
                         <Routes>
-                            <Route path={'/home/*'} element={<Box marginTop={'8px'}>
-                                {isLoading ? (
-                                    <Box><LinearProgress color="primary"/></Box>) : tweets.map((tweet, index) => (
-                                    <Paper key={tweets.length - index} variant={'outlined'}
-                                           className={classes.tweetsWrapperHeader}>
-                                        <Link to={`/home/tweet${tweet.id}`} className={classes.link}>
-                                            <TweetsContent text={tweet.text} tweet={tweet}/>
-                                        </Link>
-                                    </Paper>
-                                ))}
-                            </Box>}>
-                            </Route>
+                            {universalRenderPaths(['home', 'home/tweet:id'],
+                                <Box
+                                    marginTop={'8px'}
+                                >
+                                    {isLoading ? (
+                                            <Box><LinearProgress color="primary"/></Box>) :
+                                        <TweetsContent tweets={tweets}/>}
+                                </Box>)}
                         </Routes>
                     </Paper>
                 </Box>
