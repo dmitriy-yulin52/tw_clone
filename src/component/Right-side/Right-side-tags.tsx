@@ -25,10 +25,10 @@ export const RightSideTags = memo(function RightSideTags(props: RightSideTagsPro
 
     return <>
         {tags.map((tag, index) =>
-            <Link style={styleLink} to={`/search?q=${tag.fullName}`} key={tags.length - index}>
+            <Link style={styleLink} to={`search?q=${tag.fullName}`} key={tags.length - index}>
                 <MaterialBlock
                     key={tags.length - index}
-                    style
+                    styleHover
                     fullName={tag.fullName}
                     userName={tag.userName}
                     text={tag.text}

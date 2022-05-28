@@ -1,5 +1,5 @@
 import * as React from "react";
-import {memo, ReactElement, ReactNode} from "react";
+import {FunctionComponent, memo, ReactElement, ReactNode, useCallback} from "react";
 import {
     Avatar,
     Box,
@@ -14,7 +14,13 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
+import {preventDefault} from "./hook-utils";
+import {Route} from "react-router-dom";
+import {PopoverDialog} from "../component/popoverDialog/PopoverDialog";
 
+
+export const universalRenderPaths = (paths: string[], Element: ReactNode): JSX.Element[] =>
+    paths.map((path) => <Route key={path} path={path} element={Element}/>);
 
 interface MaterialDialogProps {
     open: boolean
@@ -78,9 +84,9 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
-interface MaterialBlockProps {
+interface MaterialBlockProps<T>{
     headerButton?: ReactNode,
-    style?: boolean
+    styleHover?: boolean
     subTitle?: string
     children?: ReactNode,
     text?: string,
@@ -88,6 +94,9 @@ interface MaterialBlockProps {
     userName?: string,
     avatarUrl?: string,
     count?: number
+    styleFullname?: boolean
+    popoverDialog?: { showPopover: boolean, Component: any, children: any,propsChildren: T}
+    // popoverDialog?: any
 }
 
 
@@ -111,6 +120,11 @@ const MaterialBlockStyles = makeStyles(() => ({
             transform: "scale(0.99)",
             borderRadius: '10px'
         }
+    },
+    styleFullName: {
+        '&:hover': {
+            textDecoration: 'underline'
+        }
     }
 }))
 
@@ -120,32 +134,84 @@ const typographyMargin = {
     fontWeight: 500
 } as const
 
+const anchorOrigin = {
+    vertical: 'bottom',
+    horizontal: 'left',
+} as const
+const transformOrigin = {
+    vertical: 'top',
+    horizontal: 'left',
+} as const
 
+function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
 
-function MaterialBlockImpl(props: MaterialBlockProps): ReactElement {
-
-    const {headerButton, style = false, subTitle, text, avatarUrl, userName, fullName, children, count} = props
+    const {
+        headerButton,
+        styleHover = false,
+        subTitle,
+        text,
+        avatarUrl,
+        userName,
+        fullName,
+        children,
+        count,
+        styleFullname = false,
+        popoverDialog
+    } = props
     const classes = MaterialBlockStyles()
+
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setAnchorEl(event.currentTarget);
+    }, [setAnchorEl, anchorEl]);
+
+    const handlePopoverClose = useCallback(() => {
+        setAnchorEl(null);
+    }, [anchorEl, setAnchorEl]);
+
+    const openPopover = Boolean(anchorEl);
 
 
     return <Box data-testid={'user-item'} flexWrap={'nowrap'} display={'flex'} className={classNames({
-        [classes.hover]: style,
+        [classes.hover]: styleHover,
     })}>
+        {popoverDialog &&
+            popoverDialog.showPopover &&
+            <popoverDialog.Component
+                open={openPopover}
+                anchorEl={anchorEl}
+                anchorOrigin={anchorOrigin}
+                transformOrigin={transformOrigin}
+                transitionDuration={5}
+            >
+                <popoverDialog.children {...popoverDialog.propsChildren}/>
+                {/*{popoverDialog.children}*/}
+            </popoverDialog.Component>}
         {avatarUrl && <Box marginRight={'16px'}>
 
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
         <Box display={'flex'} flexDirection={'column'} flexGrow={1}
-             className={classNames({[classes.paddingDown]: style})}>
+             className={classNames({[classes.paddingDown]: styleHover})}>
             <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
                 <Box display={'flex'} flexDirection={'column'}>
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'}>
                                 {fullName &&
-                                    <Typography color={'secondary'}
-                                                style={typographyMargin}>{fullName}</Typography>}
+                                    <Typography
+                                        aria-owns={openPopover ? 'mouse-over-popover' : undefined}
+                                        aria-haspopup="true"
+                                        onMouseEnter={handlePopoverOpen}
+                                        onMouseLeave={handlePopoverClose}
+                                        onClick={preventDefault}
+                                        color={'primary'}
+                                        className={classNames({
+                                            [classes.styleFullName]: styleFullname
+                                        })}
+                                        style={typographyMargin}>{fullName}</Typography>}
                                 {userName &&
                                     <Typography color={'secondary'}>{userName}</Typography>}
                             </Box>

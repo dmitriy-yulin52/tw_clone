@@ -22,6 +22,8 @@ import {RightSideUsers} from "../../Right-side/Right-side-users";
 import {useAction} from "../../../utils/hook-utils";
 import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 import {RightSideTags} from "../../Right-side/Right-side-tags";
+import {Route, Routes} from "react-router-dom";
+import {universalRenderPaths} from "../../../utils/components-utils";
 
 const RightSideStyles = makeStyles((theme) => ({
     wrapperRightBlock: {
@@ -84,7 +86,7 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
     useEffect(() => {
         fetch_tags()
         fetch_users()
-    }, [fetch_tags,fetch_users])
+    }, [fetch_tags, fetch_users])
 
 
     if (is_request_users_error || is_request_tags_error) {
@@ -103,14 +105,17 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
             <Paper className={classes.paperHeader}>
                 <Typography variant={'h6'}>Актуальные темы для вас</Typography>
             </Paper>
-             <Divider/>
-            {is_loading_tags ? <Box><LinearProgress color="primary"/></Box> : <RightSideTags tags={tags}/>}
+            <Divider/>
+            <Routes>
+                {universalRenderPaths(['home','home/search'],<>{is_loading_tags ? <Box><LinearProgress color="primary"/></Box> :
+                <RightSideTags tags={tags}/>}</>)}
+            </Routes>
         </Paper>
         <Paper className={classes.paperWrapper}>
             <Paper className={classes.paperHeader}>
-                <Typography variant={'h6'} >Кого читать</Typography>
+                <Typography variant={'h6'}>Кого читать</Typography>
             </Paper>
-             <Divider/>
+            <Divider/>
             {is_loading_users ? <Box><LinearProgress color="primary"/></Box> : <RightSideUsers users={users}/>}
         </Paper>
     </Box>

@@ -20,7 +20,8 @@ export const RightSideUsers = memo((props: RightSideUsersProps): ReactElement | 
 
     return <Box> {users.map((user, index) => (
         <MaterialBlock
-            style
+            styleFullname
+            styleHover
             fullName={user.name}
             userName={user.userName}
             avatarUrl={user.avatarUrl}
