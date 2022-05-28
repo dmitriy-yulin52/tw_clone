@@ -1,16 +1,19 @@
 import * as React from 'react'
-import {memo, ReactElement, useEffect} from 'react'
-import {Box, LinearProgress, makeStyles, Paper, Typography} from "@material-ui/core";
+import {memo, ReactElement, ReactNode, useCallback, useEffect} from 'react'
+import {Avatar, Box, IconButton, LinearProgress, makeStyles, Paper, Popover, Typography} from "@material-ui/core";
 import {LeftMenu} from "./Left-menu";
 import {RightSide} from "./Right-side";
-import {TweetsContent} from "./Tweets-content";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
 import {useAction} from "../../../utils/hook-utils";
 import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
 import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
-import {RootState} from "../../../store/store";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
+import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {TweetBlock, TweetsContent} from "./Tweets-content";
+import {universalRenderPaths} from "../../../utils/components-utils";
+import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -25,12 +28,14 @@ export const useStylesHome = makeStyles((theme) => ({
         flexGrow: 1,
     },
     tweetsWrapper: {
-        height: '100%',
+        // height: '100%',
         borderTop: 'none',
         borderBottom: 'none',
     },
+
     tweetsWrapperHeader: {
-        borderTop: 'none',
+
+        // borderTop: 'none',
         // borderLeft: 'none',
         // borderRight: 'none',
         padding: '15px',
@@ -40,6 +45,18 @@ export const useStylesHome = makeStyles((theme) => ({
             transition: '0.5s'
         }
     },
+    tweetsForm: {
+        marginTop: theme.spacing(1),
+        padding: '15px',
+        '&:hover': {
+            backgroundColor: 'rgb(245,248,250)',
+            cursor: 'pointer',
+            transition: '0.5s'
+        }
+    },
+    link: {
+        textDecoration: 'none'
+    }
 
 }))
 
@@ -50,33 +67,104 @@ const user = {
 } as const
 
 
+const header = {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+} as const
+
+
+const paddingIcon = {
+    padding: 0
+} as const
+
+
 export const Home = memo((): ReactElement => {
     const classes = useStylesHome()
 
-    const tweets:Tweet[] = useSelector<RootState,Tweet[]>(selectTweetsItems)
-    const isLoading:boolean = useSelector(selectIsTweetsLoading)
-    const fetch_tweets:()=> void = useAction(fetchTweets)
+    const history = useNavigate()
+
+    const onClickBack: () => void = useCallback(() => {
+        history('/home');
+    }, [history])
+
+    const tweets: Tweet[] = useSelector(selectTweetsItems)
+    const isLoading: boolean = useSelector(selectIsTweetsLoading)
+
+    const fetch_tweets: () => void = useAction(fetchTweets)
 
     useEffect(() => {
         fetch_tweets()
     }, [fetch_tweets])
+
+
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
     return (
         <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>
             <Box display={'flex'} flexBasis={'600px'}>
                 <Box className={classes.tweets}>
-                    <Paper className={classes.tweetsWrapper} variant={'outlined'}>
-                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <Typography variant={'h6'} color={'primary'}>Home</Typography>
+                    <Paper className={classes.tweetsWrapper}>
+                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader} style={header}>
+                            <Routes>
+                                {universalRenderPaths(['home'],
+                                    <Typography
+                                        variant={'h6'}
+                                        color={'primary'}
+                                    >
+                                        Главная
+                                    </Typography>)}
+                            </Routes>
+                            <Routes>
+                                {universalRenderPaths(['home/tweet:id', 'home/search'],
+                                    <>
+                                        <IconButton
+                                            onClick={onClickBack}
+                                            color={'primary'}
+                                            style={paddingIcon}
+                                        >
+                                            <ArrowBackIcon/>
+                                        </IconButton>
+                                        <Box marginLeft={'8px'}>
+                                            <Typography
+                                                variant={'h6'}
+                                                color={'primary'}>
+                                                Твит
+                                            </Typography>
+                                        </Box>
+                                    </>)}
+                            </Routes>
                         </Paper>
-                        <Paper variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <TweetsForm user={user}/>
-                        </Paper>
-                        {isLoading ? (<Box><LinearProgress color="primary" /></Box>) : tweets.map((user,index)=>(
-                            <Paper key={tweets.length - index} variant={'outlined'} className={classes.tweetsWrapperHeader}>
-                            <TweetsContent text={user.text} user={user}/>
-                        </Paper>
-                        ))}
+                        <Routes>
+                            {universalRenderPaths(['home', 'home/search'],
+                                <Paper variant={'outlined'}
+                                       className={classes.tweetsForm}>
+                                    <TweetsForm user={user}/>
+                                </Paper>)}
+                        </Routes>
+                        <Routes>
+                            {universalRenderPaths(['home', 'home/tweet:id'],
+                                <Box
+                                    marginTop={'8px'}
+                                >
+                                    {isLoading ? (
+                                            <Box><LinearProgress color="primary"/></Box>) :
+                                        <TweetsContent tweets={tweets}/>}
+                                </Box>)}
+                        </Routes>
                     </Paper>
                 </Box>
             </Box>

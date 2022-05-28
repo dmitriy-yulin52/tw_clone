@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {ChangeEvent, memo, ReactElement, useCallback, useState} from 'react'
 import {Box, Button, CircularProgress, IconButton, makeStyles} from "@material-ui/core";
-import {MaterialBlock, MaterialTextField, WrapperMaterialBlock} from "../../utils/components-utils";
+import {MaterialBlock, MaterialTextField} from "../../utils/components-utils";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import classNames from "classnames";
@@ -64,10 +64,11 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
     }, [setText, text])
 
 
-    return <WrapperMaterialBlock<any> avatarUrl={user.avatarUrl}>
+    return <MaterialBlock  avatarUrl={user.avatarUrl}>
         <Box display={'flex'} flexDirection={'column'}>
             <MaterialTextField
                 onChange={handleChange}
+                maxRows={10}
                 multiline
                 fullWidth
                 placeholder={'Что происходит?'}
@@ -92,14 +93,14 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
                                 className={classNames(classes.circularProgressAbsolute, {
                                     [classes.circularProgressAbsoluteError]: text.length >= MAX_LENGTH
                                 })}
-                                variant={'static'}
+                                variant={'determinate'}
                                 size={20}
                                 thickness={5}
                                 value={text.length >= MAX_LENGTH ? 100 : limitPercent}
                             />
                             <CircularProgress
                                 className={classes.circularProgressRelative}
-                                variant={'static'}
+                                variant={'determinate'}
                                 size={20}
                                 thickness={5}
                                 value={100}
@@ -115,5 +116,5 @@ export const TweetsForm = memo((props: TweetsFormProps): ReactElement => {
                 </Box>
             </Box>
         </Box>
-    </WrapperMaterialBlock>
+    </MaterialBlock>
 })

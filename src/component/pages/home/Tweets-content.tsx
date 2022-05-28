@@ -1,13 +1,20 @@
 import * as React from 'react'
-import {memo, ReactElement} from 'react'
-import {Box, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
+import {memo, ReactElement, useEffect, useMemo} from 'react'
+import {Box, Grid, IconButton, makeStyles, Paper, Typography} from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import classNames from "classnames";
-import {MaterialBlock, WrapperMaterialBlock} from "../../../utils/components-utils";
-import {preventDefault} from "../../../utils/hook-utils";
+import {MaterialBlock} from "../../../utils/components-utils";
+import {preventDefault, useAction} from "../../../utils/hook-utils";
+import {Tweet} from "../../../store/reducers/ducks/tweets/types";
+import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
+import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
+import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
+import {ChildrenPopover} from "../../popoverDialog/ChildrenPopover";
 
 
 export const TweetsContentStyles = makeStyles((theme) => ({
@@ -52,6 +59,21 @@ export const TweetsContentStyles = makeStyles((theme) => ({
     },
     tweetsWrapperIconButton: {
         marginRight: theme.spacing(1)
+    },
+    tweetsWrapperHeader: {
+
+        // borderTop: 'none',
+        // borderLeft: 'none',
+        // borderRight: 'none',
+        padding: '15px',
+        '&:hover': {
+            backgroundColor: 'rgb(245,248,250)',
+            cursor: 'pointer',
+            transition: '0.5s'
+        }
+    },
+    link: {
+        textDecoration: 'none'
     }
 
 
@@ -62,9 +84,9 @@ const gridPadding = {
 } as const
 
 
-interface TweetsContentProps {
+interface TweetBlockProps {
     text: string
-    user: {
+    tweet: {
         id: string,
         text: string
         user: {
@@ -75,13 +97,88 @@ interface TweetsContentProps {
     }
 }
 
-export const TweetsContent = memo(function CenterContent(props: TweetsContentProps): ReactElement {
+interface TweetsContentProps {
+    tweets: Tweet[]
+}
 
-    const {text, user} = props
+export const TweetsContent = memo((props: TweetsContentProps) => {
+
+    const {tweets} = props
+    const classes = TweetsContentStyles()
+
+    return <>
+        {tweets.map((tweet, index) => (
+            <Paper key={tweets.length - index} variant={'outlined'}
+                   className={classes.tweetsWrapperHeader}>
+                <Link to={`tweet${tweet.id}`} className={classes.link}>
+                    <TweetBlock text={tweet.text} tweet={tweet}/>
+                </Link>
+            </Paper>
+        ))}
+    </>
+})
+
+
+type TweetToTransform = Partial<Omit<Tweet, 'id' | 'text'>>
+type TransformToTweet = {
+    status?: string,
+    readers?: number,
+    in_readable?: number,
+    fullName?: string
+    userName?: string
+    avatarUrl?: string
+}
+
+
+function transform_tweet(tweet: TweetToTransform, status?: string, readers?: number, in_readable?: number): TransformToTweet | null {
+    const {user} = tweet
+
+    if (user) {
+        const {fullName, userName,avatarUrl} = user
+        return {
+            status,
+            fullName,
+            userName,
+            avatarUrl,
+            readers,
+            in_readable
+        }
+    }
+    return null
+}
+
+
+export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElement {
+
+    const {text, tweet} = props
 
     const classes = TweetsContentStyles()
 
-    return <WrapperMaterialBlock<any> headerTitle={user.user} avatarUrl={user.user.avatarUrl}>
+    const props_children = transform_tweet(tweet)
+     const popover_dialog_for_tweet_block = {
+            Component: PopoverDialog,
+            children: ChildrenPopover,
+            propsChildren: props_children!,
+            showPopover: true
+        }
+
+    const memomize_popover_dialog = useMemo(() => {
+
+
+
+        const popover_dialog_for_tweet_block = {
+            Component: PopoverDialog,
+            children: ChildrenPopover,
+            propsChildren: props_children ? props_children : null,
+            showPopover: true
+        }
+        return popover_dialog_for_tweet_block
+    }, [PopoverDialog, ChildrenPopover,tweet])
+
+
+    return <MaterialBlock popoverDialog={popover_dialog_for_tweet_block} styleFullname fullName={tweet.user.fullName}
+                          userName={tweet.user.userName}
+                          avatarUrl={tweet.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
                 {text}
@@ -97,8 +194,9 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <ChatBubbleOutlineIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
+
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>
@@ -108,8 +206,8 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <RepeatIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>
@@ -120,9 +218,8 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                     >
                         <IconButton onClick={preventDefault}>
                             <FavoriteBorderIcon/>
+                            <Box fontSize={'14px'}>12</Box>
                         </IconButton>
-                        <Typography component={'span'}>14</Typography>
-
                     </Box>
                 </Grid>
                 <Grid item style={gridPadding}>
@@ -137,7 +234,7 @@ export const TweetsContent = memo(function CenterContent(props: TweetsContentPro
                 </Grid>
             </Grid>
         </Box>
-    </WrapperMaterialBlock>
+    </MaterialBlock>
 
 
 })

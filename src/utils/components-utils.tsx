@@ -1,5 +1,5 @@
 import * as React from "react";
-import {memo, ReactElement, ReactNode} from "react";
+import {FunctionComponent, memo, ReactElement, ReactNode, useCallback} from "react";
 import {
     Avatar,
     Box,
@@ -14,8 +14,13 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
-import {Tag} from "../store/reducers/ducks/tags/types";
+import {preventDefault} from "./hook-utils";
+import {Route} from "react-router-dom";
+import {PopoverDialog} from "../component/popoverDialog/PopoverDialog";
 
+
+export const universalRenderPaths = (paths: string[], Element: ReactNode): JSX.Element[] =>
+    paths.map((path) => <Route key={path} path={path} element={Element}/>);
 
 interface MaterialDialogProps {
     open: boolean
@@ -79,19 +84,19 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
-interface MaterialBlockProps {
+interface MaterialBlockProps<T>{
     headerButton?: ReactNode,
-    style?: boolean
+    styleHover?: boolean
     subTitle?: string
-}
-
-interface WrapperAndBlockProps
-    extends WrapperMaterialBlockType {
     children?: ReactNode,
     text?: string,
     fullName?: string,
     userName?: string,
     avatarUrl?: string,
+    count?: number
+    styleFullname?: boolean
+    popoverDialog?: { showPopover: boolean, Component: any, children: any,propsChildren: T}
+    // popoverDialog?: any
 }
 
 
@@ -115,6 +120,11 @@ const MaterialBlockStyles = makeStyles(() => ({
             transform: "scale(0.99)",
             borderRadius: '10px'
         }
+    },
+    styleFullName: {
+        '&:hover': {
+            textDecoration: 'underline'
+        }
     }
 }))
 
@@ -124,38 +134,92 @@ const typographyMargin = {
     fontWeight: 500
 } as const
 
-function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
+const anchorOrigin = {
+    vertical: 'bottom',
+    horizontal: 'left',
+} as const
+const transformOrigin = {
+    vertical: 'top',
+    horizontal: 'left',
+} as const
 
-    const {headerButton, style = false, subTitle, text,avatarUrl,userName,fullName,children} = props
+function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
+
+    const {
+        headerButton,
+        styleHover = false,
+        subTitle,
+        text,
+        avatarUrl,
+        userName,
+        fullName,
+        children,
+        count,
+        styleFullname = false,
+        popoverDialog
+    } = props
     const classes = MaterialBlockStyles()
 
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-    return <Box flexWrap={'nowrap'} display={'flex'} className={classNames({
-        [classes.hover]: style,
+    const handlePopoverOpen = useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setAnchorEl(event.currentTarget);
+    }, [setAnchorEl, anchorEl]);
+
+    const handlePopoverClose = useCallback(() => {
+        setAnchorEl(null);
+    }, [anchorEl, setAnchorEl]);
+
+    const openPopover = Boolean(anchorEl);
+
+
+    return <Box data-testid={'user-item'} flexWrap={'nowrap'} display={'flex'} className={classNames({
+        [classes.hover]: styleHover,
     })}>
+        {popoverDialog &&
+            popoverDialog.showPopover &&
+            <popoverDialog.Component
+                open={openPopover}
+                anchorEl={anchorEl}
+                anchorOrigin={anchorOrigin}
+                transformOrigin={transformOrigin}
+                transitionDuration={5}
+            >
+                <popoverDialog.children {...popoverDialog.propsChildren}/>
+                {/*{popoverDialog.children}*/}
+            </popoverDialog.Component>}
         {avatarUrl && <Box marginRight={'16px'}>
 
             <Avatar alt={`Аватар пользователя`}
                     src={avatarUrl}/>
         </Box>}
         <Box display={'flex'} flexDirection={'column'} flexGrow={1}
-             className={classNames({[classes.paddingDown]: style})}>
+             className={classNames({[classes.paddingDown]: styleHover})}>
             <Box display={'flex'} flexDirection={'column'} flexGrow={1}>
                 <Box display={'flex'} flexDirection={'column'}>
                     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'}>
-                                {fullName !== null &&
-                                    <Typography color={'secondary'}
-                                                style={typographyMargin}>{`${fullName}:`}</Typography>}
-                                {userName !== null &&
+                                {fullName &&
+                                    <Typography
+                                        aria-owns={openPopover ? 'mouse-over-popover' : undefined}
+                                        aria-haspopup="true"
+                                        onMouseEnter={handlePopoverOpen}
+                                        onMouseLeave={handlePopoverClose}
+                                        onClick={preventDefault}
+                                        color={'primary'}
+                                        className={classNames({
+                                            [classes.styleFullName]: styleFullname
+                                        })}
+                                        style={typographyMargin}>{fullName}</Typography>}
+                                {userName &&
                                     <Typography color={'secondary'}>{userName}</Typography>}
                             </Box>
-                            {text !== null &&
+                            {text &&
                                 <Typography color={'primary'}>{text}</Typography>}
                             {subTitle && <Box><Typography color={'secondary'}>{subTitle}</Typography></Box>}
                         </Box>
-                        {headerButton !== null && <Box>
+                        {headerButton && <Box>
                             {headerButton}
                         </Box>}
                     </Box>
@@ -166,14 +230,7 @@ function MaterialBlockImpl(props: WrapperAndBlockProps): ReactElement {
     </Box>
 }
 
-type WrapperMaterialBlockType =
-    { children?: ReactNode, text?: string, fullName?: string, userName?: string, avatarUrl?: string, count?: number }
-    & MaterialBlockProps
-export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
-
-export function WrapperMaterialBlock(props: WrapperMaterialBlockType): ReactElement {
-    return <MaterialBlock {...props}/>
-}
+export const MaterialBlock = memo(MaterialBlockImpl)
 
 
 interface MaterialTextFieldProps {

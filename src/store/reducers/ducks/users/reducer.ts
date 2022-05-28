@@ -3,9 +3,9 @@ import produce, {Draft} from "immer";
 import {UsersActions, UsersActionsType} from "./actions";
 
 
-const initialUsersState: UsersState = {
+export const initialUsersState: UsersState = {
     items: [],
-    loadingState: LoadingState.NEVER
+    loadingState: LoadingState.NEVER,
 }
 
 

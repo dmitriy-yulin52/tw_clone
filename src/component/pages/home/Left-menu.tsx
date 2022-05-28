@@ -13,7 +13,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {TweetsDialog} from "../../TweetsDialog/TweetsDialog";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
-
+import {Link,NavLink, Outlet} from 'react-router-dom'
 
 const leftMenuStyles = makeStyles((theme) => ({
     WrapperLeftBlock: {
@@ -29,6 +29,8 @@ const leftMenuStyles = makeStyles((theme) => ({
     },
     list: {
         listStyle: 'none',
+        marginTop:0,
+        paddingTop:0,
         padding: '8px',
         marginRight: theme.spacing(4),
         '@media (max-width: 1300px)': {
@@ -86,18 +88,23 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
         <Grid item className={classes.WrapperLeftBlock}>
             <ul className={classes.list}>
                 <li>
-                    <IconButton>
-                        <TwitterIcon color={'primary'} fontSize={'large'} style={twitterFilter}/>
-                    </IconButton>
+                    <Link to={'/'}>
+                        <IconButton>
+                            <TwitterIcon color={'primary'} fontSize={'large'} style={twitterFilter}/>
+                        </IconButton>
+                    </Link>
                 </li>
                 <li>
-                    <IconButton>
+                     <NavLink to={'home'} style={{textDecoration:'none'}}>
+                        <IconButton>
                         <HomeIcon fontSize={'large'}/>
                         <Hidden smDown mdDown>
                             <Typography variant={'h5'} component={'span'}
                             >Home</Typography>
                         </Hidden>
                     </IconButton>
+                    </NavLink>
+
                 </li>
                 <li>
                     <IconButton>
@@ -164,5 +171,6 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
         <TweetsDialog open={openDialog} closeDialog={setCloseDialog}>
             <TweetsForm user={user}/>
         </TweetsDialog>
+
     </>
 })

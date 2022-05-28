@@ -1,3 +1,4 @@
+import {Tweet} from "../tweets/types";
 
 export enum LoadingState{
     LOADED = 'LOADED',
@@ -7,14 +8,9 @@ export enum LoadingState{
 
 }
 
-export interface User {
-    id:string,
-    name:string
-    userName:string
-    avatarUrl:string
-}
 
-export interface UsersState {
-    items:User[]
+export interface TweetDataState {
+    data:Tweet | null
     loadingState:LoadingState
+
 }

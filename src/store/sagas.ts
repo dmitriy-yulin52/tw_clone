@@ -6,7 +6,7 @@ import {usersSaga} from "./reducers/ducks/users/saga";
 export default function* rootSaga() {
     yield all([
         tweetsSaga(),
+        usersSaga(),
         tagsSaga(),
-        usersSaga()
     ])
 }
