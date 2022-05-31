@@ -24,7 +24,7 @@ export function useBooleanState(
 * @function
  * preventDefault and stopPropagation
  */
-interface AbstractEvent {
+export interface AbstractEvent {
     preventDefault(): void;
     stopPropagation(): void;
 }

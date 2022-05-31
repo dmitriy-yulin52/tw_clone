@@ -98,19 +98,6 @@ export const Home = memo((): ReactElement => {
         fetch_tweets()
     }, [fetch_tweets])
 
-
-    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
-    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handlePopoverClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-
     return (
         <Box className={classes.homeWrapper} alignContent={'stretch'} justifyContent={'center'} overflow={'auto'}>
             <LeftMenu/>

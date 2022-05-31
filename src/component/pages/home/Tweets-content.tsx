@@ -9,7 +9,7 @@ import classNames from "classnames";
 import {MaterialBlock, PopoverDialogType} from "../../../utils/components-utils";
 import {preventDefault} from "../../../utils/hook-utils";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import {PopoverDialog} from "../../popoverDialog/PopoverDialog";
 import {ChildrenPopover} from "../../popoverDialog/ChildrenPopover";
 
@@ -51,7 +51,7 @@ export const TweetsContentStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
         '& button': {
             marginRight: theme.spacing(1),
-            padding: '0px'
+            padding: '5px'
         }
     },
     tweetsWrapperIconButton: {
@@ -82,7 +82,6 @@ const gridPadding = {
 
 
 interface TweetBlockProps {
-    text: string
     tweet: {
         id: string,
         text: string
@@ -98,17 +97,18 @@ interface TweetsContentProps {
     tweets: Tweet[]
 }
 
-export const TweetsContent = memo((props: TweetsContentProps) => {
+export const TweetsContent = memo((props: TweetsContentProps): ReactElement => {
 
     const {tweets} = props
     const classes = TweetsContentStyles()
+
 
     return <>
         {tweets.map((tweet, index) => (
             <Paper key={tweets.length - index} variant={'outlined'}
                    className={classes.tweetsWrapperHeader}>
                 <Link to={`tweet${tweet.id}`} className={classes.link}>
-                    <TweetBlock text={tweet.text} tweet={tweet}/>
+                    <TweetBlock tweet={tweet}/>
                 </Link>
             </Paper>
         ))}
@@ -116,20 +116,23 @@ export const TweetsContent = memo((props: TweetsContentProps) => {
 })
 
 
-type TweetToTransform = Omit<Tweet, 'id' | 'text'>
-type TransformToTweet = {
+type TweetToTransform = Omit<Tweet, 'id' | 'text'> & {
+    readers?: number,
+    in_readable?: number,
+    status?: string,
+}
+export type TransformToTweet = {
     status?: string,
     readers?: number,
     in_readable?: number,
-    fullName?: string
-    userName?: string
+    fullName: string
+    userName: string
     avatarUrl?: string
 }
 
 
-function transform_tweet(tweet: TweetToTransform, status?: string, readers?: number, in_readable?: number): TransformToTweet{
-    const {user} = tweet
-
+function transform_tweet(tweet: TweetToTransform): TransformToTweet {
+    const {user, readers, in_readable, status} = tweet
     const {fullName, userName, avatarUrl} = user
     return {
         status,
@@ -144,11 +147,20 @@ function transform_tweet(tweet: TweetToTransform, status?: string, readers?: num
 
 export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElement {
 
-    const {text, tweet} = props
+    const {tweet} = props
     const classes = TweetsContentStyles()
 
-    const props_children:TransformToTweet = transform_tweet(tweet)
-    const memomize_popover_dialog = useMemo(() => {
+    console.log('tweets-content')
+
+
+    const memomize_popover_dialog: PopoverDialogType<TransformToTweet> = useMemo(() => {
+        const transform_tweet_props = {
+            ...tweet,
+            status: 'status',
+            readers: 34.5,
+            in_readable: 200
+        }
+        const props_children: TransformToTweet = transform_tweet(transform_tweet_props)
 
         const popover_dialog_for_tweet_block: PopoverDialogType<TransformToTweet> = {
             Component: PopoverDialog,
@@ -157,7 +169,7 @@ export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElem
             showPopover: true
         }
         return popover_dialog_for_tweet_block
-    }, [PopoverDialog, ChildrenPopover, tweet, props_children])
+    }, [tweet])
 
 
     return <MaterialBlock popoverDialog={memomize_popover_dialog} styleFullname fullName={tweet.user.fullName}
@@ -165,7 +177,7 @@ export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElem
                           avatarUrl={tweet.user.avatarUrl}>
         <Box marginRight={'8px'}>
             <Typography variant={'body1'} color={'textPrimary'}>
-                {text}
+                {tweet.text}
             </Typography>
         </Box>
         <Box marginTop={'16px'}>

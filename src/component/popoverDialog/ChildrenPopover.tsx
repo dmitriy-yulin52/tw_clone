@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ReactElement} from "react";
+import {memo, ReactElement} from "react";
 import {Avatar, Box, Typography} from "@material-ui/core";
 
 
@@ -10,8 +10,8 @@ const avatarWidth = {height: '80px', width: '80px'} as const
 
 
 interface ChildrenPopover {
-    fullName?: string
-    userName?: string
+    fullName: string
+    userName: string
     avatarUrl?: string
     status?: string
     readers?: number
@@ -19,7 +19,7 @@ interface ChildrenPopover {
 }
 
 
-export function ChildrenPopover<T extends ChildrenPopover>(props: T): ReactElement {
+function ChildrenPopoverImpl(props: ChildrenPopover): ReactElement {
     const {
         fullName,
         userName,
@@ -36,13 +36,13 @@ export function ChildrenPopover<T extends ChildrenPopover>(props: T): ReactEleme
                                      src={avatarUrl}/> : <Avatar style={avatarWidth}
                                                                  src={''}/>}
             </Box>}
-            {fullName && <Typography color={'primary'}>{fullName}</Typography>}
-            {userName && <Typography color={'secondary'}>{userName}</Typography>}
+            <Typography color={'primary'}>{fullName}</Typography>
+            <Typography color={'secondary'}>{userName}</Typography>
         </Box>
        {status &&  <Box marginTop={'8px'} width={'320px'}>
             <Typography>{status}</Typography>
         </Box>}
-        <Box marginTop={'16px'} display={'flex'} justifyContent={'space-between'}>
+        <Box marginTop={'16px'} display={'flex'} justifyContent={'space-between'} flexWrap={'wrap'}>
             <Box display={'flex'}>
                 {in_readable && (<><Typography style={marginRightStyle} color={'primary'}>{in_readable} </Typography>
                     <Typography color={'secondary'}>в читаемых</Typography></>)}
@@ -54,3 +54,4 @@ export function ChildrenPopover<T extends ChildrenPopover>(props: T): ReactEleme
         </Box>
     </Box>
 }
+export const ChildrenPopover = memo(ChildrenPopoverImpl) as typeof ChildrenPopoverImpl

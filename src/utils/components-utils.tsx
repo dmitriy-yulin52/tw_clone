@@ -93,8 +93,7 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
 })
 
 
-
-interface MaterialBlockProps<T>{
+interface MaterialBlockProps<T> {
     headerButton?: ReactNode,
     styleHover?: boolean
     subTitle?: string
@@ -105,14 +104,13 @@ interface MaterialBlockProps<T>{
     avatarUrl?: string,
     count?: number
     styleFullname?: boolean
-    // popoverDialog?: { showPopover: boolean, Component: any, children: any,propsChildren: T}
     popoverDialog?: PopoverDialogType<T>
 }
 
 export interface PopoverDialogType<T> {
-    showPopover:boolean,
-    Component: MemoExoticComponent<(props:PopoverDialogProps)=>ReactElement<any,string | React.JSXElementConstructor<any>>>
-    children:(props: T) => ReactElement<any, string | React.JSXElementConstructor<any>>
+    showPopover: boolean,
+    Component: MemoExoticComponent<(props: PopoverDialogProps) => ReactElement<any, string | React.JSXElementConstructor<any>>>
+    children: (props: T) => ReactElement<any, string | React.JSXElementConstructor<any>>
     propsChildren: T
 }
 
@@ -162,6 +160,8 @@ const transformOrigin = {
 
 function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
 
+
+    console.log('MaterialBlockImpl')
     const {
         headerButton,
         styleHover = false,
@@ -221,7 +221,10 @@ function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
                                         aria-owns={openPopover ? 'mouse-over-popover' : undefined}
                                         aria-haspopup="true"
                                         onMouseEnter={handlePopoverOpen}
-                                        onMouseLeave={handlePopoverClose}
+                                        onMouseLeave={(e) => {
+                                            handlePopoverClose()
+                                            preventDefault(e)
+                                        }}
                                         onClick={preventDefault}
                                         color={'primary'}
                                         className={classNames({
@@ -246,7 +249,7 @@ function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
     </Box>
 }
 
-export const MaterialBlock=  memo(MaterialBlockImpl) as typeof MaterialBlockImpl
+export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
 
 interface MaterialTextFieldProps {
     onChange: (e: any) => void
