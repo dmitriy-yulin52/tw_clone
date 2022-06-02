@@ -19,10 +19,6 @@ export const composeEnhancers =
 
 export type RootState = ReturnType<typeof rootReducer>
 
-// export type  RootState = {
-//     tweets:TweetsState
-// }
-
 const sagaMiddleware = createSagaMiddleware()
 
 export const store = createStore(rootReducer,composeEnhancers(applyMiddleware(sagaMiddleware)))

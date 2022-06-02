@@ -18,6 +18,7 @@ export interface SetTweetDataType extends Action<TweetDataActionsType> {
 }
 export interface FetchTweetDataType extends Action<TweetDataActionsType> {
     type: TweetDataActionsType.FETCH_TWEET_DATA
+    payload:string
 }
 export interface SetTweetDataLoadingStateType extends Action<TweetDataActionsType> {
     type: TweetDataActionsType.SET_LOADING_STATE
@@ -26,8 +27,7 @@ export interface SetTweetDataLoadingStateType extends Action<TweetDataActionsTyp
 
 /** actions */
 export const setTweetData = (payload: Tweet): SetTweetDataType => {
-
-    console.log(payload,'payload')
+    console.log(payload,'setTweetData')
     return {
         type: TweetDataActionsType.SET_TWEET_DATA,
         payload
@@ -39,8 +39,9 @@ export const setTweetDataLoadingState = (payload:LoadingState): SetTweetDataLoad
         payload
     }
 }
-export const fetchTweetData = (): FetchTweetDataType => {
+export const fetchTweetData = (payload:string): FetchTweetDataType => {
     return {
         type: TweetDataActionsType.FETCH_TWEET_DATA,
+        payload
     }
 }

@@ -9,10 +9,11 @@ import {fetchTweets} from "../../../store/reducers/ducks/tweets/actions";
 import {useSelector} from "react-redux";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/reducers/ducks/tweets/selectors";
 import {Tweet} from "../../../store/reducers/ducks/tweets/types";
-import {Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {TweetsContent} from "./Tweets-content";
 import {universalRenderPaths} from "../../../utils/components-utils";
+import {FullTweet} from "./Tweet";
 
 
 export const useStylesHome = makeStyles((theme) => ({
@@ -140,9 +141,10 @@ export const Home = memo((): ReactElement => {
                                        className={classes.tweetsForm}>
                                     <TweetsForm user={user}/>
                                 </Paper>)}
+                             <Route path={'home/tweet:id'}  element={<FullTweet/>}/>
                         </Routes>
                         <Routes>
-                            {universalRenderPaths(['home', 'home/tweet:id'],
+                            {universalRenderPaths(['home'],
                                 <Box
                                     marginTop={'8px'}
                                 >

@@ -101,7 +101,7 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
             </Paper>
             <Divider/>
             <Routes>
-                {universalRenderPaths(['home', 'home/search'], <>{is_loading_tags ?
+                {universalRenderPaths(['home', 'home/search','home/tweet:id'], <>{is_loading_tags ?
                     <Box><LinearProgress color="primary"/></Box> :
                     <RightSideTags tags={tags}/>}</>)}
             </Routes>
