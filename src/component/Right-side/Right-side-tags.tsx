@@ -1,10 +1,11 @@
 import * as React from 'react'
-import {memo, ReactElement} from 'react'
+import {memo, ReactElement, useMemo} from 'react'
 import {IconButton, Typography} from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {MaterialBlock} from "../../utils/components-utils";
 import {Tag} from "../../store/reducers/ducks/tags/types";
 import {Link} from "react-router-dom";
+import {preventDefault} from "../../utils/hook-utils";
 
 interface RightSideTagsProps {
     tags: Tag[]
@@ -23,6 +24,9 @@ export const RightSideTags = memo(function RightSideTags(props: RightSideTagsPro
 
     const {tags} = props
 
+
+
+
     return <>
         {tags.map((tag, index) =>
             <Link style={styleLink} to={`search?q=${tag.fullName}`} key={tags.length - index}>
@@ -34,6 +38,7 @@ export const RightSideTags = memo(function RightSideTags(props: RightSideTagsPro
                     text={tag.text}
                     headerButton={
                         <IconButton
+                            onClick={preventDefault}
                             color={"primary"}
                             style={iconButtonPadding}>
                             <MoreHorizIcon/>

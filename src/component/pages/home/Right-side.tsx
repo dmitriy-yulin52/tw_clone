@@ -5,24 +5,18 @@ import {SearchTextField} from '../../SerachTextField/SearchTextField';
 import {useSelector} from "react-redux";
 import {Tag} from "../../../store/reducers/ducks/tags/types";
 import {fetchTags} from "../../../store/reducers/ducks/tags/actions";
-import {
-    selectIsTagsError,
-    selectIsTagsLoaded,
-    selectIsTagsLoading,
-    selectTagsItems
-} from "../../../store/reducers/ducks/tags/selectors";
+import {selectIsTagsError, selectIsTagsLoading, selectTagsItems} from "../../../store/reducers/ducks/tags/selectors";
 import {
     selectIsUsersError,
-    selectIsUsersLoaded,
     selectIsUsersLoading,
     selectUsersItems
 } from "../../../store/reducers/ducks/users/selectors";
 import {User} from "../../../store/reducers/ducks/users/types";
-import {RightSideUsers} from "../../Right-side/Right-side-users";
+import {RightSideUser} from "../../Right-side/Right-side-users";
 import {useAction} from "../../../utils/hook-utils";
 import {fetchUsers} from "../../../store/reducers/ducks/users/actions";
 import {RightSideTags} from "../../Right-side/Right-side-tags";
-import {Route, Routes} from "react-router-dom";
+import {Routes} from "react-router-dom";
 import {universalRenderPaths} from "../../../utils/components-utils";
 
 const RightSideStyles = makeStyles((theme) => ({
@@ -107,8 +101,9 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
             </Paper>
             <Divider/>
             <Routes>
-                {universalRenderPaths(['home','home/search'],<>{is_loading_tags ? <Box><LinearProgress color="primary"/></Box> :
-                <RightSideTags tags={tags}/>}</>)}
+                {universalRenderPaths(['home', 'home/search'], <>{is_loading_tags ?
+                    <Box><LinearProgress color="primary"/></Box> :
+                    <RightSideTags tags={tags}/>}</>)}
             </Routes>
         </Paper>
         <Paper className={classes.paperWrapper}>
@@ -116,7 +111,9 @@ export const RightSide = memo(function RightSide(): ReactElement | null {
                 <Typography variant={'h6'}>Кого читать</Typography>
             </Paper>
             <Divider/>
-            {is_loading_users ? <Box><LinearProgress color="primary"/></Box> : <RightSideUsers users={users}/>}
+            {is_loading_users ? <Box><LinearProgress color="primary"/></Box> : <>{users.map((user,index) => (
+                <RightSideUser key={users.length - index}
+                                user={user}/>))}</>}
         </Paper>
     </Box>
 })

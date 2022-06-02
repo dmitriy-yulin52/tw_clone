@@ -4,7 +4,7 @@ import {Box, Popover, Typography} from "@material-ui/core";
 import {PopoverOrigin} from "@material-ui/core/Popover/Popover";
 
 
-interface PopoverDialogProps {
+export interface PopoverDialogProps {
     open?: boolean
     anchorEl?: HTMLElement | null
     anchorOrigin?: PopoverOrigin
@@ -19,12 +19,12 @@ interface PopoverDialogProps {
 
 const pointerNone = {
     pointerEvents: 'none',
+    width:'700px'
 } as const
 
 export const PopoverDialog = memo((props: PopoverDialogProps): ReactElement => {
     const {open, anchorEl, anchorOrigin, transformOrigin, children, transitionDuration} = props
     return (
-        <Box borderRadius={'100px'}>
             <Popover
                 open={open ?? false}
                 anchorEl={anchorEl}
@@ -32,13 +32,10 @@ export const PopoverDialog = memo((props: PopoverDialogProps): ReactElement => {
                 transformOrigin={transformOrigin}
                 transitionDuration={transitionDuration}
                 style={pointerNone}
-                classes={{root:'red'}}
             >
                 <Box>
                     {children}
                 </Box>
             </Popover>
-
-        </Box>
     );
 })
