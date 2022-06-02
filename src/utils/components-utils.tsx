@@ -1,5 +1,13 @@
 import * as React from "react";
-import {FunctionComponent, memo, ReactElement, ReactNode, useCallback} from "react";
+import {
+    FunctionComponent,
+    JSXElementConstructor,
+    memo,
+    MemoExoticComponent,
+    ReactElement,
+    ReactNode,
+    useCallback
+} from "react";
 import {
     Avatar,
     Box,
@@ -16,7 +24,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
 import {preventDefault} from "./hook-utils";
 import {Route} from "react-router-dom";
-import {PopoverDialog} from "../component/popoverDialog/PopoverDialog";
+import {PopoverDialogProps} from "../component/popoverDialog/PopoverDialog";
 
 
 export const universalRenderPaths = (paths: string[], Element: ReactNode): JSX.Element[] =>
@@ -84,7 +92,8 @@ export const MaterialDialog = memo((props: MaterialDialogProps): ReactElement =>
     )
 })
 
-interface MaterialBlockProps<T>{
+
+interface MaterialBlockProps<T> {
     headerButton?: ReactNode,
     styleHover?: boolean
     subTitle?: string
@@ -95,8 +104,14 @@ interface MaterialBlockProps<T>{
     avatarUrl?: string,
     count?: number
     styleFullname?: boolean
-    popoverDialog?: { showPopover: boolean, Component: any, children: any,propsChildren: T}
-    // popoverDialog?: any
+    popoverDialog?: PopoverDialogType<T>
+}
+
+export interface PopoverDialogType<T> {
+    showPopover: boolean,
+    Component: MemoExoticComponent<(props: PopoverDialogProps) => ReactElement<any, string | React.JSXElementConstructor<any>>>
+    children: (props: T) => ReactElement<any, string | React.JSXElementConstructor<any>>
+    propsChildren: T
 }
 
 
@@ -145,6 +160,8 @@ const transformOrigin = {
 
 function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
 
+
+    console.log('MaterialBlockImpl')
     const {
         headerButton,
         styleHover = false,
@@ -186,7 +203,6 @@ function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
                 transitionDuration={5}
             >
                 <popoverDialog.children {...popoverDialog.propsChildren}/>
-                {/*{popoverDialog.children}*/}
             </popoverDialog.Component>}
         {avatarUrl && <Box marginRight={'16px'}>
 
@@ -205,7 +221,10 @@ function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
                                         aria-owns={openPopover ? 'mouse-over-popover' : undefined}
                                         aria-haspopup="true"
                                         onMouseEnter={handlePopoverOpen}
-                                        onMouseLeave={handlePopoverClose}
+                                        onMouseLeave={(e) => {
+                                            handlePopoverClose()
+                                            preventDefault(e)
+                                        }}
                                         onClick={preventDefault}
                                         color={'primary'}
                                         className={classNames({
@@ -230,8 +249,7 @@ function MaterialBlockImpl<T>(props: MaterialBlockProps<T>): ReactElement {
     </Box>
 }
 
-export const MaterialBlock = memo(MaterialBlockImpl)
-
+export const MaterialBlock = memo(MaterialBlockImpl) as typeof MaterialBlockImpl
 
 interface MaterialTextFieldProps {
     onChange: (e: any) => void

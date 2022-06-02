@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {memo, ReactElement} from 'react'
+import {CSSProperties, memo, ReactElement} from 'react'
 import {Button, Grid, Hidden, IconButton, makeStyles, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import HomeIcon from "@material-ui/icons/Home";
@@ -13,7 +13,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import {useBooleanState} from "../../../utils/hook-utils";
 import {TweetsDialog} from "../../TweetsDialog/TweetsDialog";
 import {TweetsForm} from "../../TweetsForm/TweetsForm";
-import {Link,NavLink, Outlet} from 'react-router-dom'
+import {Link, NavLink, Outlet} from 'react-router-dom'
 
 const leftMenuStyles = makeStyles((theme) => ({
     WrapperLeftBlock: {
@@ -27,10 +27,13 @@ const leftMenuStyles = makeStyles((theme) => ({
             flexBasis: '80px',
         }
     },
+    link: {
+        textDecoration: 'none',
+    },
     list: {
         listStyle: 'none',
-        marginTop:0,
-        paddingTop:0,
+        marginTop: 0,
+        paddingTop: 0,
         padding: '8px',
         marginRight: theme.spacing(4),
         '@media (max-width: 1300px)': {
@@ -76,6 +79,12 @@ const user = {
     avatarUrl: 'https://jooinn.com/images/man-standing-on-street.jpg'
 } as const
 
+function isActive(obj: { isActive: boolean }): CSSProperties {
+    return {
+        filter: obj.isActive ? 'invert(52%) sepia(52%) saturate(3103%) hue-rotate(177deg) brightness(100%) contrast(92%)' : ''
+    }
+}
+
 
 export const LeftMenu = memo(function LeftMenu(): ReactElement {
 
@@ -95,14 +104,14 @@ export const LeftMenu = memo(function LeftMenu(): ReactElement {
                     </Link>
                 </li>
                 <li>
-                     <NavLink to={'home'} style={{textDecoration:'none'}}>
+                    <NavLink to={'home'} className={classes.link} style={isActive}>
                         <IconButton>
-                        <HomeIcon fontSize={'large'}/>
-                        <Hidden smDown mdDown>
-                            <Typography variant={'h5'} component={'span'}
-                            >Home</Typography>
-                        </Hidden>
-                    </IconButton>
+                            <HomeIcon fontSize={'large'}/>
+                            <Hidden smDown mdDown>
+                                <Typography variant={'h5'} component={'span'}
+                                >Home</Typography>
+                            </Hidden>
+                        </IconButton>
                     </NavLink>
 
                 </li>
