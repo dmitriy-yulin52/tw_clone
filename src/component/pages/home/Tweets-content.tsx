@@ -81,18 +81,6 @@ const gridPadding = {
 } as const
 
 
-interface TweetBlockProps {
-    tweet: {
-        id: string,
-        text: string
-        user: {
-            fullName: string
-            userName: string
-            avatarUrl: string
-        }
-    }
-}
-
 interface TweetsContentProps {
     tweets: Tweet[]
 }
@@ -108,7 +96,7 @@ export const TweetsContent = memo((props: TweetsContentProps): ReactElement => {
             <Paper key={tweets.length - index} variant={'outlined'}
                    className={classes.tweetsWrapperHeader}>
                 <Link to={`tweet${tweet.id}`} className={classes.link}>
-                    <TweetBlock tweet={tweet}/>
+                    <TweetBlock  tweet={tweet}/>
                 </Link>
             </Paper>
         ))}
@@ -144,35 +132,49 @@ function transform_tweet(tweet: TweetToTransform): TransformToTweet {
     }
 }
 
+interface TweetBlockProps {
+    tweet: {
+        id: string,
+        text: string
+        user: {
+            fullName: string
+            userName: string
+            avatarUrl: string
+        }
+    }
+}
+
+
+function is_popover_dialog(tweet: Tweet): PopoverDialogType<TransformToTweet> {
+    const transform_tweet_props = {
+        ...tweet,
+        status: 'status',
+        readers: 34.5,
+        in_readable: 200
+    }
+    const props_children: TransformToTweet = transform_tweet(transform_tweet_props)
+
+    const popover_dialog_for_tweet_block: PopoverDialogType<TransformToTweet> = {
+        Component: PopoverDialog,
+        children: ChildrenPopover,
+        propsChildren: props_children,
+        showPopover: true
+    }
+    return popover_dialog_for_tweet_block
+}
+
 
 export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElement {
 
     const {tweet} = props
     const classes = TweetsContentStyles()
 
-    console.log('tweets-content')
+    const use_popover_dialog: PopoverDialogType<TransformToTweet> = useMemo(() => {
+        return is_popover_dialog(tweet)
+    }, [is_popover_dialog, tweet])
 
 
-    const memomize_popover_dialog: PopoverDialogType<TransformToTweet> = useMemo(() => {
-        const transform_tweet_props = {
-            ...tweet,
-            status: 'status',
-            readers: 34.5,
-            in_readable: 200
-        }
-        const props_children: TransformToTweet = transform_tweet(transform_tweet_props)
-
-        const popover_dialog_for_tweet_block: PopoverDialogType<TransformToTweet> = {
-            Component: PopoverDialog,
-            children: ChildrenPopover,
-            propsChildren: props_children,
-            showPopover: true
-        }
-        return popover_dialog_for_tweet_block
-    }, [tweet])
-
-
-    return <MaterialBlock popoverDialog={memomize_popover_dialog} styleFullname fullName={tweet.user.fullName}
+    return <MaterialBlock popoverDialog={use_popover_dialog} styleFullname fullName={tweet.user.fullName}
                           userName={tweet.user.userName}
                           avatarUrl={tweet.user.avatarUrl}>
         <Box marginRight={'8px'}>
@@ -230,6 +232,4 @@ export const TweetBlock = memo(function Tweet(props: TweetBlockProps): ReactElem
             </Grid>
         </Box>
     </MaterialBlock>
-
-
 })

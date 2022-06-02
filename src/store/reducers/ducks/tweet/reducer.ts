@@ -10,7 +10,7 @@ const initialTweetDataState: TweetDataState = {
 }
 
 
-export const tweetsReducer = produce((draft: Draft<TweetDataState>, action: TweetDataActions) => {
+export const tweetReducer = produce((draft: Draft<TweetDataState>, action: TweetDataActions) => {
 
 
     switch (action.type) {
